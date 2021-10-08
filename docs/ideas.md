@@ -1,12 +1,16 @@
-Team VAV
+<h1>Team VAV</h1>
 
-//The application name//
+# The application name
 
-<h1>Team Overview</h1> 
-Aaron - "OfficialAaronTsui" & "OfficialAaronTsui2"
+# Team Overview
+Aaron - **OfficialAaronTsui** & **OfficialAaronTsui2**
 Griffin Evans - 
-Joseph Yang - JoJo-19
+Joseph Yang - **JoJo-19** 
 
-The second section titled Innovative Idea which provides a brief paragraph or two describing your application and how it relates to other existing applications. If your application does not relate to an existing application then mention that.
+# Innovative Idea 
+which provides a brief paragraph or two describing your application and how it relates to other existing applications. If your application does not relate to an existing application then mention that.
 
-The third section titled Important Components which provides a brief paragraph or two explaining the functions provided by some of the components of your final projects.
+create a formal website for students with covid/other illnesses. They can sign up on and ask for food, etc. more easily than the current informal system because we don't want them to infect others.
+
+# Important Components 
+which provides a brief paragraph or two explaining the functions provided by some of the components of your final projects.
