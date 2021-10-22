@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-10-22T21:17:37.281Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="y-KEJ7401oD5NWE-6XBV" version="15.5.8" type="github">
+<mxfile host="app.diagrams.net" modified="2021-10-22T21:39:14.673Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="o26yV76vwExWTRxtitih" version="15.5.8" type="github">
   <diagram id="xOa8urjB6kpWdedyfURd" name="Page-1">
     <mxGraphModel dx="1102" dy="1680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -38,7 +38,7 @@
           <mxGeometry x="170" y="-35" width="660" height="275" as="geometry" />
         </mxCell>
         <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-13" value="&lt;h1&gt;Quarantining?&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
-          <mxGeometry x="360" y="10" width="280" height="40" as="geometry" />
+          <mxGeometry x="180" y="10" width="280" height="40" as="geometry" />
         </mxCell>
         <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-16" value="Request" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="210" y="60" width="140" height="30" as="geometry" />
@@ -62,7 +62,7 @@
           <mxGeometry x="850" y="-25" width="560" height="215" as="geometry" />
         </mxCell>
         <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-29" value="&lt;h1&gt;Looking to help?&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
-          <mxGeometry x="970" width="280" height="40" as="geometry" />
+          <mxGeometry x="850" width="280" height="40" as="geometry" />
         </mxCell>
         <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-30" value="Current Requests" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="874.38" y="60" width="140" height="30" as="geometry" />
@@ -128,7 +128,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-59" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="270" y="297.5" width="560" height="225" as="geometry" />
+          <mxGeometry x="380" y="315" width="560" height="225" as="geometry" />
         </mxCell>
         <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-60" value="UMassQuarantineRequests.com" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="850" y="-35" width="560" height="20" as="geometry" />
@@ -296,6 +296,9 @@
             <mxPoint x="1110" y="-350" as="sourcePoint" />
             <mxPoint x="1160" y="-400" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="93Qjyc0g4FZ4KYOtwzbX-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.083;entryY=0.952;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="gMZ0pz86UfZ7Bh6NmJJu-13" target="gMZ0pz86UfZ7Bh6NmJJu-13">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
