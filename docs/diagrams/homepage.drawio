@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-10-22T21:12:48.063Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="r4z8srdP8EdQvnzfGO8Z" version="15.5.8" type="github">
+<mxfile host="app.diagrams.net" modified="2021-10-22T21:17:37.281Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="y-KEJ7401oD5NWE-6XBV" version="15.5.8" type="github">
   <diagram id="xOa8urjB6kpWdedyfURd" name="Page-1">
     <mxGraphModel dx="1102" dy="1680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -210,7 +210,7 @@
         <mxCell id="8UkIw04C8tfjKHW86x7a-48" value="&lt;h1&gt;Delivering Helper&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
           <mxGeometry x="400" y="1110" width="280" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="8UkIw04C8tfjKHW86x7a-50" value="&lt;h1&gt;Tip your Helper! (Venmo)&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
+        <mxCell id="8UkIw04C8tfjKHW86x7a-50" value="&lt;h1&gt;Tip your Helper! (paypal)&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
           <mxGeometry x="345" y="1200" width="390" height="40" as="geometry" />
         </mxCell>
         <mxCell id="8UkIw04C8tfjKHW86x7a-51" value="@SpaceXMusk" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -234,7 +234,7 @@
         <mxCell id="8UkIw04C8tfjKHW86x7a-63" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.misc.loading_circle_1;pointerEvents=1" parent="1" vertex="1">
           <mxGeometry x="630" y="673.75" width="30" height="32.5" as="geometry" />
         </mxCell>
-        <mxCell id="8UkIw04C8tfjKHW86x7a-64" value="&lt;h1&gt;Tip your Helper! (Venmo)&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
+        <mxCell id="8UkIw04C8tfjKHW86x7a-64" value="&lt;h1&gt;Tip your Helper! (paypal)&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
           <mxGeometry x="345" y="820" width="390" height="40" as="geometry" />
         </mxCell>
         <mxCell id="8UkIw04C8tfjKHW86x7a-65" value="@SpaceXMusk" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
