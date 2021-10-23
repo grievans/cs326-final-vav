@@ -1,0 +1,13 @@
+body {
+    /* to avoid having too much of the image be covered by the navbar; maybe not the best solution to that though (TODO improve if one finds a better method): */
+    padding-top: 56px;
+}
+
+.bg-image {
+    /* TODO: maybe get a wider image? gets a bit grainy at high resolutions */
+    background-image: url('diagrams/campus.jpg');
+    height: 15em;
+    max-height: 20vh;
+    background-size: cover;
+    background-position: center;
+}
