@@ -9,65 +9,45 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
   </head>
-  <body>
+  <body class="text-center">
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" 
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" 
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
-    <h1>quarantineing?</h1>
+    <h1>Quarantining?</h1>
     <div class="container" href="">
         <div class="row">
             <div class="col">
-                <div class="row g-3 align-items-center">
-                    <div class="col-auto">
-                      <label for="inputPassword6" class="col-form-label">request</label>
-                    </div>
-                    <div class="col-auto">
-                      <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
-                    </div>
-                    <div class="col-auto">
-                      <span id="passwordHelpInline" class="form-text">
-                        request title
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="row g-3 align-items-center">
-                    <div class="col-auto">
-                      <input type="password" id="inputPassword6" class="form-control">
-                    </div>
-                    <div class="col-auto">
-                        <span id="passwordHelpInline" class="form-text">
-                          request description
-                        </span>
-                      </div>
-                  </div>
+              <h4>Request</h4>
+              <div class="form-floating">
+                <input type="text" id="requestTitle" class="form-control" placeholder="[untitled]">
+                <label for="requestTitle" class="text-muted">Request title</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" id="requestDescription" class="form-control" placeholder="[no description given]">
+                <label for="requestDescription" class="text-muted">Request description</label>
+                <!-- TODO: make into a larger box? Not sure how to make a multi-line text input rn -->
+              </div>
                 
 
 
             </div>
             <div class="col">
-                <div class="row g-3 align-items-center">
-                    <div class="col-auto">
-                      <label for="inputPassword6" class="col-form-label">location</label>
-                    </div>
-                    <div class="col-auto">
-                      <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
-                    </div>
-
-                  </div>
-
-                  <div class="row g-3 align-items-center">
-
-                    <div class="col-auto">
-                        Your contact info
-                      <input type="password" id="inputPassword6" class="form-control">
-                    </div>
-
-                  </div>
-                
+              <div class="form-floating">
+                <input type="text" id="location" class="form-control" placeholder="[no location given]"> 
+                <!-- TODO: when implementing actual submissions, should maybe have it not be able to submit if no location is given? Same with title and maybe description -->
+                <label for="location" class="text-muted">Location</label>
+              </div>
+              <div class="form-floating">
+                <input type="tel" id="email" class="form-control" placeholder="[none]">
+                <label for="email" class="text-muted">Email</label>
+              </div>
+              <div class="form-floating">
+                <input type="tel" id="phoneNumber" class="form-control" placeholder="[none]">
+                <label for="phoneNumber" class="text-muted">Phone number</label>
+              </div>
 
 
 
@@ -79,6 +59,7 @@
 
     </p>
     <a href="status.html" class="btn btn-primary">submit request</a>
+    <!-- TODO: figure out how we want button labels to be written, like capitalized or not -->
     <p>
 
     </p>
@@ -89,7 +70,7 @@
     <p></p>
     <p></p>
     <p></p>
-    <a href="https://paypal.me/bitextreme" class="link">tip the creators</a>
+    <!-- <a href="https://paypal.me/bitextreme" class="link">tip the creators</a> -->
   </body>
 </html>
 
