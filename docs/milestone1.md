@@ -1,5 +1,4 @@
-#Milestone#1
-<h1>Team VAV</h1>
+# Team VAV Milestone #1
 
 # Team Overview
 Aaron - **OfficialAaronTsui** & **OfficialAaronTsui2**
