@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-10-24T02:59:57.632Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="r1W7L6CrTABeNVA4S2mB" version="15.5.8" type="github">
+<mxfile host="app.diagrams.net" modified="2021-10-24T03:14:08.963Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="FwMTz_NN0zP9y3ni8r08" version="15.5.8" type="github">
   <diagram id="xOa8urjB6kpWdedyfURd" name="Page-1">
     <mxGraphModel dx="1102" dy="1680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -13,8 +13,8 @@
         <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gMZ0pz86UfZ7Bh6NmJJu-6" target="gMZ0pz86UfZ7Bh6NmJJu-60" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-5" value="&lt;h1&gt;Welcome!&lt;/h1&gt;&lt;p&gt;[description of site&#39;s purpose]&amp;nbsp;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
-          <mxGeometry x="700" y="-230" width="280" height="70" as="geometry" />
+        <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-5" value="&lt;h1&gt;Welcome!&lt;/h1&gt;&lt;p&gt;Here is where you can either make requests or respond to others&#39; requests.&amp;nbsp;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;" parent="1" vertex="1">
+          <mxGeometry x="700" y="-230" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="gMZ0pz86UfZ7Bh6NmJJu-6" value="&lt;font style=&quot;font-size: 16px&quot;&gt;View requests&lt;/font&gt;" style="rounded=1;html=1;shadow=0;dashed=0;whiteSpace=wrap;fontSize=10;fillColor=#E6E6E6;align=center;strokeColor=#E6E6E6;fontColor=#333333;" parent="1" vertex="1">
           <mxGeometry x="930" y="-120" width="120" height="50" as="geometry" />
