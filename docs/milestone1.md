@@ -35,6 +35,12 @@ Below is our wireframe!
 
 # HTML and CSS
 Below are screenshots of our web pages!
+![indexPage](diagrams/index.png)
+![quarantiningPage](diagrams/quarantining.png)
+![requestHolderPage](diagrams/requestHolder.png)
+![requestProgressPage](diagrams/requestProgress.png)
+![statusPage](diagrams/status.png)
+![welcomePage](diagrams/welcome.png)
 
 # Division of Labor
 Aaron Tsui
