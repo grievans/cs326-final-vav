@@ -35,3 +35,22 @@ Below is our wireframe!
 
 # HTML and CSS
 Below are screenshots of our web pages!
+
+# Division of Labor
+Aaron Tsui
+* Created majority of main branch of site in code
+* Created majority of left branch of site in code
+* Advanced wireframe in initial version of code
+* Updated wireframe to modern, current version of code
+
+Griffin Evans
+* Created initial wireframe
+* Advanced overall site code
+* Redesigned status page and reformatted multiple pages
+* Stylized site better
+
+Joseph Yang
+* Created majority of right branch of site in code
+* Created navigation bar on site
+* Added visual effects to site
+* Modified links across site
