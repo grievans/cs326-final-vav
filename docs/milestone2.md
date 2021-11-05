@@ -54,6 +54,48 @@ create task, get data of a task, resolve (delete) tasks, edit task info, mark ta
 
 create comment, get list of comments for a task?, deleting comments (might just make part of deleting a task)?
 
+### Create Comment
+
+create comment, get list of comments for a task?
+
+**POST** /comment/{commentId}
+
+Requester creates new comment with commentId, server stores comment with requestId.
+
+Parameters:
+| Name | Type | In | Description |
+|------|------|----|-------------|
+requestId | integer | query | Identification Number for the request.
+commentId | integer |path |Identification Number for the comment.
+
+
+*Response:*
+
+    Status: 200 (OK)
+    {
+        "comment_creation": "successful",
+        "session_token": "xxxxxxxxxxx"
+    }
+
+### Get comments
+**GET** /comment/all
+Helper gets all comments.
+
+Parameters:
+| Name | Type | In | Description |
+|------|------|----|-------------|
+requestId | integer | query | Identification Number for the request.
+all | string |path |maximum number of comments to show parameter.
+
+
+*Response:*
+
+    Status: 200 (OK)
+    {
+        "all_comments": "true",
+        "session_token": "xxxxxxxxxxx"
+    }
+
 
 ## Part 2: Front-end Implementation
 
