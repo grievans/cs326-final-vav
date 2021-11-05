@@ -1,14 +1,14 @@
 {
   "name": "cs326-final-vav",
   "version": "1.0.0",
-  "description": "crud application with express and mongodb",
+  "description": "crud application and server with express for now",
   "main": "server.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
   },
   "keywords": [
     "crud",
-    "mongodb"
+    "express"
   ],
   "author": "Aaron, Griffin, Joseph",
   "license": "ISC",
@@ -25,13 +25,6 @@
   },
   "homepage": "https://github.com/grievans/cs326-final-vav#readme",
   "dependencies": {
-    "axios": "^0.24.0",
-    "body-parser": "^1.19.0",
-    "dotenv": "^10.0.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
-    "mongoose": "^6.0.12",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.14"
+    "express": "^4.17.1"
   }
 }
