@@ -43,7 +43,7 @@ Creates a new account, if `user_email` is not already in use.
 |user_email|string|body|The email to be used for the new account|
 |password|string|body|Password to be hashed and set for the account|
 |display_name|string|body|If present, sets this name to be shown in the account's contact details.|
-|phone_number|string|body|If present, sets this number to be shown in the account's contact details.|
+|phone_number|string|body|If present, sets this number to be shown in the account's contact details. Note that the type is *string*, not number.|
 
 *Response:*
 
@@ -79,13 +79,39 @@ If `session_token` is invalid:
 
 ### Get account data
 
-....
+Retrieves the publicly viewable data for an account, specified by the associated email.
+<!-- Or maybe should use some separate system of IDs (numerical for instance)? so this wouldn't have to change the input it takes if the account has its email changed. TODO decide, not sure it really matters what we pick for now or not since this works either way for the dummy implementation -->
 
-**GET** /user/data
+**GET** /user/data/{target_email}
 
 *Parameters:*
 
-<!-- TODO I'll finish in a bit -->
+| Name | Type | In | Description |
+|------|------|----|----------|
+|target_email|string|path|The address of the user to retrieve data for.|
+
+*Response:*
+
+    Status: 200 OK
+    {
+        "user": {
+            "email": "xxxxxx@example.com",
+            "display_name": "Xxxxx Xxx",
+            "phone_number": "555-555-5555"
+        }
+    }
+
+If `target_email` has no matching account:
+
+    404 Not Found
+
+
+
+
+
+
+
+
 
 create task, get data of a task, resolve (delete) tasks, edit task info, mark task in progress (a variant of editing info? maybe separate since different authentication is needed to do it), get list of open tasks
 
