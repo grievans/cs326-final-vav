@@ -4,6 +4,7 @@ import express from "express";
 import faker from "faker"; //IMPORTANT PROBABLY: note "npm i faker" needed to be run to use this, probably will have to mention in the docs/setup.md file; TODO
 const app = express();
 app.use(express.static('public'));
+app.use(express.static('images'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -49,7 +50,7 @@ app.get("/user/login", (req, res) => {
     // res.send(`login_status = "valid", session_token = ${session_token}`);
 });
 
-//for submiting request
+//for submiting request quarantiining.html
 app.post("/submitRequest", (req, res) => {
     const requestTitle = req.body["requestTitle"];
     const requestDescription = req.body["requestDescription"];
