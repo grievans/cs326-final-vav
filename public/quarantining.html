@@ -9,8 +9,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Make Request - UMassQuarantineRequests</title>
+
+
   </head>
   <body class="text-center">
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" 
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -65,14 +69,41 @@
         </div>
 
     </div>
-    <p>
-
-    </p>
-    <a href="status.html" class="btn btn-primary">submit request</a>
+    <br>
+    <!-- <a href="status.html" class="btn btn-primary" type="submit">submit request</a> -->
     <!-- TODO: figure out how we want button labels to be written, like capitalized or not -->
-    <p>
+    <button type="submit" id="submit">Submit Request</button>
+    <!-- handle request -->
+    <script>
 
-    </p>
+      const requestTitle = document.getElementById('requestTitle');
+      const requestDescription = document.getElementById('requestDescription');
+      const name = document.getElementById('name'); 
+      const req_location = document.getElementById('location');
+      const email = document.getElementById('email');
+      const phoneNumber = document.getElementById('phoneNumber');
+      const submitButton = document.getElementById('submit');
+
+      submitButton.addEventListener('click', function(a) {
+        a.preventDefault();//prevent from reloading
+
+        fetch('/submitRequest', {
+          method: 'post', 
+          body: requestTitle
+        }).then(function(response) {
+          return response.text();
+        }).then(function(text) {
+          console.log(text);
+        }).catch(function(error) {
+          console.error(error);
+        })
+      });
+
+    </script>
+
+    <br>
+    <br>
+
     <nav class="navbar fixed-top navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
@@ -97,6 +128,14 @@
       </div>
     </nav>
     <!--  include this navbar in every page-->
+
+
+
+
+
+
+
+
 
   </body>
 </html>

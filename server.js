@@ -6,19 +6,22 @@ const app = express();
 
 app.use(express.json()); // lets you handle JSON input
 
-app.get("/", (req, res) => {
-    // console.log(req.headers);
-    // console.log(req.url);
-    // console.log(req.ip);
-    // console.log(req.method);
-    // console.log(req.protocol);
-    // console.log(req.path);
-    // console.log(req.query);
-    // console.log(req.subdomains);
-    // console.log(req.params);
-    // res.status(404).end();
-    res.send("Test");
-});
+app.use(express.static('public'));
+
+
+// app.get("/", (req, res) => {
+//     // console.log(req.headers);
+//     // console.log(req.url);
+//     // console.log(req.ip);
+//     // console.log(req.method);
+//     // console.log(req.protocol);
+//     // console.log(req.path);
+//     // console.log(req.query);
+//     // console.log(req.subdomains);
+//     // console.log(req.params);
+//     // res.status(404).end();
+//     res.send("Test");
+// });
 
 
 //Command used to test:
@@ -47,6 +50,36 @@ app.get("/user/login", (req, res) => {
     }));
     // res.send(`login_status = "valid", session_token = ${session_token}`);
 });
+
+//for submiting request
+app.post("/submitRequest", (req, res) => {
+    const requestTitle = req.body["requestTitle"];
+    const requestDescription = req.body["requestDescription"];
+    const name = req.body["name"]; 
+    const req_location = req.body["req_location"];
+    const email = req.body["email"];
+    const phoneNumber = req.body["phoneNumber"];
+
+    console.log("Request Submitted!!!");
+    res.status(201);
+    res.send('submitted, you are all set!!!!');
+});
+
+app.get("/submitRequest", (req, res) => {
+    const requestTitle = req.params["requestTitle"];
+    const requestDescription = req.params["requestDescription"];
+    const name = req.params["name"]; 
+    const req_location = req.params["req_location"];
+    const email = req.params["email"];
+    const phoneNumber = req.params["phoneNumber"];
+
+    console.log("Request Submitted!!!");
+
+    res.status(201);
+    res.send('submitted,  you are all set!!!!');
+    res.send(requestTitle);
+});
+
 
 //TODO not sure if needed?
 app.get("*", (req, res) => {
