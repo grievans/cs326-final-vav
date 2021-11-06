@@ -26,8 +26,8 @@ export class Database {
         //     }
         //     return true;
         // });
+        let output = {};
         if (category == "user") {
-            let output = {};
             output["pass_hash"] = faker.internet.password(); 
             if (!(email in element)) {
                 output["email"] = element.email;
@@ -38,9 +38,9 @@ export class Database {
             output["phone_number"] = faker.phone.phoneNumber(); 
             output["tip_link"] = faker.internet.url(); 
         } else if (category == "task") {
-            let output = {};
             //TODO generates whatever fake format of data is neede
         }
+        return output
     }
 
     findAndUpdate(category, element, updates) {
