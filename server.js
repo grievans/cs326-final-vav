@@ -3,11 +3,9 @@
 import express from "express";
 import faker from "faker"; //IMPORTANT PROBABLY: note "npm i faker" needed to be run to use this, probably will have to mention in the docs/setup.md file; TODO
 const app = express();
-
-app.use(express.json()); // lets you handle JSON input
-
 app.use(express.static('public'));
-
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // app.get("/", (req, res) => {
 //     // console.log(req.headers);
@@ -60,7 +58,8 @@ app.post("/submitRequest", (req, res) => {
     const email = req.body["email"];
     const phoneNumber = req.body["phoneNumber"];
 
-    console.log("Request Submitted!!!");
+    console.log("Post body: ")
+    console.log(req.body)
     res.status(201);
     res.send('submitted, you are all set!!!!');
 });
@@ -73,8 +72,8 @@ app.get("/submitRequest", (req, res) => {
     const email = req.params["email"];
     const phoneNumber = req.params["phoneNumber"];
 
-    console.log("Request Submitted!!!");
-
+    console.log("Get param: ")
+    console.log(req.params)
     res.status(201);
     res.send('submitted,  you are all set!!!!');
     res.send(requestTitle);
