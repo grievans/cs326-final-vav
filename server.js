@@ -64,21 +64,49 @@ app.post("/submitRequest", (req, res) => {
     res.status(201);
     res.send('submitted, you are all set!!!!');
 });
+//for updating request quarantiining.html
+app.put("/submitRequest", (req, res) => {
+    const requestTitle = req.body["requestTitle"];
+    const requestDescription = req.body["requestDescription"];
+    const name = req.body["name"]; 
+    const req_location = req.body["req_location"];
+    const email = req.body["email"];
+    const phoneNumber = req.body["phoneNumber"];
 
+    console.log("Updated body: ");
+    console.log(req.body);
+    res.status(201);
+    res.send('Updated, you are all set!!!!');
+});
+//for geting request quarantiining.html
 app.get("/submitRequest", (req, res) => {
-    const requestTitle = req.params["requestTitle"];
-    const requestDescription = req.params["requestDescription"];
-    const name = req.params["name"]; 
-    const req_location = req.params["req_location"];
-    const email = req.params["email"];
-    const phoneNumber = req.params["phoneNumber"];
+    const requestTitle = req.query["requestTitle"];
+    const requestDescription = req.query["requestDescription"];
+    const name = req.query["name"]; 
+    const req_location = req.query["req_location"];
+    const email = req.query["email"];
+    const phoneNumber = req.query["phoneNumber"];
 
     console.log("Get param: ");
-    console.log(req.params);
+    console.log(req.query);
     res.status(201);
-    res.send('submitted,  you are all set!!!!');
-    res.send(requestTitle);
+    res.json(req.query);
 });
+//for deleting request quarantiining.html
+app.delete("/submitRequest", (req, res) => {
+    const requestTitle = req.body["requestTitle"];
+    const requestDescription = req.body["requestDescription"];
+    const name = req.body["name"]; 
+    const req_location = req.body["req_location"];
+    const email = req.body["email"];
+    const phoneNumber = req.body["phoneNumber"];
+
+    console.log("delete param: ");
+    console.log(req.body);
+    res.status(201);
+    res.send('Deleted, you are all set!!!!');
+});
+
 
 //for submiting request requestProgress.html
 app.post("/markProgress", (req, res) => {
