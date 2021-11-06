@@ -3,9 +3,9 @@
 import express from "express";
 import faker from "faker"; //IMPORTANT PROBABLY: note "npm i faker" needed to be run to use this, probably will have to mention in the docs/setup.md file; TODO
 const app = express();
-app.use(express.static('public'));
-app.use(express.static('images'));
-app.use(express.urlencoded({ extended: false }));
+app.use('/', express.static('public'));
+// app.use('/', express.static('public/images')); //TODO not sure this needed or not if above included
+app.use(express.urlencoded({ extended: false })); //TODO do we need this? They seem to recommend to just use JSON anyway so this seems redundant
 app.use(express.json());
 
 // app.get("/", (req, res) => {
