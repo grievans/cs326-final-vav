@@ -11,8 +11,8 @@ Gets a token to be used for logging the client into a specified account, given t
 *Parameters:*
 | Name | Type | In | Description |
 |------|------|----|----------|
-|user_email|string|body|The email used by the account|
-|password|string|body|Password of the account (to be hashed and compared)|
+|user_email|string|header|The email used by the account|
+|password|string|header|Password of the account (to be hashed and compared)|
 <!-- Seems like hashing would be server side? Not sure, just basing off of what other APIs seem to do. -->
 
 *Response:*
@@ -41,7 +41,7 @@ Creates a new account, if `user_email` is not already in use.
 | Name | Type | In | Description |
 |------|------|----|----------|
 |user_email|string|body|The email to be used for the new account|
-|password|string|body|Password to be hashed and set for the account|
+|password|string|body|Password to be hashed and set for the account| <!-- TODO again not totally sure how this works -->
 |display_name|string|body|If present, sets this name to be shown in the account's contact details.|
 |phone_number|string|body|If present, sets this number to be shown in the account's contact details. Note that the type is *string*, not number.|
 
@@ -71,7 +71,29 @@ Edits details of this session's account
 
 *Response:*
 
-    Status: 201 Created
+    Status: 204 No Content
+
+If `session_token` is invalid:
+
+    Status: 403 Forbidden
+
+<!-- ^maybe should be 401? Probably doens't matter -->
+
+### Delete account
+
+Marks the user's account to be removed from the database.
+
+**PUT** /user/delete
+
+*Parameters:*
+
+| Name | Type | In | Description |
+|------|------|----|----------|
+|session_token|string|body|The token for the current login session, used to identify the active account.|
+
+*Response:*
+
+    Status: 204 No Content
 
 If `session_token` is invalid:
 
@@ -88,7 +110,8 @@ Retrieves the publicly viewable data for an account, specified by the associated
 
 | Name | Type | In | Description |
 |------|------|----|----------|
-|target_email|string|path|The address of the user to retrieve data for.|
+|target_email|string|header|The address of the user to retrieve data for.|
+<!-- or maybe should be in path? -->
 
 *Response:*
 
