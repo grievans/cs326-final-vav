@@ -134,7 +134,37 @@ If `target_email` has no matching account:
 
 
 ### Create Task
+Creates a new request. 
+
+**POST** /submitRequest
+
+*Parameters:*
+
+| requestTitle | requestDescription | name | req_location | email | phoneNumber | 
+|--------------|--------------------|------|--------------|-------|-------------|
+|requestTitle|string|body|The request to be made.|
+|requestDescription|string|body|The description for the request.| 
+|name|string|body|Name for the person who submit request.|
+|req_location|string|body||
+|email|string|body||
+|phoneNumber|string|body||
+
+*Response:*
+
+    Status: 201 Created
+
+If the email is already in use:
+
+    Status: 304 Not Modified
 ### Get Task Data
+{
+  requestTitle: 'a',
+  requestDescription: 's',
+  name: 'd',
+  req_location: 'f',
+  email: 'v',
+  phoneNumber: 'c'
+}
 ### Delete Tasks
 ### Edit Task
 ### Task Progress
@@ -183,6 +213,9 @@ all | string |path |maximum number of comments to show parameter.
         "all_comments": "true",
         "session_token": "xxxxxxxxxxx"
     }
+
+
+
 
 ## Part 1: Back-end Skeleton Code
 
