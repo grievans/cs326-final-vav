@@ -80,6 +80,8 @@ app.get("/submitRequest", (req, res) => {
     res.send(requestTitle);
 });
 
+//for submiting request requestProgress.html
+
 
 //TODO not sure if needed?
 app.get("*", (req, res) => {
