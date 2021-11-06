@@ -35,7 +35,8 @@ export class Database {
                 output["email"] = faker.internet.email(); 
             }
             output["display_name"] = faker.internet.userName(); 
-            output["phone_number"] = faker.internet.phone_number(); 
+            output["phone_number"] = faker.phone.phoneNumber(); 
+            output["tip_link"] = faker.internet.url(); 
         } else if (category == "task") {
             let output = {};
             //TODO generates whatever fake format of data is neede
