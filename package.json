@@ -1,7 +1,7 @@
 {
   "name": "cs326-final-vav",
   "version": "1.0.0",
-  "description": "crud application and server with express for now",
+  "description": "server to handle request",
   "main": "server.js",
   "directories": {
     "doc": "docs"
@@ -16,7 +16,7 @@
   },
   "keywords": [
     "crud",
-    "express"
+    "server"
   ],
   "author": "Aaron, Griffin, Joseph",
   "license": "ISC",
