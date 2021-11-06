@@ -17,7 +17,7 @@ Gets a token to be used for logging the client into a specified account, given t
 
 *Response:*
 
-    Status: 200 (OK)
+    Status: 200 OK
     {
         "login_status": "valid",
         "session_token": "xxxxxxxxxxx"
@@ -25,30 +25,67 @@ Gets a token to be used for logging the client into a specified account, given t
 
 
 
-### Logout (might only need to be client-side?)
+<!-- ### Logout (might only need to be client-side?)
 
-...TODO MAYBE DELETE
+...TODO MAYBE DELETE -->
 
 ### Create account
 
-...
+Creates a new account, if `user_email` is not already in use. 
+<!-- maybe should also return login token? not sure; can just call Login afterwards anyway -->
 
-**POST** /user/new/
+**POST** /user/new
 
-Parameters:
+*Parameters:*
+
 | Name | Type | In | Description |
 |------|------|----|----------|
 |user_email|string|body|The email to be used for the new account|
 |password|string|body|Password to be hashed and set for the account|
-||||
+|display_name|string|body|If present, sets this name to be shown in the account's contact details.|
+|phone_number|string|body|If present, sets this number to be shown in the account's contact details.|
+
+*Response:*
+
+    Status: 201 Created
+
+If the email is already in use:
+
+    Status: 304 Not Modified
 
 ### Edit account
 
-...
+Edits details of this session's account
+
+**PUT** /user/edit
+
+*Parameters:*
+
+| Name | Type | In | Description |
+|------|------|----|----------|
+|session_token|string|body|The token for the current login session, used to identify the active account.|
+|user_email|string|body|If present, an address to change the account's email to.| <!-- maybe shouldn't be changeable? -->
+|display_name|string|body|If present, a name to change the account's display name to.|
+|phone_number|string|body|If present, what to change the account's phone number to.|
+<!-- maybe should also take password? -->
+
+*Response:*
+
+    Status: 201 Created
+
+If `session_token` is invalid:
+
+    Status: 403 Forbidden
 
 ### Get account data
 
-...
+....
+
+**GET** /user/data
+
+*Parameters:*
+
+<!-- TODO I'll finish in a bit -->
 
 create task, get data of a task, resolve (delete) tasks, edit task info, mark task in progress (a variant of editing info? maybe separate since different authentication is needed to do it), get list of open tasks
 
@@ -71,7 +108,7 @@ commentId | integer |path |Identification Number for the comment.
 
 *Response:*
 
-    Status: 200 (OK)
+    Status: 200 OK
     {
         "comment_creation": "successful",
         "session_token": "xxxxxxxxxxx"
@@ -90,7 +127,7 @@ all | string |path |maximum number of comments to show parameter.
 
 *Response:*
 
-    Status: 200 (OK)
+    Status: 200 OK
     {
         "all_comments": "true",
         "session_token": "xxxxxxxxxxx"
