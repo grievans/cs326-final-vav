@@ -4,9 +4,9 @@
 
 ### Login
 
-Gets a token to be used for logging the client into a specified account, given the correct email and password. Note logging out does not depend on any server data, and thus there is not an equivalent operation for that.
+Retrieves a token to be used for logging the client into a specified account, given the correct email and password. Note logging out does not depend on any server data, and thus there is not an equivalent operation for that.
 
-**GET** /user/login
+**POST** /user/login
 
 *Parameters:*
 | Name | Type | In | Description |
@@ -83,7 +83,7 @@ If `session_token` is invalid:
 
 Marks the user's account to be removed from the database.
 
-**PUT** /user/delete
+**DELETE** /user/delete
 
 *Parameters:*
 

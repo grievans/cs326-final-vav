@@ -2,11 +2,14 @@
 
 import express from "express";
 import faker from "faker"; //IMPORTANT PROBABLY: note "npm i faker" needed to be run to use this, probably will have to mention in the docs/setup.md file; TODO
+import {Database} from "./database.js";
 const app = express();
-app.use('/', express.static('public'));
+app.use('/', express.static('public')); //TODO maybe should be "./public"? not sure if it matters in this case
 // app.use('/', express.static('public/images')); //TODO not sure this needed or not if above included
 app.use(express.urlencoded({ extended: false })); //TODO do we need this? They seem to recommend to just use JSON anyway so this seems redundant
 app.use(express.json());
+const database = new Database();
+// const database = new Database(["user", "task"]);
 
 // app.get("/", (req, res) => {
 //     // console.log(req.headers);
@@ -30,6 +33,8 @@ app.post("/user/new", (req, res) => {
     const password = req.body["password"];
     //TODO: processes and sets data in some database
     //Not sure what needs to be done in regards to that for this milestone since it's all dummy anyway... maybe nothing?
+    const hash = faker.internet.password(); //in practice would take password and apply some actual hashing algorithm to get this
+    database.insert("user", {"email":email,"pass_hash":hash});
     console.log(`Created account: ${email}`);
     res.status(201);
     res.send('Created account.');
@@ -37,17 +42,30 @@ app.post("/user/new", (req, res) => {
 
 //Not totally sure if this is setup right, but works with the command:
 //curl -H 'user_email : Test password : ABCDEF Content-Type: application/json' http://localhost:3000/user/login/
-app.get("/user/login", (req, res) => {
-    const email = req.params["user_email"];
-    const password = req.params["password"];
-    //TODO processes account info and gets relevant data, makes session token. On success:
+app.post("/user/login", (req, res) => {
+    const email = req.body["user_email"];
+    const password = req.body["password"];
+
+    database.find("user", {"email":user_email});
+    //TODO tests if hash of passwords match, makes session token. On success:
     const session_token = faker.internet.password();
+
     res.status(200);
     res.send(JSON.stringify({
         "login_status": "valid",
         "session_token": session_token
     }));
     // res.send(`login_status = "valid", session_token = ${session_token}`);
+});
+
+app.put("/user/edit", (req, res) => {
+    const  session_token = req.body["session_token"];
+    const  user_email = req.body["session_token"];
+    const  display_name = req.body["display_name"];
+    const  phone_number = req.body["phone_number"];
+
+    res.status(204);
+    
 });
 
 //for submiting request quarantiining.html
