@@ -24,7 +24,7 @@ const deleteButton = document.getElementById('delete');
           "phoneNumber" : phoneNumber.value, 
         };
 
-        fetch('/submitRequest', {
+        fetch('/task', {
 
           method: 'post', 
           cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -67,7 +67,7 @@ const deleteButton = document.getElementById('delete');
           "phoneNumber" : phoneNumber.value, 
         };
 
-        fetch('/submitRequest', {
+        fetch('/task', {
 
           method: 'put', 
           cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -114,7 +114,7 @@ const deleteButton = document.getElementById('delete');
         query = "requestTitle="+requestTitle.value + "&" +"requestDescription=" + requestDescription.value + "&" +"name=" + name.value + 
         "&" +"location=" + req_location.value + "&" +"email=" + email.value + "&" +"phone=" + phoneNumber.value;
 
-        fetch('/submitRequest/?' + query, {
+        fetch('/task/?' + query, {
 
           method: 'get', 
           cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -160,7 +160,7 @@ const deleteButton = document.getElementById('delete');
         // query = "requestTitle="+requestTitle.value + "&" +"requestDescription=" + requestDescription.value + "&" +"name=" + name.value + 
         // "&" +"location=" + req_location.value + "&" +"email=" + email.value + "&" +"phone=" + phoneNumber.value;
 
-        fetch('/submitRequest', {
+        fetch('/task', {
 
           method: 'delete', 
           cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

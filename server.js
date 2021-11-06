@@ -51,7 +51,7 @@ app.get("/user/login", (req, res) => {
 });
 
 //for submiting request quarantiining.html
-app.post("/submitRequest", (req, res) => {
+app.post("/task", (req, res) => {
     const requestTitle = req.body["requestTitle"];
     const requestDescription = req.body["requestDescription"];
     const name = req.body["name"]; 
@@ -65,7 +65,7 @@ app.post("/submitRequest", (req, res) => {
     res.send('submitted, you are all set!!!!');
 });
 //for updating request quarantiining.html
-app.put("/submitRequest", (req, res) => {
+app.put("/task", (req, res) => {
     const requestTitle = req.body["requestTitle"];
     const requestDescription = req.body["requestDescription"];
     const name = req.body["name"]; 
@@ -79,7 +79,7 @@ app.put("/submitRequest", (req, res) => {
     res.send('Updated, you are all set!!!!');
 });
 //for geting request quarantiining.html
-app.get("/submitRequest", (req, res) => {
+app.get("/task", (req, res) => {
     const requestTitle = req.query["requestTitle"];
     const requestDescription = req.query["requestDescription"];
     const name = req.query["name"]; 
@@ -93,7 +93,7 @@ app.get("/submitRequest", (req, res) => {
     res.json(req.query);
 });
 //for deleting request quarantiining.html
-app.delete("/submitRequest", (req, res) => {
+app.delete("/task", (req, res) => {
     const requestTitle = req.body["requestTitle"];
     const requestDescription = req.body["requestDescription"];
     const name = req.body["name"]; 
@@ -123,7 +123,7 @@ app.get("/markProgress", (req, res) => {
     console.log(req.params);
     res.status(201);
     res.send('Marked!! Changing status right now!!');
-    res.send(data);
+    // res.send(data);
 });
 
 
