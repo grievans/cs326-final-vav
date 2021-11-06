@@ -112,7 +112,7 @@ If `target_email` has no matching account:
 
 
 
-
+<!-- this next paragraph still needs documentation: -->
 create task, get data of a task, resolve (delete) tasks, edit task info, mark task in progress (a variant of editing info? maybe separate since different authentication is needed to do it), get list of open tasks
 
 create comment, get list of comments for a task?, deleting comments (might just make part of deleting a task)?
