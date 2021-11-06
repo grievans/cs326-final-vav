@@ -59,8 +59,8 @@ app.post("/submitRequest", (req, res) => {
     const email = req.body["email"];
     const phoneNumber = req.body["phoneNumber"];
 
-    console.log("Post body: ")
-    console.log(req.body)
+    console.log("Post body: ");
+    console.log(req.body);
     res.status(201);
     res.send('submitted, you are all set!!!!');
 });
@@ -73,19 +73,36 @@ app.get("/submitRequest", (req, res) => {
     const email = req.params["email"];
     const phoneNumber = req.params["phoneNumber"];
 
-    console.log("Get param: ")
-    console.log(req.params)
+    console.log("Get param: ");
+    console.log(req.params);
     res.status(201);
     res.send('submitted,  you are all set!!!!');
     res.send(requestTitle);
 });
 
 //for submiting request requestProgress.html
+app.post("/markProgress", (req, res) => {
+    const data = req.body["data"];
+    console.log("Post body: ");
+    console.log(req.body);
+    res.status(201);
+    res.send('Marked!! Changing status right now!!');
+});
+
+app.get("/markProgress", (req, res) => {
+    const data = req.params["data"];
+    console.log("Get param: ");
+    console.log(req.params);
+    res.status(201);
+    res.send('Marked!! Changing status right now!!');
+    res.send(data);
+});
+
 
 
 //TODO not sure if needed?
 app.get("*", (req, res) => {
-    res.status(404)
+    res.status(404);
     res.send("Request invalid.");
 });
 
