@@ -16,7 +16,7 @@ async function login(event) {
         },
         body: JSON.stringify(data)
     }).then((response) => {
-        return response.json;
+        return response.json();
     }).then((data) => {
         if (data["login_status"] === "valid") {
             window.localStorage.setItem('session', data["session_token"]);
