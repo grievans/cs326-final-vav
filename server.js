@@ -4,7 +4,7 @@ import express from "express";
 import faker from "faker"; //IMPORTANT PROBABLY: note "npm i faker" needed to be run to use this, probably will have to mention in the docs/setup.md file; TODO
 import {Database} from "./database.js";
 const app = express();
-app.use(express.static('public')); //TODO maybe should be "./public"? not sure if it matters in this case
+app.use(express.static('/public')); //TODO maybe should be "./public"? not sure if it matters in this case
 // app.use('/', express.static('public/images')); //TODO not sure this needed or not if above included
 // app.use(express.urlencoded({ extended: false })); //TODO do we need this? They seem to recommend to just use JSON anyway so this seems redundant
 app.use(express.json());
@@ -210,7 +210,8 @@ app.get("*", (req, res) => {
     res.send("Request invalid.");
 });
 
-app.listen(3000, err => {
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
     if (err) {
         console.log("problem!!", err);
         return;
