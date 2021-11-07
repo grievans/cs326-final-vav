@@ -262,6 +262,9 @@ method: post
 *Response:*
     Client: Let the client know task status has changed.
     Server: Change status.html to 'in progress'
+    Sample dummy output:
+    Post body: 
+{ ok: true }
 
 
 
