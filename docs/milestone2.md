@@ -4,7 +4,7 @@
 
 ### Login
 
-Retrieves a token to be used for logging the client into a specified account, given the correct email and password. Note logging out does not depend on any server data, and thus there is not an equivalent operation for that.
+Gets a token to be used for logging the client into a specified account, given the correct email and password. Note logging out does not depend on any server data, and thus there is not an equivalent operation for that.
 
 **POST** /user/login
 <!-- Uses a POST since that seems to be convention for logins as it's not stored locally? -->
@@ -45,7 +45,6 @@ Creates a new account, if `user_email` is not already in use.
 |password|string|body|Password to be hashed and set for the account| <!-- TODO again not totally sure how this works -->
 |display_name|string|body|If present, sets this name to be shown in the account's contact details.|
 |phone_number|string|body|If present, sets this number to be shown in the account's contact details. Note that the type is *string*, not number.|
-|tip_link|string|body|If present, sets this link to be shown to the requesters of tasks the person is completing.|
 
 *Response:*
 
@@ -69,7 +68,6 @@ Edits details of this session's account
 |user_email|string|body|If present, an address to change the account's email to.| <!-- maybe shouldn't be changeable? -->
 |display_name|string|body|If present, a name to change the account's display name to.|
 |phone_number|string|body|If present, what to change the account's phone number to.|
-|tip_link|string|body|If present, a new link to be shown to the requesters of tasks the person is completing.|
 <!-- maybe should also take password? -->
 
 *Response:*
@@ -86,7 +84,7 @@ If `session_token` is invalid:
 
 Marks the user's account to be removed from the database.
 
-**DELETE** /user/delete
+**PUT** /user/delete
 
 *Parameters:*
 
@@ -107,7 +105,7 @@ If `session_token` is invalid:
 Retrieves the publicly viewable data for an account, specified by the associated email.
 <!-- Or maybe should use some separate system of IDs (numerical for instance)? so this wouldn't have to change the input it takes if the account has its email changed. TODO decide, not sure it really matters what we pick for now or not since this works either way for the dummy implementation -->
 
-**GET** /user/data?target_email={address}
+**GET** /user/data/{target_email}
 
 *Parameters:*
 
@@ -124,7 +122,6 @@ Retrieves the publicly viewable data for an account, specified by the associated
             "email": "xxxxxx@example.com",
             "display_name": "Xxxxx Xxx",
             "phone_number": "555-555-5555"
-            "tip_link": "example.com/example"
         }
     }
 
@@ -140,7 +137,9 @@ If `target_email` has no matching account:
 ### Create Task
 Creates a new request. 
 
-**POST** /submitRequest
+**POST** /task
+
+method: post
 
 *Parameters:*
 
@@ -149,30 +148,125 @@ Creates a new request.
 |requestTitle|string|body|The request to be made.|
 |requestDescription|string|body|The description for the request.| 
 |name|string|body|Name for the person who submit request.|
-|req_location|string|body||
-|email|string|body||
-|phoneNumber|string|body||
+|req_location|string|body|Location for the request.|
+|email|string|body|Email to reach the person asking for help.|
+|phoneNumber|string|body|Phone number to reach the person asking for help.|
 
 *Response:*
+    Client side: stored info in req.body and send to server.
 
-    Status: 201 Created
-
-If the email is already in use:
-
-    Status: 304 Not Modified
-### Get Task Data
+    Server: Status: 201 Created. Use req.body to handle it, example output would be:
+    Post body: 
 {
-  requestTitle: 'a',
-  requestDescription: 's',
-  name: 'd',
-  req_location: 'f',
-  email: 'v',
-  phoneNumber: 'c'
+  requestTitle: '',
+  requestDescription: '',
+  name: '',
+  req_location: '',
+  email: '',
+  phoneNumber: ''
 }
+
+### Get Task Data
+Review the request made.
+
+**GET** /task
+method: get
+
+*Parameters:*
+
+| requestTitle | requestDescription | name | req_location | email | phoneNumber | 
+|--------------|--------------------|------|--------------|-------|-------------|
+|requestTitle|string|body|The request to be made.|
+|requestDescription|string|body|The description for the request.| 
+|name|string|body|Name for the person who submit request.|
+|req_location|string|body|Location for the request.|
+|email|string|body|Email to reach the person asking for help.|
+|phoneNumber|string|body|Phone number to reach the person asking for help.|
+
+*Response:*
+    Client side: Request data from server.
+    Server: Abstract data from DB(future). Check authentication to proceed/ return(future). Send data to client.
+
+    Example output would be:
+    Get param: 
+{
+  requestTitle: '',
+  requestDescription: '',
+  name: '',
+  req_location: '',
+  email: '',
+  phoneNumber: ''
+}
+
+
 ### Delete Tasks
+Delete the requested data.
+
+**DELETE** /task
+method: delete
+
+*Parameters:*
+
+| requestTitle | requestDescription | name | req_location | email | phoneNumber | 
+|--------------|--------------------|------|--------------|-------|-------------|
+|requestTitle|string|body|The request to be made.|
+|requestDescription|string|body|The description for the request.| 
+|name|string|body|Name for the person who submit request.|
+|req_location|string|body|Location for the request.|
+|email|string|body|Email to reach the person asking for help.|
+|phoneNumber|string|body|Phone number to reach the person asking for help.|
+
+*Response:*
+    Client: Request delete from server.
+    Server: Delete from DB(future). Let client know it's deleted from DB.
+    Example output would be:
+    'Deleted, you are all set!!!!'
+
 ### Edit Task
+Update the requested data.
+
+**PUT** /task
+method: put
+
+*Parameters:*
+
+| requestTitle | requestDescription | name | req_location | email | phoneNumber | 
+|--------------|--------------------|------|--------------|-------|-------------|
+|requestTitle|string|body|The request to be made.|
+|requestDescription|string|body|The description for the request.| 
+|name|string|body|Name for the person who submit request.|
+|req_location|string|body|Location for the request.|
+|email|string|body|Email to reach the person asking for help.|
+|phoneNumber|string|body|Phone number to reach the person asking for help.|
+
+*Response:*
+    Client side: stored info in req.body and send to server.
+
+    Server: Status: 201 Created. Use req.body to handle it, example output would be:
+    Post body: 
+{
+  requestTitle: '',
+  requestDescription: '',
+  name: '',
+  req_location: '',
+  email: '',
+  phoneNumber: ''
+}
+
+
 ### Task Progress
-### Get Task List
+Mark/ update task progress.
+
+**POST** /markProgress
+method: post
+
+*Response:*
+    Client: Let the client know task status has changed.
+    Server: Change status.html to 'in progress'
+    Sample dummy output:
+    Post body: 
+{ ok: true }
+
 
 
 
@@ -235,4 +329,4 @@ Griffin: All of account/login
 
 Aaron: All of Comment/creation/deletion
 
-Joseph: All of Task-based
+Joseph: All of Task-based Create request/ Update request/ Get request/ Delete request
