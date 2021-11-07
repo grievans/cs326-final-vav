@@ -2,6 +2,7 @@ function setup() {
   async function getDefaults() {
     const email =  window.localStorage.getItem('user_email');
     if (email !== null) {
+      let status = 0;
       fetch(`/user/data/?${email}`,{
         method: "GET",
         cache: "no-cache",
@@ -9,13 +10,14 @@ function setup() {
             "Content-Type": "application/json"
         },
       }).then((response) => {
-          return {"data": response.json(), "status":response.status};
-      }).then((obj) => {
-          if (obj.status === 200) {
-            document.getElementById('name').value = obj.data['display_name']
-            document.getElementById('email').value = obj.data['email']
-            document.getElementById('phoneNumber').value = obj.data['phone_number']
-          }
+        status = response.status;
+        return response.json();
+      }).then((data) => {
+        if (status === 200) {
+          document.getElementById('name').value = data['display_name'];
+          document.getElementById('email').value = data['email'];
+          document.getElementById('phoneNumber').value = data['phone_number'];
+        }
       });
     }
   }
