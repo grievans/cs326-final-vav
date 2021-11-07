@@ -51,6 +51,7 @@ app.post("/user/login", (req, res) => {
         const session_token = faker.internet.password();
         database.insert("session", {"token":session_token, "email":email});
 
+        console.log(`New login from: ${email}`);
         res.status(200);
         res.send(JSON.stringify({
             "login_status": "valid",
