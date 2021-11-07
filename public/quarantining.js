@@ -9,7 +9,7 @@ function setup() {
             "Content-Type": "application/json"
         },
       }).then((response) => {
-          return {"data": response.JSON(), "status":response.status};
+          return {"data": response.json(), "status":response.status};
       }).then((obj) => {
           if (obj.status === 200) {
             document.getElementById('name').value = obj.data['display_name']
