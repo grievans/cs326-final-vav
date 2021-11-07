@@ -29,8 +29,8 @@ export class Database {
         let output = {};
         if (category == "user") {
             output["pass_hash"] = faker.internet.password(); 
-            if (!(email in element)) {
-                output["email"] = element.email;
+            if ("email" in element) {
+                output["email"] = element["email"];
             } else {
                 output["email"] = faker.internet.email(); 
             }
@@ -39,6 +39,13 @@ export class Database {
             output["tip_link"] = faker.internet.url(); 
         } else if (category == "task") {
             //TODO generates whatever fake format of data is neede
+        } else if (category == "session") {
+            if ("token" in element) {
+                output["token"] = element["token"];
+            } else {
+                output["token"] = faker.internet.password(); 
+            }
+            output["email"] = faker.internet.email(); 
         }
         return output
     }
@@ -56,7 +63,7 @@ export class Database {
         // return target;
 
         let output = this.find(category, element);
-        for (const [key,value] of Object.entries) {
+        for (const [key,value] of Object.entries(updates)) {
             output[key] = value;
         }
         return output;

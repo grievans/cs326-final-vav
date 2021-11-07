@@ -43,29 +43,86 @@ app.post("/user/new", (req, res) => {
 //Not totally sure if this is setup right, but works with the command:
 //curl -H 'user_email : Test password : ABCDEF Content-Type: application/json' http://localhost:3000/user/login/
 app.post("/user/login", (req, res) => {
-    const email = req.body["user_email"];
-    const password = req.body["password"];
+    if ("user_email" in req.body) {
+        const email = req.body["user_email"];
+        const password = req.body["password"];
+        database.find("user", {"email":email});
+        //TODO tests if hash of passwords match, makes session token. On success:
+        const session_token = faker.internet.password();
 
-    database.find("user", {"email":user_email});
-    //TODO tests if hash of passwords match, makes session token. On success:
-    const session_token = faker.internet.password();
-
-    res.status(200);
-    res.send(JSON.stringify({
-        "login_status": "valid",
-        "session_token": session_token
-    }));
-    // res.send(`login_status = "valid", session_token = ${session_token}`);
+        res.status(200);
+        res.send(JSON.stringify({
+            "login_status": "valid",
+            "session_token": session_token
+        }));
+        // res.send(`login_status = "valid", session_token = ${session_token}`);
+    } else {
+        res.status(400);
+        res.send(JSON.stringify({
+            "login_status": "invalid"
+        }));
+    }
 });
 
+// curl -X PUT -d '{ "session_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/edit
 app.put("/user/edit", (req, res) => {
-    const  session_token = req.body["session_token"];
-    const  user_email = req.body["session_token"];
-    const  display_name = req.body["display_name"];
-    const  phone_number = req.body["phone_number"];
+    const session_token = req.body["session_token"];
+    const changes = {};
+    changes.user_email = req.body["user_email"];
+    changes.display_name = req.body["display_name"];
+    changes.phone_number = req.body["phone_number"];
+    changes.tip_link = req.body["tip_link"]; //would have the database handle any of these being undefined I think
+    const password = req.body["password"];
+    changes.hash = faker.internet.password();
 
-    res.status(204);
+    const session_details = database.find("session", {"token":session_token});
+    if (session_details !== null) {
+        database.findAndUpdate("user", {"email": session_details.email}, changes);
+        //^again, maybe should identify with some separate id instead of email? IDK really, probably depends somewhat on how our database is actually set up
+        database.findAndUpdate("session", {"token":session_token}, {"email":changes.user_email});
+        res.status(204);
+        res.send('Updated account details.');
+    } else {
+        res.status(403);
+        res.send('Invalid session.');
+    }
     
+});
+
+//curl -X DELETE -d '{ "dsession_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/delete
+app.delete("/user/delete", (req, res) => {
+    const session_token = req.body["session_token"];
+    const session_details = database.find("session", {"token":session_token});
+    if (session_details !== null) {
+        database.findAndDelete("user", {"email": session_details.email});
+        database.findAndDelete("session", {"token":session_token})
+        console.log(`Deleted account ${session_details.email}`);
+        res.status(204);
+        res.send('Deleted account.');
+    } else {
+        res.status(403);
+        res.send('Invalid session.');
+    }
+    
+});
+
+//Test curl:
+//curl -H "Content-Type: application/json" http://localhost:3000/user/data?target_email=test@umass.edu
+app.get("/user/data", (req, res) => {
+    const email = req.query["target_email"];
+    const details = database.find("user", {"email": email});
+    if (details !== null) {
+        let output = {};
+        output.email = details.email;
+        output.display_name = details.display_name;
+        output.phone_number = details.phone_number;
+        output.tip_link = details.tip_link;
+        res.status(200);
+        res.send(JSON.stringify(output));
+    } else {
+        res.status(404);
+        res.send();
+    }
 });
 
 //for submiting request quarantiining.html

@@ -44,6 +44,7 @@ Creates a new account, if `user_email` is not already in use.
 |password|string|body|Password to be hashed and set for the account| <!-- TODO again not totally sure how this works -->
 |display_name|string|body|If present, sets this name to be shown in the account's contact details.|
 |phone_number|string|body|If present, sets this number to be shown in the account's contact details. Note that the type is *string*, not number.|
+|tip_link|string|body|If present, sets this link to be shown to the requesters of tasks the person is completing.|
 
 *Response:*
 
@@ -67,6 +68,7 @@ Edits details of this session's account
 |user_email|string|body|If present, an address to change the account's email to.| <!-- maybe shouldn't be changeable? -->
 |display_name|string|body|If present, a name to change the account's display name to.|
 |phone_number|string|body|If present, what to change the account's phone number to.|
+|tip_link|string|body|If present, a new link to be shown to the requesters of tasks the person is completing.|
 <!-- maybe should also take password? -->
 
 *Response:*
@@ -104,7 +106,7 @@ If `session_token` is invalid:
 Retrieves the publicly viewable data for an account, specified by the associated email.
 <!-- Or maybe should use some separate system of IDs (numerical for instance)? so this wouldn't have to change the input it takes if the account has its email changed. TODO decide, not sure it really matters what we pick for now or not since this works either way for the dummy implementation -->
 
-**GET** /user/data/{target_email}
+**GET** /user/data?target_email={address}
 
 *Parameters:*
 
@@ -121,6 +123,7 @@ Retrieves the publicly viewable data for an account, specified by the associated
             "email": "xxxxxx@example.com",
             "display_name": "Xxxxx Xxx",
             "phone_number": "555-555-5555"
+            "tip_link": "example.com/example"
         }
     }
 
