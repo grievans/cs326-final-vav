@@ -7,7 +7,7 @@ const app = express();
 app.use('/', express.static('/public')); //TODO maybe should be "./public"? not sure if it matters in this case
 // app.use('/', express.static('public/images')); //TODO not sure this needed or not if above included
 // app.use(express.urlencoded({ extended: false })); //TODO do we need this? They seem to recommend to just use JSON anyway so this seems redundant
-app.use(express.json());
+// app.use(express.json());
 const database = new Database();
 // const database = new Database(["user", "task"]);
 
