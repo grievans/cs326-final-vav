@@ -5,8 +5,8 @@ function setup() {
 async function login(event) {
     event.preventDefault();
     // console.log("B")
-    const email = document.getElementById("userEmail");
-    const password = document.getElementById("userEmail");
+    const email = document.getElementById("userEmail").value;
+    const password = document.getElementById("userPassword").value;
     const data = {"user_email":email, "password":password};
     fetch("/user/login",{
         method: "POST",
@@ -16,7 +16,7 @@ async function login(event) {
         },
         body: JSON.stringify(data)
     }).then((response) => {
-        return response.json;
+        return response.json();
     }).then((data) => {
         if (data["login_status"] === "valid") {
             window.localStorage.setItem('session', data["session_token"]);
@@ -29,8 +29,8 @@ async function login(event) {
 }
 async function createAccount(event) {
     event.preventDefault();
-    const email = document.getElementById("userEmail");
-    const password = document.getElementById("userEmail");
+    const email = document.getElementById("userEmail").value;
+    const password = document.getElementById("userPassword").value;
     const data = {"user_email":email, "password":password};
     fetch("/user/new",{
         method: "POST",
