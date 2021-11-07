@@ -2,7 +2,7 @@ function setup() {
   async function getDefaults() {
     const email =  window.localStorage.getItem('user_email');
     if (email !== null) {
-      fetch(`/user/data/${email}`,{
+      fetch(`/user/data/?${email}`,{
         method: "GET",
         cache: "no-cache",
         headers: {
