@@ -7,6 +7,7 @@
 Retrieves a token to be used for logging the client into a specified account, given the correct email and password. Note logging out does not depend on any server data, and thus there is not an equivalent operation for that.
 
 **POST** /user/login
+<!-- Uses a POST since that seems to be convention for logins as it's not stored locally? -->
 
 *Parameters:*
 | Name | Type | In | Description |

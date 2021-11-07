@@ -49,6 +49,7 @@ app.post("/user/login", (req, res) => {
         database.find("user", {"email":email});
         //TODO tests if hash of passwords match, makes session token. On success:
         const session_token = faker.internet.password();
+        database.insert("session", {"token":session_token, "email":email});
 
         res.status(200);
         res.send(JSON.stringify({
