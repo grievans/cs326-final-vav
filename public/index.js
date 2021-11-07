@@ -8,7 +8,7 @@ async function login(event) {
     const email = document.getElementById("userEmail");
     const password = document.getElementById("userEmail");
     const data = {"user_email":email, "password":password};
-    fetch("/user/login",{
+    fetch("https://cs326-final-vav-project.herokuapp.com/user/login",{
         method: "POST",
         cache: "no-cache",
         headers: {
@@ -32,7 +32,7 @@ async function createAccount(event) {
     const email = document.getElementById("userEmail");
     const password = document.getElementById("userEmail");
     const data = {"user_email":email, "password":password};
-    fetch("/user/new",{
+    fetch("https://cs326-final-vav-project.herokuapp.com/user/new",{
         method: "POST",
         cache: "no-cache",
         headers: {
