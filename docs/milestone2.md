@@ -321,7 +321,17 @@ Dummy server implemented.
 
 ## Part 2: Front-end Implementation
 
-TODO insert screenshots+brief description
+![post request server dummy respond](diagrams/ms2/task-post-server.png)
+![post request client dummy respond](diagrams/ms2/task-post-client.png)
+![update request client dummy respond](diagrams/ms2/task-update-client.png)
+![update request server dummy respond](diagrams/ms2/task-update-server.png)
+![get request client dummy respond](diagrams/ms2/task-get-client.png)
+![get request server dummy respond](diagrams/ms2/task-get-server.png)
+![delete request client dummy respond](diagrams/ms2/task-delete-client.png)
+![delete request server dummy respond](diagrams/ms2/task-delete-server.png)
+![post request from markProgress client dummy respond](diagrams/ms2/markProgress-post-client.png)
+![post request from markProgress server dummy respond](diagrams/ms2/markProgress-post-server.png)
+
 
 ## Division of labor
 
