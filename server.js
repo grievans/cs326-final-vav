@@ -130,6 +130,7 @@ async function findUser(email) {
         //     return true;
         // }
         const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
+        console.log(userData);
         if (userData.length <= 0) {
             return false;
         }
