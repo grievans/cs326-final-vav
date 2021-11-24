@@ -27,8 +27,8 @@ const database = new Database();
 // });
 
 
-import * as expressSession from 'express-session';  // for managing session state
-import * as passport from 'passport';               // handles authentication
+import expressSession from 'express-session';  // for managing session state
+import passport from 'passport';               // handles authentication
 import {Strategy as LocalStrategy} from 'passport-local'; // username/password strategy
 // const expressSession = require('express-session');  // for managing session state
 // const passport = require('passport');               // handles authentication
