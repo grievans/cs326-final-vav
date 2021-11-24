@@ -17,7 +17,8 @@ import * as c from 'crypto';
   @module miniCrypt
   @desc A tiny crypto lib for the 326 kids.
  */
-module.exports = (function() {
+// module.exports = (function() {
+export default function() {
   /**
     @constructor
     @arg {number} its - The number of iterations to be performed; higher iterations means more security but slower speed.
@@ -60,4 +61,5 @@ module.exports = (function() {
   };
 
   return MiniCrypt;
-}());
+};
+// }());
