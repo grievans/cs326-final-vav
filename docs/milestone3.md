@@ -38,3 +38,9 @@
 
 
 ## Division of Labor
+
+Griffin Evans: Login and user authentification; setup of database structure and tables
+
+Joseph Yang:
+
+Aaron Tsui:
