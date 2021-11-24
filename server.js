@@ -130,11 +130,11 @@ async function findUser(email) {
         //     return true;
         // }
         const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
-        console.log(userData);
+        // console.log(userData);
         if (userData.length <= 0) {
             return false;
         }
-        console.log("TEST");
+        // console.log("TEST");
         return true
     }
     catch(err) {
@@ -190,6 +190,7 @@ app.post("/user/new", async (req, res) => {
         // const hash = faker.internet.password(); //in practice would take password and apply some actual hashing algorithm to get this
         const [salt, hash] = mc.hash(password);
 	    // users[name] = [salt, hash];
+        console.log("TEST");
         try {
             //TODO maybe should move into separate database.js? I'm finding this way easier though
             await db.none({text:"INSERT INTO users(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
@@ -199,6 +200,7 @@ app.post("/user/new", async (req, res) => {
             res.send('Created account.');
         } catch(err)
         {
+            console.log("FAIL");
             console.error(err);
             res.status(500);
             res.send('Failed to add account.');
