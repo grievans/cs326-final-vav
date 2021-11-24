@@ -143,7 +143,9 @@ function findUser(email) {
             return false; //not sure what's best to do here really; might not end up using this function anyway tbh
         }
     }
-    return helper().then(x => {return x;});
+    let result = false;
+    helper().then(x => {result = x;});
+    return result;
 }
 
 // Returns true iff the password is the one we have stored.
@@ -166,7 +168,9 @@ function validatePassword(email, pwd) {
             return false; //not sure best approach here
         }
     }
-    return helper().then(x => {return x;});
+    let result = false;
+    helper().then(x => {result = x;});
+    return result;
 }
 
 function checkLoggedIn(req, res, next) {
