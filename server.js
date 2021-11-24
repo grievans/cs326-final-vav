@@ -102,19 +102,19 @@ const db = pgp({
       });
 async function initializeDatabase() {
     try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS users (email text UNIQUE, user_name text UNIQUE, phone_number text, salt text NOT NULL, hash text NOT NULL)"});
+        await db.none({text:"CREATE TABLE IF NOT EXISTS users (email text UNIQUE, display_name text, phone_number text, salt text NOT NULL, hash text NOT NULL)"});
     }
     catch(err) {
         console.error(err);
     }
     try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text UNIQUE, location text, email text UNIQUE, phone_number text, id serial)"});
+        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, id serial UNIQUE)"});
     }
     catch(err) {
         console.error(err);
     }
     try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS comments (task_id integer, user_name text UNIQUE, contents text)"});
+        await db.none({text:"CREATE TABLE IF NOT EXISTS comments (task_id integer, user_name text, contents text)"});
     }
     catch(err) {
         console.error(err);
