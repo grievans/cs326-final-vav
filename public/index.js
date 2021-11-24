@@ -17,7 +17,7 @@ async function login(event) {
         body: JSON.stringify(data),
         redirect: 'follow'
     }).then((response) => {
-        if (response.status === 401) {
+        if (response.status >= 400) {
             return {"login_status" : "invalid"};
         }
         return response.json();

@@ -196,10 +196,10 @@ function checkLoggedIn(req, res, next) {
 app.post("/user/new", async (req, res) => {
     const email = req.body["user_email"];
     const password = req.body["password"];
-
-    console.log(findUser(email));
-    console.log(await findUser(email));
-    if (await findUser(email)) {
+    if (email === "" || password === "") {
+        res.status(401)
+        res.send("Empty parameters.")
+    } else if (await findUser(email)) {
         res.status(304);
         res.send("Account already exists.")
     } else {
