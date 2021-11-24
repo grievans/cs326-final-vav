@@ -234,14 +234,14 @@ app.post("/user/login",
     //     'successRedirect' : '/welcome.html',
     //     'failureRedirect' : '/index.html'
     // })
-    //, (req, res) => {
-    //         console.log(`New login from: ${email}`);
-    //         res.status(200);
-    //         res.send(JSON.stringify({
-    //             "login_status": "valid",
-    //             // "session_token": session_token
-    //         }));
-    // }
+    , (req, res) => {
+            console.log(`New login from: ${email}`);
+            res.status(200);
+            res.send(JSON.stringify({
+                "login_status": "valid",
+                // "session_token": session_token
+            }));
+    }
 //     , async (req, res) => {
 //     if ("user_email" in req.body) {
 //         const email = req.body["user_email"];
