@@ -322,21 +322,38 @@ app.delete("/user/delete", (req, res) => {
 
 //Test curl:
 //curl -H "Content-Type: application/json" http://localhost:3000/user/data?target_email=test@umass.edu
-app.get("/user/data", (req, res) => {
+app.get("/user/data", async (req, res) => {
     const email = req.query["target_email"];
-    const details = database.find("user", {"email": email});
+    const details;
+    try {
+        const userData = await db.any({text:"SELECT email, display_name, phone_number FROM users WHERE email = $1 LIMIT 1", values:[email]});
+        // console.log(userData);
+        if (userData.length <= 0) {
+            details = null;
+        }
+        details = userData[0];
+    } catch(err) {
+        console.error(err);
+        details = null;
+    }
     if (details !== null) {
         let output = {};
         output.email = details.email;
-        output.display_name = details.display_name;
-        output.phone_number = details.phone_number;
-        output.tip_link = details.tip_link;
+        output.display_name = details.display_name || "";
+        output.phone_number = details.phone_number || "";
+        output.tip_link = details.tip_link || "";
+        //^was in dummy function but not in table since we didn't specify it in our API; so will just be blank currently. Can add to table later if needed
         res.status(200);
         res.send(JSON.stringify(output));
     } else {
         res.status(404);
         res.send();
     }
+});
+
+app.get('/user/logout', (req, res) => {
+    req.logout(); // Logs us out!
+    res.redirect('/login'); // back to login
 });
 
 //for submiting request quarantiining.html
