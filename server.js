@@ -52,12 +52,12 @@ const session = {
 
 const strategy = new LocalStrategy(
     async (username, password, done) => {
-	if (!findUser(username)) {
+	if (!(await findUser(username))) {
 	    // no such user
 	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
 	    return done(null, false, { 'message' : 'Wrong username' });
 	}
-	if (!validatePassword(username, password)) {
+	if (!(await validatePassword(username, password))) {
 	    // invalid password
 	    // should disable logins after N messages
 	    // delay return to rate-limit brute-force attacks
