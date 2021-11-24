@@ -170,7 +170,7 @@ function checkLoggedIn(req, res, next) {
 
 //Command used to test:
 //curl -d '{ "user_email" : "Test", "password" : "ABCDEF" }' -H "Content-Type: application/json" http://localhost:3000/user/new/
-app.post("/user/new", (req, res) => {
+app.post("/user/new", async (req, res) => {
     const email = req.body["user_email"];
     const password = req.body["password"];
 
