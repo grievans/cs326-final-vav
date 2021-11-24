@@ -368,18 +368,25 @@ app.put("/task", (req, res) => {
     res.send('Updated, you are all set!!!!');
 });
 //for geting request quarantiining.html
-app.get("/task", (req, res) => {
-    const requestTitle = req.query["requestTitle"];
-    const requestDescription = req.query["requestDescription"];
-    const name = req.query["name"]; 
-    const req_location = req.query["req_location"];
-    const email = req.query["email"];
-    const phoneNumber = req.query["phoneNumber"];
+app.get("/task", async (req, res) => {
+    // const requestTitle = req.query["requestTitle"];
+    // const requestDescription = req.query["requestDescription"];
+    // const name = req.query["name"]; 
+    // const req_location = req.query["req_location"];
+    // const email = req.query["email"];
+    // const phoneNumber = req.query["phoneNumber"];
 
-    console.log("Get param: ");
-    console.log(req.query);
-    res.status(201);
-    res.json(req.query);
+    // console.log("Get param: ");
+    // console.log(req.query);
+    // res.status(201);
+    // res.json(req.query);
+
+    try {
+        const results = await db.query("SELECT * FROM task");// db named task
+        return res.json(results.rows);
+      } catch (err) {
+        return next(err);
+      }
 });
 //for deleting request quarantiining.html
 app.delete("/task", (req, res) => {
