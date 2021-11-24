@@ -121,56 +121,56 @@ initializeDatabase();
 
 //code here modified from provided code for exercise
 // Returns true iff the user exists.
-function findUser(email) {
-    async function helper(){
-        try {
-            // const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
-            // if (!userExists[0]) {
-            //     return false;
-            // } else {
-            //     return true;
-            // }
-            const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
-            // console.log(userData);
-            if (userData.length <= 0) {
-                return false;
-            }
-            // console.log("TEST");
-            return true
+async function findUser(email) {
+    // async function helper(){
+    try {
+        // const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
+        // if (!userExists[0]) {
+        //     return false;
+        // } else {
+        //     return true;
+        // }
+        const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
+        // console.log(userData);
+        if (userData.length <= 0) {
+            return false;
         }
-        catch(err) {
-            console.error(err);
-            return false; //not sure what's best to do here really; might not end up using this function anyway tbh
-        }
+        // console.log("TEST");
+        return true
     }
-    let result = false;
-    helper().then(x => {result = x;});
-    return result;
+    catch(err) {
+        console.error(err);
+        return false; //not sure what's best to do here really; might not end up using this function anyway tbh
+    }
+    // }
+    // let result = false;
+    // helper().then(x => {result = x;});
+    // return result;
 }
 
 // Returns true iff the password is the one we have stored.
-function validatePassword(email, pwd) {
-    async function helper(){
-        // if (!findUser(email)) {
-        //     return false;
-        // }
-        // CHECK PASSWORD
-        try {
-            const userData = await db.any({text:"SELECT email, salt, hash FROM users WHERE email = $1 LIMIT 1", values:[email]});
-            if (userData.length <= 0) {
-                return false;
-            }
-            const userSalt = userData[0].salt;
-            const userHash = userData[0].hash;
-            return mc.check(pwd, userSalt, userHash);
-        } catch(err) {
-            console.error(err);
-            return false; //not sure best approach here
+async function validatePassword(email, pwd) {
+    // async function helper(){
+    // if (!findUser(email)) {
+    //     return false;
+    // }
+    // CHECK PASSWORD
+    try {
+        const userData = await db.any({text:"SELECT email, salt, hash FROM users WHERE email = $1 LIMIT 1", values:[email]});
+        if (userData.length <= 0) {
+            return false;
         }
+        const userSalt = userData[0].salt;
+        const userHash = userData[0].hash;
+        return mc.check(pwd, userSalt, userHash);
+    } catch(err) {
+        console.error(err);
+        return false; //not sure best approach here
     }
-    let result = false;
-    helper().then(x => {result = x;});
-    return result;
+    // }
+    // let result = false;
+    // helper().then(x => {result = x;});
+    // return result;
 }
 
 function checkLoggedIn(req, res, next) {
@@ -192,7 +192,8 @@ app.post("/user/new", async (req, res) => {
     const password = req.body["password"];
 
     console.log(findUser(email));
-    if (findUser(email)) {
+    console.log(await findUser(email));
+    if (await findUser(email)) {
         res.status(304);
         res.send("Account already exists.")
     } else {
@@ -222,13 +223,13 @@ app.post("/user/new", async (req, res) => {
 //Not totally sure if this is setup right, but works with the command:
 //curl -H 'user_email : Test password : ABCDEF Content-Type: application/json' http://localhost:3000/user/login/
 app.post("/user/login",
-    passport.authenticate("local"), (req, res) => {
+    passport.authenticate("local"), async (req, res) => {
     if ("user_email" in req.body) {
         const email = req.body["user_email"];
         const password = req.body["password"];
         // database.find("user", {"email":email});
         // if (findUser(email)) {
-        if (validatePassword(email)) {
+        if (await validatePassword(email)) {
             // }
             //TODO tests if hash of passwords match, makes session token. On success:
             // const session_token = faker.internet.password();
