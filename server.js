@@ -27,59 +27,59 @@ const database = new Database();
 // });
 
 
-// //TODO not sure if these need to be changed to use import instead?
-// const expressSession = require('express-session');  // for managing session state
-// const passport = require('passport');               // handles authentication
-// const LocalStrategy = require('passport-local').Strategy; // username/password strategy
-// /// NEW
-// const minicrypt = require('./miniCrypt');
-// const mc = new minicrypt();
+//TODO not sure if these need to be changed to use import instead?
+const expressSession = require('express-session');  // for managing session state
+const passport = require('passport');               // handles authentication
+const LocalStrategy = require('passport-local').Strategy; // username/password strategy
+/// NEW
+const minicrypt = require('./miniCrypt');
+const mc = new minicrypt();
 
-// // Session configuration
+// Session configuration
 
-// const session = {
-//     secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
-//     //TODO maybe need to set up this^? I don't totally understand what I need to put exactly
-//     resave : false,
-//     saveUninitialized: false
-// };
+const session = {
+    secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
+    //TODO maybe need to set up this^? I don't totally understand what I need to put exactly
+    resave : false,
+    saveUninitialized: false
+};
 
-// // Passport configuration
+// Passport configuration
 
-// const strategy = new LocalStrategy(
-//     async (username, password, done) => {
-// 	if (!findUser(username)) {
-// 	    // no such user
-// 	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
-// 	    return done(null, false, { 'message' : 'Wrong username' });
-// 	}
-// 	if (!validatePassword(username, password)) {
-// 	    // invalid password
-// 	    // should disable logins after N messages
-// 	    // delay return to rate-limit brute-force attacks
-// 	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
-// 	    return done(null, false, { 'message' : 'Wrong password' });
-// 	}
-// 	// success!
-// 	// should create a user object here, associated with a unique identifier
-// 	return done(null, username);
-//     });
+const strategy = new LocalStrategy(
+    async (username, password, done) => {
+	if (!findUser(username)) {
+	    // no such user
+	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
+	    return done(null, false, { 'message' : 'Wrong username' });
+	}
+	if (!validatePassword(username, password)) {
+	    // invalid password
+	    // should disable logins after N messages
+	    // delay return to rate-limit brute-force attacks
+	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
+	    return done(null, false, { 'message' : 'Wrong password' });
+	}
+	// success!
+	// should create a user object here, associated with a unique identifier
+	return done(null, username);
+    });
 
-// // App configuration
+// App configuration
 
-// app.use(expressSession(session));
-// passport.use(strategy);
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(expressSession(session));
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
 
-// // Convert user object to a unique identifier.
-// passport.serializeUser((user, done) => {
-//     done(null, user);
-// });
-// // Convert a unique identifier to a user object.
-// passport.deserializeUser((uid, done) => {
-//     done(null, uid);
-// });
+// Convert user object to a unique identifier.
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+// Convert a unique identifier to a user object.
+passport.deserializeUser((uid, done) => {
+    done(null, uid);
+});
 
 
 // //TODO maybe should move to top?
