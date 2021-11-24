@@ -27,13 +27,17 @@ const database = new Database();
 // });
 
 
-//TODO not sure if these need to be changed to use import instead?
-const expressSession = require('express-session');  // for managing session state
-const passport = require('passport');               // handles authentication
-const LocalStrategy = require('passport-local').Strategy; // username/password strategy
+import * as expressSession from 'express-session';  // for managing session state
+import * as passport from 'passport';               // handles authentication
+import {Strategy as LocalStrategy} from 'passport-local'; // username/password strategy
+// const expressSession = require('express-session');  // for managing session state
+// const passport = require('passport');               // handles authentication
+// const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 /// NEW
-const minicrypt = require('./miniCrypt');
-const mc = new minicrypt();
+// import * as minicrypt from './miniCrypt';
+// const mc = new minicrypt();
+// const minicrypt = require('./miniCrypt');
+// const mc = new minicrypt();
 
 // Session configuration
 
@@ -82,37 +86,37 @@ passport.deserializeUser((uid, done) => {
 });
 
 
-// //TODO maybe should move to top?
-// import pgPromise from 'pg-promise'; 
+//TODO maybe should move to top?
+import pgPromise from 'pg-promise'; 
 
-// const pgp = pgPromise();
-// const db = pgp({
-//         connectionString: process.env.DATABASE_URL,
-//         ssl: {
-//           rejectUnauthorized: false
-//         }
-//       });
-// async function initializeDatabase() {
-//     try {
-//         await db.none({text:"CREATE TABLE IF NOT EXISTS users (email text, display_name text, phone_number text, salt text NOT NULL, display_name text NOT NULL)"});
-//     }
-//     catch(err) {
-//         console.error(err);
-//     }
-//     try {
-//         await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, id serial)"});
-//     }
-//     catch(err) {
-//         console.error(err);
-//     }
-//     try {
-//         await db.none({text:"CREATE TABLE IF NOT EXISTS comment (task_id integer, user_name text, contents text)"});
-//     }
-//     catch(err) {
-//         console.error(err);
-//     }
-// }
-// initializeDatabase();
+const pgp = pgPromise();
+const db = pgp({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
+      });
+async function initializeDatabase() {
+    try {
+        await db.none({text:"CREATE TABLE IF NOT EXISTS users (email text, display_name text, phone_number text, salt text NOT NULL, display_name text NOT NULL)"});
+    }
+    catch(err) {
+        console.error(err);
+    }
+    try {
+        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, id serial)"});
+    }
+    catch(err) {
+        console.error(err);
+    }
+    try {
+        await db.none({text:"CREATE TABLE IF NOT EXISTS comment (task_id integer, user_name text, contents text)"});
+    }
+    catch(err) {
+        console.error(err);
+    }
+}
+initializeDatabase();
 
 
 
