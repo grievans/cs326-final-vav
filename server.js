@@ -413,13 +413,20 @@ app.post("/markProgress", (req, res) => {
     res.send('Marked!! Changing status right now!!');
 });
 
-app.get("/markProgress", (req, res) => {
-    const data = req.params["data"];
-    console.log("Get param: ");
-    console.log(req.params);
-    res.status(201);
-    res.send('Marked!! Changing status right now!!');
+app.get("/markProgress", async (req, res) => {
+    // const data = req.params["data"];
+    // console.log("Get param: ");
+    // console.log(req.params);
+    // res.status(201);
+    // res.send('Marked!! Changing status right now!!');
     // res.send(data);
+
+    try {
+        const results = await db.query("SELECT * FROM task WHERE ");// TODO: need to update WHERE clause
+        return res.json(results.rows);
+      } catch (err) {
+        return next(err);
+      }
 });
 
 
