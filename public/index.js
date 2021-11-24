@@ -45,8 +45,10 @@ async function createAccount(event) {
     }).then((status) => {
         if (status === 201) {
             login(event); //TODO maybe should just make new do login too?
+        } else if (status === 304) {
+            alert("Failed to create account; try another email.");
         } else {
-            alert("Failed to create account; try another email.")
+            alert("Failed to create account.");
         }
     });
 }
