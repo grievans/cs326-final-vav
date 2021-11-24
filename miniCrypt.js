@@ -11,7 +11,8 @@
 
   If you'd like to learn more about the theory and maths behind cryptography, then take 466 next semester. Great professor.
  */
-const c = require('crypto');
+import * as c from 'crypto';
+// const c = require('crypto');
 /**
   @module miniCrypt
   @desc A tiny crypto lib for the 326 kids.
