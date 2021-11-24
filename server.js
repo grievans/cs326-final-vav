@@ -51,6 +51,10 @@ const session = {
 // Passport configuration
 
 const strategy = new LocalStrategy(
+    {
+        usernameField: 'user_email',
+        passwordField: 'password'
+      },
     async (username, password, done) => {
 	if (!(await findUser(username))) {
 	    // no such user
@@ -225,40 +229,45 @@ app.post("/user/new", async (req, res) => {
 //Not totally sure if this is setup right, but works with the command:
 //curl -H 'user_email : Test password : ABCDEF Content-Type: application/json' http://localhost:3000/user/login/
 app.post("/user/login",
-    passport.authenticate("local"), async (req, res) => {
-    if ("user_email" in req.body) {
-        const email = req.body["user_email"];
-        const password = req.body["password"];
-        // database.find("user", {"email":email});
-        // if (findUser(email)) {
-        if (await validatePassword(email)) {
-            // }
-            //TODO tests if hash of passwords match, makes session token. On success:
-            // const session_token = faker.internet.password();
-            // database.insert("session", {"token":session_token, "email":email});
-            //^this was something I thought might be needed for authentification but I don't think is
+    passport.authenticate("local", {
+        'successRedirect' : '/welcome.html',
+        'failureRedirect' : '/index.html'
+    })
+//     , async (req, res) => {
+//     if ("user_email" in req.body) {
+//         const email = req.body["user_email"];
+//         const password = req.body["password"];
+//         // database.find("user", {"email":email});
+//         // if (findUser(email)) {
+//         if (await validatePassword(email)) {
+//             // }
+//             //TODO tests if hash of passwords match, makes session token. On success:
+//             // const session_token = faker.internet.password();
+//             // database.insert("session", {"token":session_token, "email":email});
+//             //^this was something I thought might be needed for authentification but I don't think is
 
-            console.log(`New login from: ${email}`);
-            res.status(200);
-            res.redirect('/welcome.html');
-            res.send(JSON.stringify({
-                "login_status": "valid",
-                // "session_token": session_token
-            }));
-            // res.send(`login_status = "valid", session_token = ${session_token}`);
-        } else {
-            res.status(403);
-            res.send(JSON.stringify({
-                "login_status": "invalid"
-            }));
-        }
-    } else {
-        res.status(400);
-        res.send(JSON.stringify({
-            "login_status": "invalid"
-        }));
-    }
-});
+//             console.log(`New login from: ${email}`);
+//             res.status(200);
+//             res.redirect('/welcome.html');
+//             res.send(JSON.stringify({
+//                 "login_status": "valid",
+//                 // "session_token": session_token
+//             }));
+//             // res.send(`login_status = "valid", session_token = ${session_token}`);
+//         } else {
+//             res.status(403);
+//             res.send(JSON.stringify({
+//                 "login_status": "invalid"
+//             }));
+//         }
+//     } else {
+//         res.status(400);
+//         res.send(JSON.stringify({
+//             "login_status": "invalid"
+//         }));
+//     }
+// });
+);
 
 // curl -X PUT -d '{ "session_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/edit
 app.put("/user/edit", (req, res) => {
