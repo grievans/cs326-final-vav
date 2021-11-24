@@ -52,12 +52,12 @@ const session = {
 
 const strategy = new LocalStrategy(
     async (username, password, done) => {
-	if (!await findUser(username)) {
+	if (!findUser(username)) {
 	    // no such user
 	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
 	    return done(null, false, { 'message' : 'Wrong username' });
 	}
-	if (!await validatePassword(username, password)) {
+	if (!validatePassword(username, password)) {
 	    // invalid password
 	    // should disable logins after N messages
 	    // delay return to rate-limit brute-force attacks
@@ -121,46 +121,52 @@ initializeDatabase();
 
 //code here modified from provided code for exercise
 // Returns true iff the user exists.
-async function findUser(email) {
-    try {
-        // const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
-        // if (!userExists[0]) {
-        //     return false;
-        // } else {
-        //     return true;
-        // }
-        const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
-        // console.log(userData);
-        if (userData.length <= 0) {
-            return false;
+function findUser(email) {
+    async function helper(){
+        try {
+            // const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
+            // if (!userExists[0]) {
+            //     return false;
+            // } else {
+            //     return true;
+            // }
+            const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
+            // console.log(userData);
+            if (userData.length <= 0) {
+                return false;
+            }
+            // console.log("TEST");
+            return true
         }
-        // console.log("TEST");
-        return true
+        catch(err) {
+            console.error(err);
+            return false; //not sure what's best to do here really; might not end up using this function anyway tbh
+        }
     }
-    catch(err) {
-        console.error(err);
-        return false; //not sure what's best to do here really; might not end up using this function anyway tbh
-    }
+    helper().then(x => {return x;});
 }
 
 // Returns true iff the password is the one we have stored.
-async function validatePassword(email, pwd) {
-    // if (!findUser(email)) {
-    //     return false;
-    // }
-    // CHECK PASSWORD
-    try {
-        const userData = await db.any({text:"SELECT email, salt, hash FROM users WHERE email = $1 LIMIT 1", values:[email]});
-        if (userData.length <= 0) {
-            return false;
+function validatePassword(email, pwd) {
+    async function helper(){
+        // if (!findUser(email)) {
+        //     return false;
+        // }
+        // CHECK PASSWORD
+        try {
+            const userData = await db.any({text:"SELECT email, salt, hash FROM users WHERE email = $1 LIMIT 1", values:[email]});
+            if (userData.length <= 0) {
+                return false;
+            }
+            const userSalt = userData[0].salt;
+            const userHash = userData[0].hash;
+            return mc.check(pwd, userSalt, userHash);
+        } catch(err) {
+            console.error(err);
+            return false; //not sure best approach here
         }
-        const userSalt = userData[0].salt;
-        const userHash = userData[0].hash;
-        return mc.check(pwd, userSalt, userHash);
-    } catch(err) {
-        console.error(err);
-        return false; //not sure best approach here
     }
+    helper().then(x => {return x;});
 }
 
 function checkLoggedIn(req, res, next) {
@@ -181,7 +187,7 @@ app.post("/user/new", async (req, res) => {
     const email = req.body["user_email"];
     const password = req.body["password"];
 
-    if (await findUser(email)) {
+    if (findUser(email)) {
         // console.log(findUser(email));
         res.status(304);
         res.send("Account already exists.")
@@ -218,7 +224,7 @@ app.post("/user/login",
         const password = req.body["password"];
         // database.find("user", {"email":email});
         // if (findUser(email)) {
-        if (await validatePassword(email)) {
+        if (validatePassword(email)) {
             // }
             //TODO tests if hash of passwords match, makes session token. On success:
             // const session_token = faker.internet.password();
