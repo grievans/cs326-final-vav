@@ -123,12 +123,17 @@ initializeDatabase();
 // Returns true iff the user exists.
 async function findUser(email) {
     try {
-        const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
-        if (!userExists[0]) {
+        // const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
+        // if (!userExists[0]) {
+        //     return false;
+        // } else {
+        //     return true;
+        // }
+        const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
+        if (userData.length <= 0) {
             return false;
-        } else {
-            return true;
         }
+        return true
     }
     catch(err) {
         console.error(err);
