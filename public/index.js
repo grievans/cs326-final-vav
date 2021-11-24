@@ -19,9 +19,9 @@ async function login(event) {
         return response.json();
     }).then((data) => {
         if (data["login_status"] === "valid") {
-            window.localStorage.setItem('session', data["session_token"]);
-            window.localStorage.setItem('user_email', email);
-            window.location.href = "./welcome.html";
+            // window.localStorage.setItem('session', data["session_token"]);
+            // window.localStorage.setItem('user_email', email);
+            // window.location.href = "./welcome.html";
         } else {
             alert("Invalid login credentials.");
         }

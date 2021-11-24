@@ -86,7 +86,7 @@ passport.deserializeUser((uid, done) => {
 });
 
 
-//TODO maybe should move to top?
+//TODO maybe should move into database.js
 import pgPromise from 'pg-promise'; 
 
 const pgp = pgPromise();
@@ -98,7 +98,7 @@ const db = pgp({
       });
 async function initializeDatabase() {
     try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS users (email text, display_name text, phone_number text, salt text NOT NULL, hash text NOT NULL)"});
+        await db.none({text:"CREATE TABLE IF NOT EXISTS users (email text UNIQUE, display_name text, phone_number text, salt text NOT NULL, hash text NOT NULL)"});
     }
     catch(err) {
         console.error(err);
@@ -110,7 +110,7 @@ async function initializeDatabase() {
         console.error(err);
     }
     try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS comment (task_id integer, user_name text, contents text)"});
+        await db.none({text:"CREATE TABLE IF NOT EXISTS comments (task_id integer, user_name text, contents text)"});
     }
     catch(err) {
         console.error(err);
@@ -119,7 +119,52 @@ async function initializeDatabase() {
 initializeDatabase();
 
 
+//code here modified from provided code for exercise
+// Returns true iff the user exists.
+async function findUser(email) {
+    try {
+        const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
+        if (!userExists[0]) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    catch(err) {
+        console.error(err);
+        return false; //not sure what's best to do here really; might not end up using this function anyway tbh
+    }
+}
 
+// Returns true iff the password is the one we have stored.
+async function validatePassword(email, pwd) {
+    // if (!findUser(email)) {
+    //     return false;
+    // }
+    // CHECK PASSWORD
+    try {
+        const userData = await db.any({text:"SELECT email, salt, hash FROM users WHERE email = $1 LIMIT 1", values:[email]});
+        if (userData.length <= 0) {
+            return false;
+        }
+        const userSalt = userData[0].salt;
+        const userHash = userData[0].hash;
+        return mc.check(pwd, userSalt, userHash);
+    } catch(err) {
+        console.error(err);
+        return false; //not sure best approach here
+    }
+}
+
+function checkLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        // If we are authenticated, run the next route.
+        next();
+    } else {
+        // Otherwise, redirect to the login page.
+        res.redirect('/index.html');
+    }
+}
 
 
 
@@ -128,33 +173,62 @@ initializeDatabase();
 app.post("/user/new", (req, res) => {
     const email = req.body["user_email"];
     const password = req.body["password"];
-    //TODO: processes and sets data in some database
-    //Not sure what needs to be done in regards to that for this milestone since it's all dummy anyway... maybe nothing?
-    const hash = faker.internet.password(); //in practice would take password and apply some actual hashing algorithm to get this
-    database.insert("user", {"email":email,"pass_hash":hash});
-    console.log(`Created account: ${email}`);
-    res.status(201);
-    res.send('Created account.');
+
+    if (findUser(email)) {
+        res.status(304);
+        res.send("Account already exists.")
+    } else {
+        //TODO: processes and sets data in some database
+        //Not sure what needs to be done in regards to that for this milestone since it's all dummy anyway... maybe nothing?
+        // const hash = faker.internet.password(); //in practice would take password and apply some actual hashing algorithm to get this
+        const [salt, hash] = mc.hash(password);
+	    // users[name] = [salt, hash];
+        try {
+            //TODO maybe should move into separate database.js? I'm finding this way easier though
+            await db.none({text:"INSERT INTO users(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
+            // database.insert("user", {"email":email,"pass_hash":hash});
+            console.log(`Created account: ${email}`);
+            res.status(201);
+            res.send('Created account.');
+        } catch(err)
+        {
+            console.error(err);
+            res.status(500);
+            res.send('Failed to add account.');
+        }
+    }
 });
 
 //Not totally sure if this is setup right, but works with the command:
 //curl -H 'user_email : Test password : ABCDEF Content-Type: application/json' http://localhost:3000/user/login/
-app.post("/user/login", (req, res) => {
+app.post("/user/login",
+    passport.authenticate("local"), (req, res) => {
     if ("user_email" in req.body) {
         const email = req.body["user_email"];
         const password = req.body["password"];
-        database.find("user", {"email":email});
-        //TODO tests if hash of passwords match, makes session token. On success:
-        const session_token = faker.internet.password();
-        database.insert("session", {"token":session_token, "email":email});
+        // database.find("user", {"email":email});
+        // if (findUser(email)) {
+        if (validatePassword(email)) {
+            // }
+            //TODO tests if hash of passwords match, makes session token. On success:
+            // const session_token = faker.internet.password();
+            // database.insert("session", {"token":session_token, "email":email});
+            //^this was something I thought might be needed for authentification but I don't think is
 
-        console.log(`New login from: ${email}`);
-        res.status(200);
-        res.send(JSON.stringify({
-            "login_status": "valid",
-            "session_token": session_token
-        }));
-        // res.send(`login_status = "valid", session_token = ${session_token}`);
+            console.log(`New login from: ${email}`);
+            res.status(200);
+            res.redirect('/welcome.html');
+            res.send(JSON.stringify({
+                "login_status": "valid",
+                // "session_token": session_token
+            }));
+            // res.send(`login_status = "valid", session_token = ${session_token}`);
+        } else {
+            res.status(400);
+            res.send(JSON.stringify({
+                "login_status": "invalid"
+            }));
+        }
     } else {
         res.status(400);
         res.send(JSON.stringify({
