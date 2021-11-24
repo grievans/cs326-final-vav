@@ -229,19 +229,19 @@ app.post("/user/new", async (req, res) => {
 //Not totally sure if this is setup right, but works with the command:
 //curl -H 'user_email : Test password : ABCDEF Content-Type: application/json' http://localhost:3000/user/login/
 app.post("/user/login",
-    passport.authenticate("local"
-    , {
-        'successRedirect' : '/welcome.html',
-        'failureRedirect' : '/index.html'
-    })
-    // , (req, res) => {
-    //         console.log(`New login from: ${email}`);
-    //         res.status(200);
-    //         res.send(JSON.stringify({
-    //             "login_status": "valid",
-    //             // "session_token": session_token
-    //         }));
-    // }
+    passport.authenticate("local"),
+    // , {
+    //     'successRedirect' : '/welcome.html',
+    //     'failureRedirect' : '/index.html'
+    // })
+    (req, res) => {
+            console.log(`New login from: ${email}`);
+            res.status(200);
+            res.send(JSON.stringify({
+                "login_status": "valid",
+                // "session_token": session_token
+            }));
+    }
 //     , async (req, res) => {
 //     if ("user_email" in req.body) {
 //         const email = req.body["user_email"];
