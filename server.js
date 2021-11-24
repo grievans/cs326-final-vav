@@ -165,6 +165,7 @@ async function validatePassword(email, pwd) {
         const userHash = userData[0].hash;
         return mc.check(pwd, userSalt, userHash);
     } catch(err) {
+        console.log(err);
         console.error(err);
         return false; //not sure best approach here
     }
