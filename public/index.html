@@ -29,10 +29,11 @@
     </p>
     <form>
     <div class="container text-center">
+        <form action="/login" method="post">
         <div class="row justify-content-center">
           <div class="col-auto">
             <div class="form-floating">
-              <input type="email" id="userEmail" class="form-control" placeholder="[none]">
+              <input type="email" name="user_email" id="userEmail" class="form-control" placeholder="[none]">
               <label for="userEmail" class="text-muted">Email</label>
             </div>
           </div>
@@ -40,22 +41,23 @@
         <div class="row justify-content-center">
           <div class="col-auto">
             <div class="form-floating">
-              <input type="password" id="userPassword" class="form-control" placeholder="[none]">
+              <input type="password" name="password" id="userPassword" class="form-control" placeholder="[none]">
               <label for="userPassword" class="text-muted">Password</label>
             </div>
           </div>
         </div>
         <div class="row">
-            <div class="col">
-                <!-- <a href="welcome.html" class="btn btn-primary">Login</a> -->
-                <input type="submit" class="btn btn-primary" id="loginButton" value="Login">
-            </div>
-            <div class="col">
-                <!-- <a href="welcome.html" class="btn btn-primary">Create account</a> -->
-                <input type="submit" class="btn btn-primary" id="createAccountButton" value="Create account">
-                <!-- TODO probably want some other page in between where the user setup stuff is? Not sure exactly since obviously we don't have the backend figured out yet -->
-            </div>
+          <div class="col">
+            <!-- <a href="welcome.html" class="btn btn-primary">Login</a> -->
+            <input type="submit" class="btn btn-primary" id="loginButton" value="Login">
+          </div>
+          <div class="col">
+            <!-- <a href="welcome.html" class="btn btn-primary">Create account</a> -->
+            <input type="button" class="btn btn-primary" id="createAccountButton" value="Create account">
+            <!-- TODO probably want some other page in between where the user setup stuff is? Not sure exactly since obviously we don't have the backend figured out yet -->
+          </div>
         </div>
+      </form>
 
     </div>
     </form>
