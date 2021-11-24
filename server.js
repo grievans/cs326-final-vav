@@ -43,7 +43,7 @@ const mc = new minicrypt();
 
 const session = {
     secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
-    //TODO maybe need to set up this^? I don't totally understand what I need to put exactly
+    //TODO maybe need to set up this^? I don't totally understand what I need to put exactly (added a config var in heroku for it, not sure if anything else is needed)
     resave : false,
     saveUninitialized: false
 };
@@ -108,7 +108,7 @@ async function initializeDatabase() {
         console.error(err);
     }
     try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, id serial)"});
+        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, id serial UNIQUE)"});
     }
     catch(err) {
         console.error(err);
