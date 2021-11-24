@@ -134,6 +134,7 @@ async function findUser(email) {
         if (userData.length <= 0) {
             return false;
         }
+        console.log("TEST");
         return true
     }
     catch(err) {
