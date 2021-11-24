@@ -52,12 +52,12 @@ const session = {
 
 const strategy = new LocalStrategy(
     async (username, password, done) => {
-	if (!findUser(username)) {
+	if (!await findUser(username)) {
 	    // no such user
 	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
 	    return done(null, false, { 'message' : 'Wrong username' });
 	}
-	if (!validatePassword(username, password)) {
+	if (!await validatePassword(username, password)) {
 	    // invalid password
 	    // should disable logins after N messages
 	    // delay return to rate-limit brute-force attacks
@@ -181,8 +181,8 @@ app.post("/user/new", async (req, res) => {
     const email = req.body["user_email"];
     const password = req.body["password"];
 
-    if (findUser(email)) {
-        console.log(findUser(email));
+    if (await findUser(email)) {
+        // console.log(findUser(email));
         res.status(304);
         res.send("Account already exists.")
     } else {
@@ -191,7 +191,7 @@ app.post("/user/new", async (req, res) => {
         // const hash = faker.internet.password(); //in practice would take password and apply some actual hashing algorithm to get this
         const [salt, hash] = mc.hash(password);
 	    // users[name] = [salt, hash];
-        console.log("TEST");
+        // console.log("TEST");
         try {
             //TODO maybe should move into separate database.js? I'm finding this way easier though
             await db.none({text:"INSERT INTO users(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
@@ -201,7 +201,7 @@ app.post("/user/new", async (req, res) => {
             res.send('Created account.');
         } catch(err)
         {
-            console.log("FAIL");
+            // console.log("FAIL");
             console.error(err);
             res.status(500);
             res.send('Failed to add account.');
@@ -218,7 +218,7 @@ app.post("/user/login",
         const password = req.body["password"];
         // database.find("user", {"email":email});
         // if (findUser(email)) {
-        if (validatePassword(email)) {
+        if (await validatePassword(email)) {
             // }
             //TODO tests if hash of passwords match, makes session token. On success:
             // const session_token = faker.internet.password();
