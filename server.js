@@ -182,6 +182,7 @@ app.post("/user/new", async (req, res) => {
     const password = req.body["password"];
 
     if (findUser(email)) {
+        console.log(findUser(email));
         res.status(304);
         res.send("Account already exists.")
     } else {
