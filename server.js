@@ -161,7 +161,7 @@ async function validatePassword(email, pwd) {
     // CHECK PASSWORD
     try {
         const userData = await db.any({text:"SELECT email, salt, hash FROM users WHERE email = $1 LIMIT 1", values:[email]});
-        console.log(userData);
+        // console.log(userData);
         if (userData.length <= 0) {
             return false;
         }
@@ -169,7 +169,7 @@ async function validatePassword(email, pwd) {
         const userHash = userData[0].hash;
         return mc.check(pwd, userSalt, userHash);
     } catch(err) {
-        console.log(err);
+        // console.log(err);
         console.error(err);
         return false; //not sure best approach here
     }
@@ -229,11 +229,11 @@ app.post("/user/new", async (req, res) => {
 //Not totally sure if this is setup right, but works with the command:
 //curl -H 'user_email : Test password : ABCDEF Content-Type: application/json' http://localhost:3000/user/login/
 app.post("/user/login",
-    passport.authenticate("local"
-    , {
-        'successRedirect' : '/welcome.html',
-        'failureRedirect' : '/index.html'
-    })
+    passport.authenticate("local")
+    // , {
+    //     'successRedirect' : '/welcome.html',
+    //     'failureRedirect' : '/index.html'
+    // })
     //, (req, res) => {
     //         console.log(`New login from: ${email}`);
     //         res.status(200);
