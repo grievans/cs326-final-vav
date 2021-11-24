@@ -351,7 +351,7 @@ app.get("/user/data", async (req, res) => {
 
 app.get('/user/logout', (req, res) => {
     req.logout(); // Logs us out!
-    res.redirect('/login'); // back to login
+    res.redirect('/index.html'); // back to login
 });
 
 //for submiting request quarantiining.html

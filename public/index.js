@@ -24,7 +24,7 @@ async function login(event) {
     }).then((data) => {
         if (data["login_status"] === "valid") {
             // window.localStorage.setItem('session', data["session_token"]);
-            // window.localStorage.setItem('user_email', email);
+            window.localStorage.setItem('user_email', email); //used to set default email on page for making requests
             window.location.href = "./welcome.html";
         } else {
             alert("Invalid login credentials.");
