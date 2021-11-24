@@ -157,6 +157,7 @@ async function validatePassword(email, pwd) {
     // CHECK PASSWORD
     try {
         const userData = await db.any({text:"SELECT email, salt, hash FROM users WHERE email = $1 LIMIT 1", values:[email]});
+        console.log(userData);
         if (userData.length <= 0) {
             return false;
         }
@@ -245,7 +246,7 @@ app.post("/user/login",
             }));
             // res.send(`login_status = "valid", session_token = ${session_token}`);
         } else {
-            res.status(400);
+            res.status(403);
             res.send(JSON.stringify({
                 "login_status": "invalid"
             }));
