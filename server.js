@@ -324,17 +324,15 @@ app.delete("/user/delete", (req, res) => {
 //curl -H "Content-Type: application/json" http://localhost:3000/user/data?target_email=test@umass.edu
 app.get("/user/data", async (req, res) => {
     const email = req.query["target_email"];
-    const details;
+    let details = null;
     try {
         const userData = await db.any({text:"SELECT email, display_name, phone_number FROM users WHERE email = $1 LIMIT 1", values:[email]});
-        // console.log(userData);
-        if (userData.length <= 0) {
-            details = null;
+        if (userData.length > 0) {
+            details = userData[0];
         }
-        details = userData[0];
     } catch(err) {
         console.error(err);
-        details = null;
+        // details = null; //< line not needed but leaving here as reminder that it will still be null
     }
     if (details !== null) {
         let output = {};
