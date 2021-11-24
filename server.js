@@ -34,8 +34,8 @@ import {Strategy as LocalStrategy} from 'passport-local'; // username/password s
 // const passport = require('passport');               // handles authentication
 // const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 /// NEW
-// import * as minicrypt from './miniCrypt';
-// const mc = new minicrypt();
+import * as minicrypt from './miniCrypt'; //NOT SURE if we're supposed to be doing encryption stuff in this but putting it in anyway
+const mc = new minicrypt();
 // const minicrypt = require('./miniCrypt');
 // const mc = new minicrypt();
 
