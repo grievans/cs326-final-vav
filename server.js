@@ -235,7 +235,7 @@ app.post("/user/login",
     //     'failureRedirect' : '/index.html'
     // })
     , (req, res) => {
-            console.log(`New login from: ${email}`);
+            // console.log(`New login from: ${email}`);
             res.status(200);
             res.send(JSON.stringify({
                 "login_status": "valid",
