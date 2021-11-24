@@ -14,17 +14,18 @@ async function login(event) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        redirect: 'follow'
     }).then((response) => {
-        return response.json();
-    }).then((data) => {
-        if (data["login_status"] === "valid") {
-            // window.localStorage.setItem('session', data["session_token"]);
-            // window.localStorage.setItem('user_email', email);
-            window.location.href = "./welcome.html";
-        } else {
-            alert("Invalid login credentials.");
-        }
+        // return response.json();
+    // }).then((data) => {
+    //     if (data["login_status"] === "valid") {
+    //         // window.localStorage.setItem('session', data["session_token"]);
+    //         // window.localStorage.setItem('user_email', email);
+    //         window.location.href = "./welcome.html";
+    //     } else {
+    //         alert("Invalid login credentials.");
+    //     }
     });
     // console.log("A")
 }
