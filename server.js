@@ -531,7 +531,9 @@ app.get("/markProgress", async (req, res) => {
       }
 });
 
-app.post("/comment", async (req, res) => {
+app.post("/comment", 
+    checkLoggedIn(),
+    async (req, res) => {
     const task_id = req.body["task_id"];
    const user_name = req.body["user_name"];
    const contents = req.body["contents"]; 
