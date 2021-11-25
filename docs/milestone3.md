@@ -24,8 +24,8 @@
 |user_name|string|Display name of the user who submitted the request.|
 |location|string|Location for the request.|
 |email|string|Email of the user who submitted the request.|
-|phone_number|string|Phone number of the user who submitted the request.|
-|id|serial|A numerical id distinct for each added request.|
+|phone_number|text|Phone number of the user who submitted the request.|
+|id|serial|A numerical id distinct/unique for each added request.|
 
 ### Comment table
 
@@ -43,4 +43,4 @@ Griffin Evans: Login and user authentification; setup of database structure and 
 
 Joseph Yang:
 
-Aaron Tsui:
+Aaron Tsui: Setup of database structure and tables, Debugging
