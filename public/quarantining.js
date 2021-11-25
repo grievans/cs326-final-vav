@@ -40,6 +40,7 @@ function setup() {
     const req_location = document.getElementById('location');
     const email = document.getElementById('email');
     const phoneNumber = document.getElementById('phoneNumber');
+    
 
     let data = {
       "requestTitle" : requestTitle.value, 
