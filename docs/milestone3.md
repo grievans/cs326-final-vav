@@ -1,3 +1,8 @@
+## Site link
+
+https://cs326-final-vav-project.herokuapp.com/
+<!-- For some reason in instructions it says to put this in the final.md but I think that's a typo and it means milestone-3 since final.md isn't stated to be created until after that -->
+
 ## Database structure
 
 <!-- api from milestone 2 will have to be updated btw but I think that's only needed updated for final project deadline and not for now-->

@@ -1,7 +1,7 @@
 "use strict";
 
 import express from "express";
-import faker from "faker"; //IMPORTANT PROBABLY: note "npm i faker" needed to be run to use this, probably will have to mention in the docs/setup.md file; TODO
+// import faker from "faker"; //IMPORTANT PROBABLY: note "npm i faker" needed to be run to use this, probably will have to mention in the docs/setup.md file; TODO
 import {Database} from "./database.js";
 const app = express();
 app.use('/', express.static('public')); //TODO maybe should be "./public"? not sure if it matters in this case
@@ -28,6 +28,7 @@ const database = new Database();
 
 
 import expressSession from 'express-session';  // for managing session state
+// TODO might have to change that to add a store that scales better, maybe connect-pg-simple since that'll integrate with our db
 import passport from 'passport';               // handles authentication
 import {Strategy as LocalStrategy} from 'passport-local'; // username/password strategy
 // const expressSession = require('express-session');  // for managing session state
@@ -56,18 +57,26 @@ const strategy = new LocalStrategy(
         passwordField: 'password'
       },
     async (username, password, done) => {
-	if (!(await findUser(username))) {
-	    // no such user
-	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
-	    return done(null, false, { 'message' : 'Wrong username' });
-	}
-	if (!(await validatePassword(username, password))) {
-	    // invalid password
-	    // should disable logins after N messages
-	    // delay return to rate-limit brute-force attacks
-	    await new Promise((r) => setTimeout(r, 2000)); // two second delay
-	    return done(null, false, { 'message' : 'Wrong password' });
-	}
+        try {
+            if (!(await findUser(username))) {
+                // no such user
+                await new Promise((r) => setTimeout(r, 2000)); // two second delay
+                return done(null, false, { 'message' : 'Wrong username' });
+            }
+        } catch(err) {
+            console.error(err);
+        }
+        try {
+            if (!(await validatePassword(username, password))) {
+                // invalid password
+                // should disable logins after N messages
+                // delay return to rate-limit brute-force attacks
+                await new Promise((r) => setTimeout(r, 2000)); // two second delay
+                return done(null, false, { 'message' : 'Wrong password' });
+            }
+        } catch(err) {
+            console.error(err);
+        }
 	// success!
 	// should create a user object here, associated with a unique identifier
 	return done(null, username);
@@ -208,9 +217,11 @@ app.post("/user/new", async (req, res) => {
         // const hash = faker.internet.password(); //in practice would take password and apply some actual hashing algorithm to get this
         const [salt, hash] = mc.hash(password);
 	    // users[name] = [salt, hash];
-        console.log("TEST");
         try {
             //TODO maybe should move into separate database.js? I'm finding this way easier though
+            //I think just gonna leave this way for now; have a database.js with functions for Find, Update etc. but the operations
+            //I'm doing are too specific for me to use that without having to write like a separate function/if statement for every
+            //time it's called at which point it'd just make the code harder to follow
             await db.none({text:"INSERT INTO users(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
             // database.insert("user", {"email":email,"pass_hash":hash});
             console.log(`Created account: ${email}`);
@@ -218,7 +229,6 @@ app.post("/user/new", async (req, res) => {
             res.send('Created account.');
         } catch(err)
         {
-            console.log("FAIL");
             console.error(err);
             res.status(500);
             res.send('Failed to add account.');
@@ -279,21 +289,36 @@ app.post("/user/login",
 );
 
 // curl -X PUT -d '{ "session_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/edit
-app.put("/user/edit", (req, res) => {
-    const session_token = req.body["session_token"];
-    const changes = {};
-    changes.user_email = req.body["user_email"];
-    changes.display_name = req.body["display_name"];
-    changes.phone_number = req.body["phone_number"];
-    changes.tip_link = req.body["tip_link"]; //would have the database handle any of these being undefined I think
-    const password = req.body["password"];
-    changes.hash = faker.internet.password();
+app.put("/user/edit", 
+    checkLoggedIn, //Authentification
+    async (req, res) => {
+    // const session_token = req.body["session_token"];
+    // const changes = {};
+    // changes.user_email = req.body["user_email"];
+    // changes.display_name = req.body["display_name"];
+    // changes.phone_number = req.body["phone_number"];
+    // changes.tip_link = req.body["tip_link"]; //would have the database handle any of these being undefined I think
+    // const password = req.body["password"];
+    // changes.hash = faker.internet.password();
 
-    const session_details = database.find("session", {"token":session_token});
-    if (session_details !== null) {
-        database.findAndUpdate("user", {"email": session_details.email}, changes);
-        //^again, maybe should identify with some separate id instead of email? IDK really, probably depends somewhat on how our database is actually set up
-        database.findAndUpdate("session", {"token":session_token}, {"email":changes.user_email});
+    // const session_details = database.find("session", {"token":session_token});
+    // if (session_details !== null) {
+    //check if proper user
+    if (req.body.user_email === req.user) {
+        // database.findAndUpdate("user", {"email": session_details.email}, changes);
+        // //^again, maybe should identify with some separate id instead of email? IDK really, probably depends somewhat on how our database is actually set up
+        // database.findAndUpdate("session", {"token":session_token}, {"email":changes.user_email});
+        try {
+            await db.none({text:"UPDATE users SET display_name = $2, phone_number = $3 WHERE email = $1", values:[user_email, display_name, phone_number]});
+            // database.insert("user", {"email":email,"pass_hash":hash});
+            console.log(`Updated account: ${email}`);
+            res.status(201);
+            res.send('Updated account.');
+        } catch(err) {
+            console.error(err);
+            res.status(500);
+            res.send('Failed to add account.');
+        }
         res.status(204);
         res.send('Updated account details.');
     } else {
@@ -339,7 +364,7 @@ app.get("/user/data", async (req, res) => {
         output.email = details.email;
         output.display_name = details.display_name || "";
         output.phone_number = details.phone_number || "";
-        output.tip_link = details.tip_link || "";
+        // output.tip_link = details.tip_link || "";
         //^was in dummy function but not in table since we didn't specify it in our API; so will just be blank currently. Can add to table later if needed
         res.status(200);
         res.send(JSON.stringify(output));
