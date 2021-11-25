@@ -302,15 +302,13 @@ app.put("/user/edit",
             await db.none({text:"UPDATE users SET display_name = $2, phone_number = $3 WHERE email = $1", values:[user_email, display_name, phone_number]});
             // database.insert("user", {"email":email,"pass_hash":hash});
             console.log(`Updated account: ${email}`);
-            res.status(201);
-            res.send('Updated account.');
+            res.status(204);
+            res.send('Updated account details.');
         } catch(err) {
             console.error(err);
             res.status(500);
             res.send('Failed to add account.');
         }
-        res.status(204);
-        res.send('Updated account details.');
     } else {
         res.status(403);
         res.send('Invalid session.');
