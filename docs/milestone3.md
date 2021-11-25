@@ -48,4 +48,4 @@ Griffin Evans: Login and user authentification + storing of user data in databas
 
 Joseph Yang: Completed all tasks/ requests related operations from asking request, updating request, deleting request from user and marking requests status from helper + debug.
 
-Aaron Tsui: Setup of database structure and tables, Debugging
+Aaron Tsui: Completed all comment related operations, Setup of database structure and tables, Debugging
