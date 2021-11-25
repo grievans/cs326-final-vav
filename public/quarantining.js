@@ -3,7 +3,7 @@ function setup() {
     const email =  window.localStorage.getItem('user_email');
     if (email !== null) {
       let status = 0;
-      fetch(`/user/data/?${email}`,{
+      fetch(`/user/data/?target_email=${email}`,{
         method: "GET",
         cache: "no-cache",
         headers: {

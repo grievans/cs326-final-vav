@@ -292,23 +292,13 @@ app.post("/user/login",
 app.put("/user/edit", 
     checkLoggedIn, //Authentification
     async (req, res) => {
-    // const session_token = req.body["session_token"];
-    // const changes = {};
-    // changes.user_email = req.body["user_email"];
-    // changes.display_name = req.body["display_name"];
-    // changes.phone_number = req.body["phone_number"];
-    // changes.tip_link = req.body["tip_link"]; //would have the database handle any of these being undefined I think
-    // const password = req.body["password"];
-    // changes.hash = faker.internet.password();
-
-    // const session_details = database.find("session", {"token":session_token});
-    // if (session_details !== null) {
     //check if proper user
     if (req.body.user_email === req.user) {
         // database.findAndUpdate("user", {"email": session_details.email}, changes);
         // //^again, maybe should identify with some separate id instead of email? IDK really, probably depends somewhat on how our database is actually set up
         // database.findAndUpdate("session", {"token":session_token}, {"email":changes.user_email});
         try {
+            //Note for now I'm leaving tip_link out of it since none of our API from last time mentioned it, I can re-add if people want it
             await db.none({text:"UPDATE users SET display_name = $2, phone_number = $3 WHERE email = $1", values:[user_email, display_name, phone_number]});
             // database.insert("user", {"email":email,"pass_hash":hash});
             console.log(`Updated account: ${email}`);
