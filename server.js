@@ -70,18 +70,18 @@ const mc = new minicrypt();
 // Session configuration
 
 const session = {
-    store: new pgSession({
-        createTableIfMissing : true,
-        conString : process.env.DATABASE_URL,
-        ssl: {
-          rejectUnauthorized: false
-        }
-        // pool : null
-        // conObject: {
-        //     connectionString: process.env.DATABASE_URL,
-        //     // ssl: true,
-        // },
-    }),
+    // store: new pgSession({
+    //     createTableIfMissing : true,
+    //     conString : process.env.DATABASE_URL,
+    //     // ssl: {
+    //     //   rejectUnauthorized: false
+    //     // }
+    //     // pool : null
+    //     // conObject: {
+    //     //     connectionString: process.env.DATABASE_URL,
+    //     //     // ssl: true,
+    //     // },
+    // }),
     //TODO maybe leave the store as is for now since it does *work* it's just not gonna scale up?
     secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
     //TODO maybe need to set up this^? I don't totally understand what I need to put exactly (added a config var in heroku for it, not sure if anything else is needed)
