@@ -292,51 +292,53 @@ app.post("/user/login",
 app.put("/user/edit", 
     checkLoggedIn, //Authentification
     async (req, res) => {
-    //check if proper user
-    // console.log(req.user);
-    // console.log(req.body);
-    const email = req.body["user_email"];
-    const displayName = req.body["display_name"];
-    const phoneNumber = req.body["phone_number"];
-    if (email === req.user) {
-        // database.findAndUpdate("user", {"email": session_details.email}, changes);
-        // //^again, maybe should identify with some separate id instead of email? IDK really, probably depends somewhat on how our database is actually set up
-        // database.findAndUpdate("session", {"token":session_token}, {"email":changes.user_email});
-        try {
-            //Note for now I'm leaving tip_link out of it since none of our API from last time mentioned it, I can re-add if people want it
-            await db.none({text:"UPDATE users SET display_name = $2, phone_number = $3 WHERE email = $1", values:[email, displayName, phoneNumber]});
-            // database.insert("user", {"email":email,"pass_hash":hash});
-            console.log(`Updated account: ${email}`);
-            res.status(204);
-            res.send('Updated account details.');
-        } catch(err) {
-            console.error(err);
-            res.status(500);
-            res.send('Failed to add account.');
+        const email = req.body["user_email"];
+        const displayName = req.body["display_name"];
+        const phoneNumber = req.body["phone_number"];
+        //check if proper user
+        //(to be honest I'm not totally sure if this checks right but going off of what the code shown in class has had it seems good?)
+        if (email === req.user) {
+            try {
+                //Note for now I'm leaving tip_link out of it since none of our API stuff from last time mentioned it, I can re-add if people want it
+                await db.none({text:"UPDATE users SET display_name = $2, phone_number = $3 WHERE email = $1", values:[email, displayName, phoneNumber]});
+                console.log(`Updated account: ${email}`);
+                res.status(204);
+                res.send('Updated account details.');
+            } catch(err) {
+                console.error(err);
+                res.status(500);
+                res.send('Failed to add account.');
+            }
+        } else {
+            res.status(403);
+            res.send('Invalid session.');
         }
-    } else {
-        res.status(403);
-        res.send('Invalid session.');
-    }
-    
-});
+        
+    });
 
 //curl -X DELETE -d '{ "dsession_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/delete
-app.delete("/user/delete", (req, res) => {
-    const session_token = req.body["session_token"];
-    const session_details = database.find("session", {"token":session_token});
-    if (session_details !== null) {
-        database.findAndDelete("user", {"email": session_details.email});
-        database.findAndDelete("session", {"token":session_token})
-        console.log(`Deleted account ${session_details.email}`);
-        res.status(204);
-        res.send('Deleted account.');
-    } else {
-        res.status(403);
-        res.send('Invalid session.');
-    }
-    
-});
+app.delete("/user/delete", 
+    checkLoggedIn, //Authentification
+    async (req, res) => {
+        const email = req.body["user_email"];
+        //check if proper user
+        if (email === req.user) {
+            try {
+                await db.none({text:"DELETE FROM users WHERE email = $1", values:[email]});
+                console.log(`Deleted account ${session_details.email}`);
+                res.status(204);
+                res.send('Deleted account.');
+            } catch(err) {
+                console.error(err);
+                res.status(500);
+                res.send('Failed to delete account.');
+            }
+        } else {
+            res.status(403);
+            res.send('Invalid session.');
+        }
+        
+    });
 
 //Test curl:
 //curl -H "Content-Type: application/json" http://localhost:3000/user/data?target_email=test@umass.edu
