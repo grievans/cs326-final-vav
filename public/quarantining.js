@@ -30,7 +30,6 @@ function setup() {
   const deleteButton = document.getElementById('delete');
 
   //POST
-  const testint = 0;
   submitButton.addEventListener('click', function(a) {
     a.preventDefault();//prevent from reloading
 
@@ -67,8 +66,7 @@ function setup() {
     }).then(function(response) {
       return response.text();
     }).then(function(text) {
-      alert(text + testint);
-      testint+1;
+      alert(text);
       window.location.href="status.html";//jump to next page
     }).catch(function(error) {
       console.error(error);
