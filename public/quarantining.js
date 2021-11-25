@@ -30,6 +30,7 @@ function setup() {
   const deleteButton = document.getElementById('delete');
 
   //POST
+  const testint = 0;
   submitButton.addEventListener('click', function(a) {
     a.preventDefault();//prevent from reloading
 
@@ -40,7 +41,7 @@ function setup() {
     const req_location = document.getElementById('location');
     const email = document.getElementById('email');
     const phoneNumber = document.getElementById('phoneNumber');
-    const testint = 0;
+    
 
     let data = {
       "requestTitle" : requestTitle.value, 
