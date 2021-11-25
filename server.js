@@ -294,7 +294,7 @@ app.put("/user/edit",
     async (req, res) => {
     //check if proper user
     console.log(req.user);
-    console.log(req.body.user_email);
+    console.log(req.body);
     if (req.body.user_email === req.user) {
         // database.findAndUpdate("user", {"email": session_details.email}, changes);
         // //^again, maybe should identify with some separate id instead of email? IDK really, probably depends somewhat on how our database is actually set up
