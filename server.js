@@ -26,6 +26,37 @@ const database = new Database();
 //     res.send("Test");
 // });
 
+import pgPromise from 'pg-promise'; 
+//TODO maybe should move into database.js
+const pgp = pgPromise();
+const db = pgp({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
+      });
+async function initializeDatabase() {
+    try {
+        await db.none({text:"CREATE TABLE IF NOT EXISTS users (email text UNIQUE, display_name text, phone_number text, salt text NOT NULL, hash text NOT NULL)"});
+    }
+    catch(err) {
+        console.error(err);
+    }
+    try {
+        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, id serial UNIQUE)"});
+    }
+    catch(err) {
+        console.error(err);
+    }
+    try {
+        await db.none({text:"CREATE TABLE IF NOT EXISTS comments (task_id integer, user_name text, contents text)"});
+    }
+    catch(err) {
+        console.error(err);
+    }
+}
+initializeDatabase();
+
 import expressSession from 'express-session';  // for managing session state
 import ConnectPgSimple from 'connect-pg-simple';
 const pgSession = ConnectPgSimple(expressSession);
@@ -42,6 +73,9 @@ const session = {
     store: new pgSession({
         createTableIfMissing : true,
         conString : process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
         // pool : null
         // conObject: {
         //     connectionString: process.env.DATABASE_URL,
@@ -104,38 +138,6 @@ passport.deserializeUser((uid, done) => {
     done(null, uid);
 });
 
-
-//TODO maybe should move into database.js
-import pgPromise from 'pg-promise'; 
-
-const pgp = pgPromise();
-const db = pgp({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-          rejectUnauthorized: false
-        }
-      });
-async function initializeDatabase() {
-    try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS users (email text UNIQUE, display_name text, phone_number text, salt text NOT NULL, hash text NOT NULL)"});
-    }
-    catch(err) {
-        console.error(err);
-    }
-    try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, id serial UNIQUE)"});
-    }
-    catch(err) {
-        console.error(err);
-    }
-    try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS comments (task_id integer, user_name text, contents text)"});
-    }
-    catch(err) {
-        console.error(err);
-    }
-}
-initializeDatabase();
 
 
 //code here modified from provided code for exercise
