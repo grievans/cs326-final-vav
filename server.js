@@ -42,7 +42,7 @@ const session = {
     store: new pgSession({
         createTableIfMissing : true,
         conString : process.env.DATABASE_URL,
-        pool : null
+        // pool : null
         // conObject: {
         //     connectionString: process.env.DATABASE_URL,
         //     // ssl: true,
