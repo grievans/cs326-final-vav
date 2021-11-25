@@ -330,6 +330,7 @@ app.post("/task", async (req, res) => {
     const req_location = req.body["req_location"];
     const email = req.body["email"];
     const phoneNumber = req.body["phoneNumber"];
+    let req_status = "pending";// adding a status input
 
     try {
         // I think this is how it's supposed to be done but really not sure
@@ -342,6 +343,7 @@ app.post("/task", async (req, res) => {
         await db.none ({text:"INSERT INTO task(req_location, salt, hash) VALUES ($1, $2, $3)", values:[req_location, salt, hash]});
         await db.none ({text:"INSERT INTO task(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
         await db.none ({text:"INSERT INTO task(phoneNumber, salt, hash) VALUES ($1, $2, $3)", values:[phoneNumber, salt, hash]});
+        await db.none ({text:"INSERT INTO task(req_status, salt, hash) VALUES ($1, $2, $3)", values:[req_status, salt, hash]});
         res.status(201);
         res.send('Created task.');
     }catch(err) {
@@ -381,6 +383,7 @@ app.put("/task",
         const req_location = req.body["req_location"];
         const email = req.body["email"];
         const phoneNumber = req.body["phoneNumber"];
+        
         //check if proper user
         //not sure but looks like it 
         //checking email alone should be sufficient
@@ -464,12 +467,52 @@ app.delete("/task",
 
 
 //for submiting request requestProgress.html
-app.post("/markProgress", (req, res) => {
-    const data = req.body["data"];
-    console.log("Post body: ");
-    console.log(req.body);
-    res.status(201);
-    res.send('Marked!! Changing status right now!!');
+// app.post("/markProgress", (req, res) => {
+//     const data = req.body["data"];
+//     console.log("Post body: ");
+//     console.log(req.body);
+//     res.status(201);
+//     res.send('Marked!! Changing status right now!!');
+// });
+
+
+app.post("/markProgress", 
+    async (req, res) => {
+        // const requestTitle = req.body["requestTitle"];
+        // const requestDescription = req.body["requestDescription"];
+        // const name = req.body["name"]; 
+        // const req_location = req.body["req_location"];
+        // const email = req.body["email"];
+        // const phoneNumber = req.body["phoneNumber"];
+        let req_status = "completed";
+        try {
+            // I think this is how it's supposed to be done but really not sure
+            // if I'm doing it right
+            // All this postgresql stuff is so confusing to me lol
+            // await db.none ({text:"INSERT INTO task(requestTitle, salt, hash) VALUES ($1, $2, $3)", values:[requestTitle, salt, hash]});
+            // console.log(`Created task: ${requestTitle}`);
+            // await db.none ({text:"INSERT INTO task(requestDescription, salt, hash) VALUES ($1, $2, $3)", values:[requestDescription, salt, hash]});
+            // await db.none ({text:"INSERT INTO task(name, salt, hash) VALUES ($1, $2, $3)", values:[name, salt, hash]});
+            // await db.none ({text:"INSERT INTO task(req_location, salt, hash) VALUES ($1, $2, $3)", values:[req_location, salt, hash]});
+            // await db.none ({text:"INSERT INTO task(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
+            // await db.none ({text:"INSERT INTO task(phoneNumber, salt, hash) VALUES ($1, $2, $3)", values:[phoneNumber, salt, hash]});
+            await db.none({text:"UPDATE task SET req_status = $2, WHERE email = $1", values:[email, req_status]});
+                console.log(`Updated task as completed: ${email} ${req_status}`);
+                res.status(204);
+                // res.send('Updated task÷ status.');
+                res.send('submitted, you are all set!!!!');
+            // res.status(201);
+            // res.send('Created task.');
+        }catch(err) {
+            console.error(err);
+            res.status(500);
+            res.send('Failed to update request status.');
+        }
+
+        // console.log("Post body: ");
+        // console.log(req.body);
+        // res.status(201);
+        // res.send('submitted, you are all set!!!!');
 });
 
 app.get("/markProgress", async (req, res) => {
