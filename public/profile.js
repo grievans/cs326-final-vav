@@ -11,6 +11,9 @@ function setup() {
                 },
             }).then((response) => {
                 status = response.status;
+                if (status === 404) {
+                    return {}
+                }
                 return response.json();
             }).then((data) => {
                 if (status === 200) {
@@ -36,13 +39,12 @@ async function updateDetails(event) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(data),
-        redirect: 'follow'
+        body: JSON.stringify(data)
     }).then((response) => {
         return response.status;
     }).then((status) => {
         if (status === 204) {
-            window.location.href = "./welcome.html";
+            alert("Updated!");
         } else if (status === 403) {
             alert("Invalid login session.");
         } else {
