@@ -29,7 +29,7 @@ function setup() {
 }
 async function updateDetails(event) {
     event.preventDefault();
-    const email = document.getElementById("email").value;
+    const email = window.localStorage.getItem('user_email');
     const displayName = document.getElementById("name").value;
     const phoneNumber = document.getElementById("phoneNumber").value;
     const data = {"user_email":email, "display_name":displayName, "phone_number":phoneNumber};
