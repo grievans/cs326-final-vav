@@ -68,7 +68,7 @@ function setup() {
       return response.text();
     }).then(function(text) {
       alert(text + testint);
-      testint++;
+      testint+1;
       window.location.href="status.html";//jump to next page
     }).catch(function(error) {
       console.error(error);
