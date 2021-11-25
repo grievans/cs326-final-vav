@@ -22,10 +22,9 @@ function setup() {
         }
     }
     getDefaults();
-    document.getElementById("loginButton").addEventListener("click", login);
-    document.getElementById("createAccountButton").addEventListener("click", createAccount);
+    document.getElementById("updateButton").addEventListener("click", updateDetails);
 }
-async function login(event) {
+async function updateDetails(event) {
     event.preventDefault();
     const email = document.getElementById("email").value;
     const displayName = document.getElementById("name").value;
