@@ -323,7 +323,7 @@ app.get('/user/logout', (req, res) => {
 });
 
 //for submiting request quarantiining.html
-app.post("/task", (req, res) => {
+app.post("/task", async (req, res) => {
     const requestTitle = req.body["requestTitle"];
     const requestDescription = req.body["requestDescription"];
     const name = req.body["name"]; 
@@ -331,10 +331,18 @@ app.post("/task", (req, res) => {
     const email = req.body["email"];
     const phoneNumber = req.body["phoneNumber"];
 
-    console.log("Post body: ");
-    console.log(req.body);
-    res.status(201);
-    res.send('submitted, you are all set!!!!');
+    try {
+        await db.none;
+    }catch(err) {
+        console.error(err);
+        res.status(500);
+        res.send('Failed to add request.');
+    }
+
+    // console.log("Post body: ");
+    // console.log(req.body);
+    // res.status(201);
+    // res.send('submitted, you are all set!!!!');
 });
 //for updating request quarantiining.html
 app.put("/task", (req, res) => {
