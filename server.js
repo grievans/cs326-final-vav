@@ -293,15 +293,18 @@ app.put("/user/edit",
     checkLoggedIn, //Authentification
     async (req, res) => {
     //check if proper user
-    console.log(req.user);
-    console.log(req.body);
-    if (req.body.user_email === req.user) {
+    // console.log(req.user);
+    // console.log(req.body);
+    const email = req.body["user_email"];
+    const displayName = req.body["display_name"];
+    const phoneNumber = req.body["phone_number"];
+    if (email === req.user) {
         // database.findAndUpdate("user", {"email": session_details.email}, changes);
         // //^again, maybe should identify with some separate id instead of email? IDK really, probably depends somewhat on how our database is actually set up
         // database.findAndUpdate("session", {"token":session_token}, {"email":changes.user_email});
         try {
             //Note for now I'm leaving tip_link out of it since none of our API from last time mentioned it, I can re-add if people want it
-            await db.none({text:"UPDATE users SET display_name = $2, phone_number = $3 WHERE email = $1", values:[user_email, display_name, phone_number]});
+            await db.none({text:"UPDATE users SET display_name = $2, phone_number = $3 WHERE email = $1", values:[email, displayName, phoneNumber]});
             // database.insert("user", {"email":email,"pass_hash":hash});
             console.log(`Updated account: ${email}`);
             res.status(204);
