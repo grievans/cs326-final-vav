@@ -524,7 +524,7 @@ app.get("/markProgress", async (req, res) => {
     // res.send(data);
 
     try {
-        const results = await db.query("SELECT * FROM task WHERE ");// TODO: need to update WHERE clause
+        const results = await db.none("SELECT * FROM task WHERE req_status = 'completed'");// TODO: need to update WHERE clause
         return res.json(results.rows);
       } catch (err) {
         return next(err);
