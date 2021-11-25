@@ -356,19 +356,54 @@ app.post("/task", async (req, res) => {
     // res.send('submitted, you are all set!!!!');
 });
 //for updating request quarantiining.html
-app.put("/task", (req, res) => {
-    const requestTitle = req.body["requestTitle"];
-    const requestDescription = req.body["requestDescription"];
-    const name = req.body["name"]; 
-    const req_location = req.body["req_location"];
-    const email = req.body["email"];
-    const phoneNumber = req.body["phoneNumber"];
+// app.put("/task", (req, res) => {
+//     const requestTitle = req.body["requestTitle"];
+//     const requestDescription = req.body["requestDescription"];
+//     const name = req.body["name"]; 
+//     const req_location = req.body["req_location"];
+//     const email = req.body["email"];
+//     const phoneNumber = req.body["phoneNumber"];
 
-    console.log("Updated body: ");
-    console.log(req.body);
-    res.status(201);
-    res.send('Updated, you are all set!!!!');
-});
+//     console.log("Updated body: ");
+//     console.log(req.body);
+//     res.status(201);
+//     res.send('Updated, you are all set!!!!');
+// });
+app.put("/task", 
+    //Authentification is not needed here
+    async (req, res) => {
+        // const email = req.body["user_email"];
+        // const displayName = req.body["display_name"];
+        // const phoneNumber = req.body["phone_number"];
+        const requestTitle = req.body["requestTitle"];
+        const requestDescription = req.body["requestDescription"];
+        const name = req.body["name"]; 
+        const req_location = req.body["req_location"];
+        const email = req.body["email"];
+        const phoneNumber = req.body["phoneNumber"];
+        //check if proper user
+        //not sure but looks like it 
+        //checking email alone should be sufficient
+        if (email === req.user) {
+            try {
+                //Note for now I'm leaving tip_link out of it since none of our API stuff from last time mentioned it, I can re-add if people want it
+                await db.none({
+                    text:"UPDATE task SET requestTitle = $2, requestDescription = $3, name = $4, req_location = $5, phoneNumber = $6 WHERE email = $1", 
+                values:[email, requestTitle, requestDescription, name, req_location, phoneNumber]});
+                console.log(`Updated account: ${email} ${requestTitle} ${requestDescription} ${name} ${req_location} ${phoneNumber}`);
+                res.status(204);
+                res.send('Updated related task details.');
+            } catch(err) {
+                console.error(err);
+                res.status(500);
+                res.send('Failed to update task details.');
+            }
+        } else {
+            res.status(403);
+            res.send('Invalid session.');
+        }
+        
+    });
 //for geting request quarantiining.html
 app.get("/task", async (req, res) => {
     // const requestTitle = req.query["requestTitle"];
