@@ -429,19 +429,6 @@ app.get("/task", async (req, res) => {
       }
 });
 //for deleting request quarantiining.html
-// app.delete("/task", (req, res) => {
-//     const requestTitle = req.body["requestTitle"];
-//     const requestDescription = req.body["requestDescription"];
-//     const name = req.body["name"]; 
-//     const req_location = req.body["req_location"];
-//     const email = req.body["email"];
-//     const phoneNumber = req.body["phoneNumber"];
-
-//     console.log("delete param: ");
-//     console.log(req.body);
-//     res.status(201);
-//     res.send('Deleted, you are all set!!!!');
-// });
 app.delete("/task", 
     checkLoggedIn, //Authentification here is needed
     async (req, res) => {
@@ -467,15 +454,6 @@ app.delete("/task",
 
 
 //for submiting request requestProgress.html
-// app.post("/markProgress", (req, res) => {
-//     const data = req.body["data"];
-//     console.log("Post body: ");
-//     console.log(req.body);
-//     res.status(201);
-//     res.send('Marked!! Changing status right now!!');
-// });
-
-
 app.post("/markProgress", 
     async (req, res) => {
         // const requestTitle = req.body["requestTitle"];
