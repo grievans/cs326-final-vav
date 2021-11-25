@@ -301,7 +301,7 @@ app.put("/user/edit",
             try {
                 //Note for now I'm leaving tip_link out of it since none of our API stuff from last time mentioned it, I can re-add if people want it
                 await db.none({text:"UPDATE users SET display_name = $2, phone_number = $3 WHERE email = $1", values:[email, displayName, phoneNumber]});
-                console.log(`Updated account: ${email}`);
+                console.log(`Updated account: ${email} ${displayName} ${phoneNumber}`);
                 res.status(204);
                 res.send('Updated account details.');
             } catch(err) {
@@ -317,6 +317,7 @@ app.put("/user/edit",
     });
 
 //curl -X DELETE -d '{ "dsession_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/delete
+//not sure I should actually make this accessible to user since it'll cause issues presumably if someone were to make a task then delete the account might cause issues? IDK
 app.delete("/user/delete", 
     checkLoggedIn, //Authentification
     async (req, res) => {
@@ -325,7 +326,7 @@ app.delete("/user/delete",
         if (email === req.user) {
             try {
                 await db.none({text:"DELETE FROM users WHERE email = $1", values:[email]});
-                console.log(`Deleted account ${session_details.email}`);
+                console.log(`Deleted account ${email}`);
                 res.status(204);
                 res.send('Deleted account.');
             } catch(err) {
