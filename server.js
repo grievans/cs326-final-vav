@@ -26,23 +26,22 @@ const database = new Database();
 //     res.send("Test");
 // });
 
-
 import expressSession from 'express-session';  // for managing session state
+import connectPgSimple from 'connect-pg-simple';
+const pgSession = connectPgSimple(expressSession);
 // TODO might have to change that to add a store that scales better, maybe connect-pg-simple since that'll integrate with our db
 import passport from 'passport';               // handles authentication
 import {Strategy as LocalStrategy} from 'passport-local'; // username/password strategy
-// const expressSession = require('express-session');  // for managing session state
-// const passport = require('passport');               // handles authentication
-// const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 /// NEW
 import minicrypt from './miniCrypt.js'; //NOT SURE if we're supposed to be doing encryption stuff in this but putting it in anyway
 const mc = new minicrypt();
-// const minicrypt = require('./miniCrypt');
-// const mc = new minicrypt();
 
 // Session configuration
 
 const session = {
+    store: new pgSession({
+        createTableIfMissing:true
+    }),
     secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
     //TODO maybe need to set up this^? I don't totally understand what I need to put exactly (added a config var in heroku for it, not sure if anything else is needed)
     resave : false,
@@ -135,7 +134,6 @@ initializeDatabase();
 //code here modified from provided code for exercise
 // Returns true iff the user exists.
 async function findUser(email) {
-    // async function helper(){
     try {
         // const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
         // if (!userExists[0]) {
@@ -143,34 +141,24 @@ async function findUser(email) {
         // } else {
         //     return true;
         // }
+        //might change back to that^? seems to work fine as is
         const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
-        // console.log(userData);
         if (userData.length <= 0) {
             return false;
         }
-        // console.log("TEST");
         return true
     }
     catch(err) {
         console.error(err);
         return false; //not sure what's best to do here really; might not end up using this function anyway tbh
     }
-    // }
-    // let result = false;
-    // helper().then(x => {result = x;});
-    // return result;
 }
 
 // Returns true iff the password is the one we have stored.
 async function validatePassword(email, pwd) {
-    // async function helper(){
-    // if (!findUser(email)) {
-    //     return false;
-    // }
     // CHECK PASSWORD
     try {
         const userData = await db.any({text:"SELECT email, salt, hash FROM users WHERE email = $1 LIMIT 1", values:[email]});
-        // console.log(userData);
         if (userData.length <= 0) {
             return false;
         }
@@ -178,14 +166,9 @@ async function validatePassword(email, pwd) {
         const userHash = userData[0].hash;
         return mc.check(pwd, userSalt, userHash);
     } catch(err) {
-        // console.log(err);
         console.error(err);
-        return false; //not sure best approach here
+        return false; //not sure best approach for what to return here
     }
-    // }
-    // let result = false;
-    // helper().then(x => {result = x;});
-    // return result;
 }
 
 function checkLoggedIn(req, res, next) {
@@ -212,18 +195,13 @@ app.post("/user/new", async (req, res) => {
         res.status(304);
         res.send("Account already exists.")
     } else {
-        //TODO: processes and sets data in some database
-        //Not sure what needs to be done in regards to that for this milestone since it's all dummy anyway... maybe nothing?
-        // const hash = faker.internet.password(); //in practice would take password and apply some actual hashing algorithm to get this
         const [salt, hash] = mc.hash(password);
-	    // users[name] = [salt, hash];
         try {
-            //TODO maybe should move into separate database.js? I'm finding this way easier though
+            //TODO maybe should move into separate database.js? I'm finding this way to be easier though
             //I think just gonna leave this way for now; have a database.js with functions for Find, Update etc. but the operations
             //I'm doing are too specific for me to use that without having to write like a separate function/if statement for every
             //time it's called at which point it'd just make the code harder to follow
             await db.none({text:"INSERT INTO users(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
-            // database.insert("user", {"email":email,"pass_hash":hash});
             console.log(`Created account: ${email}`);
             res.status(201);
             res.send('Created account.');
@@ -240,52 +218,12 @@ app.post("/user/new", async (req, res) => {
 //curl -H 'user_email : Test password : ABCDEF Content-Type: application/json' http://localhost:3000/user/login/
 app.post("/user/login",
     passport.authenticate("local")
-    // , {
-    //     'successRedirect' : '/welcome.html',
-    //     'failureRedirect' : '/index.html'
-    // })
     , (req, res) => {
-            // console.log(`New login from: ${email}`);
             res.status(200);
             res.send(JSON.stringify({
                 "login_status": "valid",
-                // "session_token": session_token
             }));
     }
-//     , async (req, res) => {
-//     if ("user_email" in req.body) {
-//         const email = req.body["user_email"];
-//         const password = req.body["password"];
-//         // database.find("user", {"email":email});
-//         // if (findUser(email)) {
-//         if (await validatePassword(email)) {
-//             // }
-//             //TODO tests if hash of passwords match, makes session token. On success:
-//             // const session_token = faker.internet.password();
-//             // database.insert("session", {"token":session_token, "email":email});
-//             //^this was something I thought might be needed for authentification but I don't think is
-
-//             console.log(`New login from: ${email}`);
-//             res.status(200);
-//             res.redirect('/welcome.html');
-//             res.send(JSON.stringify({
-//                 "login_status": "valid",
-//                 // "session_token": session_token
-//             }));
-//             // res.send(`login_status = "valid", session_token = ${session_token}`);
-//         } else {
-//             res.status(403);
-//             res.send(JSON.stringify({
-//                 "login_status": "invalid"
-//             }));
-//         }
-//     } else {
-//         res.status(400);
-//         res.send(JSON.stringify({
-//             "login_status": "invalid"
-//         }));
-//     }
-// });
 );
 
 // curl -X PUT -d '{ "session_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/edit
