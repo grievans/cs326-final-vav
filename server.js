@@ -27,7 +27,7 @@ const database = new Database();
 // });
 
 import expressSession from 'express-session';  // for managing session state
-import connectPgSimple from 'connect-pg-simple';
+import * as connectPgSimple from 'connect-pg-simple';
 const pgSession = connectPgSimple(expressSession);
 // TODO might have to change that to add a store that scales better, maybe connect-pg-simple since that'll integrate with our db
 import passport from 'passport';               // handles authentication
