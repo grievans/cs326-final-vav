@@ -293,6 +293,7 @@ app.put("/user/edit",
     checkLoggedIn, //Authentification
     async (req, res) => {
     //check if proper user
+    console.log(req.user);
     if (req.body.user_email === req.user) {
         // database.findAndUpdate("user", {"email": session_details.email}, changes);
         // //^again, maybe should identify with some separate id instead of email? IDK really, probably depends somewhat on how our database is actually set up
