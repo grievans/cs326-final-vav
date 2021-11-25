@@ -330,6 +330,7 @@ app.post("/task", async (req, res) => {
     const req_location = req.body["req_location"];
     const email = req.body["email"];
     const phoneNumber = req.body["phoneNumber"];
+    let req_status = "pending";// adding a status input
 
     try {
         // I think this is how it's supposed to be done but really not sure
@@ -342,6 +343,7 @@ app.post("/task", async (req, res) => {
         await db.none ({text:"INSERT INTO task(req_location, salt, hash) VALUES ($1, $2, $3)", values:[req_location, salt, hash]});
         await db.none ({text:"INSERT INTO task(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
         await db.none ({text:"INSERT INTO task(phoneNumber, salt, hash) VALUES ($1, $2, $3)", values:[phoneNumber, salt, hash]});
+        await db.none ({text:"INSERT INTO task(req_status, salt, hash) VALUES ($1, $2, $3)", values:[req_status, salt, hash]});
         res.status(201);
         res.send('Created task.');
     }catch(err) {
@@ -356,19 +358,55 @@ app.post("/task", async (req, res) => {
     // res.send('submitted, you are all set!!!!');
 });
 //for updating request quarantiining.html
-app.put("/task", (req, res) => {
-    const requestTitle = req.body["requestTitle"];
-    const requestDescription = req.body["requestDescription"];
-    const name = req.body["name"]; 
-    const req_location = req.body["req_location"];
-    const email = req.body["email"];
-    const phoneNumber = req.body["phoneNumber"];
+// app.put("/task", (req, res) => {
+//     const requestTitle = req.body["requestTitle"];
+//     const requestDescription = req.body["requestDescription"];
+//     const name = req.body["name"]; 
+//     const req_location = req.body["req_location"];
+//     const email = req.body["email"];
+//     const phoneNumber = req.body["phoneNumber"];
 
-    console.log("Updated body: ");
-    console.log(req.body);
-    res.status(201);
-    res.send('Updated, you are all set!!!!');
-});
+//     console.log("Updated body: ");
+//     console.log(req.body);
+//     res.status(201);
+//     res.send('Updated, you are all set!!!!');
+// });
+app.put("/task", 
+    //Authentification is not needed here
+    async (req, res) => {
+        // const email = req.body["user_email"];
+        // const displayName = req.body["display_name"];
+        // const phoneNumber = req.body["phone_number"];
+        const requestTitle = req.body["requestTitle"];
+        const requestDescription = req.body["requestDescription"];
+        const name = req.body["name"]; 
+        const req_location = req.body["req_location"];
+        const email = req.body["email"];
+        const phoneNumber = req.body["phoneNumber"];
+        
+        //check if proper user
+        //not sure but looks like it 
+        //checking email alone should be sufficient
+        if (email === req.user) {
+            try {
+                //Note for now I'm leaving tip_link out of it since none of our API stuff from last time mentioned it, I can re-add if people want it
+                await db.none({
+                    text:"UPDATE task SET requestTitle = $2, requestDescription = $3, name = $4, req_location = $5, phoneNumber = $6 WHERE email = $1", 
+                values:[email, requestTitle, requestDescription, name, req_location, phoneNumber]});
+                console.log(`Updated account: ${email} ${requestTitle} ${requestDescription} ${name} ${req_location} ${phoneNumber}`);
+                res.status(204);
+                res.send('Updated related task details.');
+            } catch(err) {
+                console.error(err);
+                res.status(500);
+                res.send('Failed to update task details.');
+            }
+        } else {
+            res.status(403);
+            res.send('Invalid session.');
+        }
+        
+    });
 //for geting request quarantiining.html
 app.get("/task", async (req, res) => {
     // const requestTitle = req.query["requestTitle"];
@@ -391,28 +429,68 @@ app.get("/task", async (req, res) => {
       }
 });
 //for deleting request quarantiining.html
-app.delete("/task", (req, res) => {
-    const requestTitle = req.body["requestTitle"];
-    const requestDescription = req.body["requestDescription"];
-    const name = req.body["name"]; 
-    const req_location = req.body["req_location"];
-    const email = req.body["email"];
-    const phoneNumber = req.body["phoneNumber"];
-
-    console.log("delete param: ");
-    console.log(req.body);
-    res.status(201);
-    res.send('Deleted, you are all set!!!!');
-});
+app.delete("/task", 
+    checkLoggedIn, //Authentification here is needed
+    async (req, res) => {
+        const email = req.body["user_email"];
+        //check if proper user
+        if (email === req.user) {
+            try {
+                await db.none({text:"DELETE FROM task WHERE email = $1", values:[email]});
+                console.log(`Deleted task from user ${email}`);
+                res.status(204);
+                res.send('Deleted task.');
+            } catch(err) {
+                console.error(err);
+                res.status(500);
+                res.send('Failed to delete task.');
+            }
+        } else {
+            res.status(403);
+            res.send('Invalid session.');
+        }
+        
+    });
 
 
 //for submiting request requestProgress.html
-app.post("/markProgress", (req, res) => {
-    const data = req.body["data"];
-    console.log("Post body: ");
-    console.log(req.body);
-    res.status(201);
-    res.send('Marked!! Changing status right now!!');
+app.post("/markProgress", 
+    async (req, res) => {
+        // const requestTitle = req.body["requestTitle"];
+        // const requestDescription = req.body["requestDescription"];
+        // const name = req.body["name"]; 
+        // const req_location = req.body["req_location"];
+        // const email = req.body["email"];
+        // const phoneNumber = req.body["phoneNumber"];
+        let req_status = "completed";
+        try {
+            // I think this is how it's supposed to be done but really not sure
+            // if I'm doing it right
+            // All this postgresql stuff is so confusing to me lol
+            // await db.none ({text:"INSERT INTO task(requestTitle, salt, hash) VALUES ($1, $2, $3)", values:[requestTitle, salt, hash]});
+            // console.log(`Created task: ${requestTitle}`);
+            // await db.none ({text:"INSERT INTO task(requestDescription, salt, hash) VALUES ($1, $2, $3)", values:[requestDescription, salt, hash]});
+            // await db.none ({text:"INSERT INTO task(name, salt, hash) VALUES ($1, $2, $3)", values:[name, salt, hash]});
+            // await db.none ({text:"INSERT INTO task(req_location, salt, hash) VALUES ($1, $2, $3)", values:[req_location, salt, hash]});
+            // await db.none ({text:"INSERT INTO task(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
+            // await db.none ({text:"INSERT INTO task(phoneNumber, salt, hash) VALUES ($1, $2, $3)", values:[phoneNumber, salt, hash]});
+            await db.none({text:"UPDATE task SET req_status = $2, WHERE email = $1", values:[email, req_status]});
+                console.log(`Updated task as completed: ${email} ${req_status}`);
+                res.status(204);
+                // res.send('Updated task÷ status.');
+                res.send('submitted, you are all set!!!!');
+            // res.status(201);
+            // res.send('Created task.');
+        }catch(err) {
+            console.error(err);
+            res.status(500);
+            res.send('Failed to update request status.');
+        }
+
+        // console.log("Post body: ");
+        // console.log(req.body);
+        // res.status(201);
+        // res.send('submitted, you are all set!!!!');
 });
 
 app.get("/markProgress", async (req, res) => {
@@ -424,13 +502,43 @@ app.get("/markProgress", async (req, res) => {
     // res.send(data);
 
     try {
-        const results = await db.query("SELECT * FROM task WHERE ");// TODO: need to update WHERE clause
+        const results = await db.none("SELECT * FROM task WHERE req_status = 'completed'");// TODO: need to update WHERE clause
         return res.json(results.rows);
       } catch (err) {
         return next(err);
       }
 });
 
+app.post("/comment", 
+    checkLoggedIn(),
+    async (req, res) => {
+    const task_id = req.body["task_id"];
+   const user_name = req.body["user_name"];
+   const contents = req.body["contents"]; 
+   try {
+       await db.none ({text:"INSERT INTO comments(task_id, salt, hash) VALUES ($1, $2, $3)", values:[task_id, salt, hash]});
+       console.log(`Created comment for ${task_id}`);
+       await db.none ({text:"INSERT INTO task(user_name, salt, hash) VALUES ($1, $2, $3)", values:[user_name, salt, hash]});
+       await db.none ({text:"INSERT INTO task(contents, salt, hash) VALUES ($1, $2, $3)", values:[contents, salt, hash]});
+       res.status(201);
+       res.send('Created comment.');
+   }
+   catch(err) {
+       console.error(err);
+       res.status(500);
+       res.send('Failed to add comment.');
+   }
+});
+
+app.get("/comment", async (req, res) => {
+   try {
+       const comms = await db.query("SELECT * FROM comments WHERE task_id = $1");
+       return res.json(comms.rows);
+   }
+   catch (err) {
+       return next(err);
+   }
+});
 
 
 //TODO not sure if needed?

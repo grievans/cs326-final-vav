@@ -45,6 +45,6 @@ https://cs326-final-vav-project.herokuapp.com/
 
 Griffin Evans: Login and user authentification + storing of user data in database; logout and user profile options. Setup of database structure and respective documentation; initialization of server connection to PostgreSQL and creation of tables.
 
-Joseph Yang:
+Joseph Yang: Completed all tasks/ requests related operations from asking request, updating request, deleting request from user and marking requests status from helper + debug.
 
-Aaron Tsui: Setup of database structure and tables, Debugging
+Aaron Tsui: Completed all comment related operations, Setup of database structure and tables, Debugging
