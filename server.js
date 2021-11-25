@@ -332,6 +332,9 @@ app.post("/task", async (req, res) => {
     const phoneNumber = req.body["phoneNumber"];
 
     try {
+        // I think this is how it's supposed to be done but really not sure
+        // if I'm doing it right
+        // All this postgresql stuff is so confusing to me lol
         await db.none ({text:"INSERT INTO task(requestTitle, salt, hash) VALUES ($1, $2, $3)", values:[requestTitle, salt, hash]});
         console.log(`Created task: ${requestTitle}`);
         await db.none ({text:"INSERT INTO task(requestDescription, salt, hash) VALUES ($1, $2, $3)", values:[requestDescription, salt, hash]});
