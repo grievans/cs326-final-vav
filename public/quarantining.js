@@ -40,6 +40,7 @@ function setup() {
     const req_location = document.getElementById('location');
     const email = document.getElementById('email');
     const phoneNumber = document.getElementById('phoneNumber');
+    const testint = 0;
 
     let data = {
       "requestTitle" : requestTitle.value, 
@@ -65,7 +66,8 @@ function setup() {
     }).then(function(response) {
       return response.text();
     }).then(function(text) {
-      alert(text);
+      alert(text + testint);
+      testint++;
       window.location.href="status.html";//jump to next page
     }).catch(function(error) {
       console.error(error);
