@@ -531,6 +531,34 @@ app.get("/markProgress", async (req, res) => {
       }
 });
 
+app.post("/comment", async (req, res) => {
+    const task_id = req.body["task_id"];
+   const user_name = req.body["user_name"];
+   const contents = req.body["contents"]; 
+   try {
+       await db.none ({text:"INSERT INTO comments(task_id, salt, hash) VALUES ($1, $2, $3)", values:[task_id, salt, hash]});
+       console.log(`Created comment for ${task_id}`);
+       await db.none ({text:"INSERT INTO task(user_name, salt, hash) VALUES ($1, $2, $3)", values:[user_name, salt, hash]});
+       await db.none ({text:"INSERT INTO task(contents, salt, hash) VALUES ($1, $2, $3)", values:[contents, salt, hash]});
+       res.status(201);
+       res.send('Created comment.');
+   }
+   catch(err) {
+       console.error(err);
+       res.status(500);
+       res.send('Failed to add comment.');
+   }
+});
+
+app.get("/comment", async (req, res) => {
+   try {
+       const comms = await db.query("SELECT * FROM comments WHERE task_id = $1");
+       return res.json(comms.rows);
+   }
+   catch (err) {
+       return next(err);
+   }
+});
 
 
 //TODO not sure if needed?
