@@ -44,7 +44,7 @@ https://cs326-final-vav-project.herokuapp.com/
 
 ## Division of Labor
 
-Griffin Evans: Login and user authentification; setup of database structure and tables
+Griffin Evans: Login and user authentification + storing of user data in database; setup of database structure and respective documentation; initialization of server connection to PostgreSQL and creation of tables.
 
 Joseph Yang:
 
