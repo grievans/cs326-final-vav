@@ -7,7 +7,7 @@ Fall 2021
 # Overview
 
 # Team Members
-Aaron - **OfficialAaronTsui** & **OfficialAaronTsui2**
+Aaron Tsui - **OfficialAaronTsui2** & **OfficialAaronTsui**
 
 Griffin Evans - **grievans**
 
