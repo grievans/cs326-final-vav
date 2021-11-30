@@ -1,7 +1,7 @@
 # Title
 Team Vav
 # Subtitle
-Quarantine Requests
+UMass Quarantine Requests
 # Semester
 Fall 2021
 # Overview
@@ -20,12 +20,11 @@ Joseph Yang - **JoJo-19**
 
 # Authentication/Authorization
 
-# Divison of Labor
+# Division of Labor
 
 # Conclusion
 
 
 
 ## Site link
-
 https://cs326-final-vav-project.herokuapp.com/
