@@ -7,12 +7,21 @@ Fall 2021
 # Overview
 
 # Team Members
-Aaron - **OfficialAaronTsui** & **OfficialAaronTsui2**
+Aaron Tsui - **OfficialAaronTsui2** & **OfficialAaronTsui**
 
 Griffin Evans - **grievans**
 
 Joseph Yang - **JoJo-19** 
 # User Interface
+
+
+# Rubric
+|      | Exemplary (5) | Good (4) | Satisfactory (3) | Competent (2) | Basic (1) |
+|------|---------------|----------|------------------|---------------|-----------|
+|Login, Logout, and Authentication|Application has ability to create account, login with credentials, and authenticate user|Application has ability to create account and login with credentials|Application has ability to create account|Application has login features on front-end but none on back-end|Application has no login-related features|
+|Tasks|Application can create tasks, update tasks, and delete tasks|Application can only create and update tasks|Application can only create tasks|Application has task features on front-end but none on back-end|Application has no task-related features|
+|Comments|Users can send comments to each other as well as create them|Users can create comments but not send them|Users cannot create comments|Application has comment features on front-end but none on back-end|Application has no comment-related features|
+
 
 # APIs
 
@@ -358,6 +367,7 @@ Aaron Tsui
 * Setup of database structure and tables
 * Application Testing and Debugging
 * Field designing and modification
+* Created and Modified Rubric
 
 
 Griffin Evans
