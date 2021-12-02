@@ -198,7 +198,7 @@ app.post("/user/new", async (req, res) => {
     const email = req.body["user_email"];
     const password = req.body["password"];
     if (email === "" || password === "") {
-        res.status(401)
+        res.status(400)
         res.send("Empty parameters.")
     } else if (await findUser(email)) {
         res.status(304);
@@ -230,14 +230,14 @@ app.post("/user/login",
     , (req, res) => {
             res.status(200);
             res.send(JSON.stringify({
-                "login_status": "valid",
+                "login_status": "valid"
             }));
     }
 );
 
 // curl -X PUT -d '{ "session_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/edit
 app.put("/user/edit", 
-    checkLoggedIn, //Authentification
+    checkLoggedIn, //Authentication
     async (req, res) => {
         const email = req.body["user_email"];
         const displayName = req.body["display_name"];
@@ -266,7 +266,7 @@ app.put("/user/edit",
 //curl -X DELETE -d '{ "dsession_token" : "Test" }' -H "Content-Type: application/json" http://localhost:3000/user/delete
 //not sure I should actually make this accessible to user since it'll cause issues presumably if someone were to make a task then delete the account might cause issues? IDK
 app.delete("/user/delete", 
-    checkLoggedIn, //Authentification
+    checkLoggedIn, //Authentication
     async (req, res) => {
         const email = req.body["user_email"];
         //check if proper user
@@ -372,7 +372,7 @@ app.post("/task", async (req, res) => {
 //     res.send('Updated, you are all set!!!!');
 // });
 app.put("/task", 
-    //Authentification is not needed here
+    //Authentication is not needed here
     async (req, res) => {
         // const email = req.body["user_email"];
         // const displayName = req.body["display_name"];
@@ -430,7 +430,7 @@ app.get("/task", async (req, res) => {
 });
 //for deleting request quarantiining.html
 app.delete("/task", 
-    checkLoggedIn, //Authentification here is needed
+    checkLoggedIn, //Authentication here is needed
     async (req, res) => {
         const email = req.body["user_email"];
         //check if proper user
