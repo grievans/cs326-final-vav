@@ -14,6 +14,15 @@ Griffin Evans - **grievans**
 Joseph Yang - **JoJo-19** 
 # User Interface
 
+
+# Rubric
+|      | Exemplary 5 | Good 4 | Satisfactory 3 | 
+|------|-------------|--------|----------------|
+|Login, Logout, and Authentication|Application has all 3: ability to create account, login with credentials, and authenticate user|Application has 2 of: ability to create account, login with credentials, and authenticate user|Application has 1 of: ability to create account, login with credentials, and authenticate user|
+|Tasks|Application can create tasks, update tasks, and delete tasks|Application can only create and update tasks|Application can only create tasks|
+|Comments|Users can send comments to each other as well as create them|Users can create comments but not send them|Users cannot create comments|
+
+
 # APIs
 
 # Database
