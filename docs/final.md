@@ -16,11 +16,11 @@ Joseph Yang - **JoJo-19**
 
 
 # Rubric
-|      | Exemplary 5 | Good 4 | Satisfactory 3 | 
-|------|-------------|--------|----------------|
-|Login, Logout, and Authentication|Application has all 3: ability to create account, login with credentials, and authenticate user|Application has 2 of: ability to create account, login with credentials, and authenticate user|Application has 1 of: ability to create account, login with credentials, and authenticate user|
-|Tasks|Application can create tasks, update tasks, and delete tasks|Application can only create and update tasks|Application can only create tasks|
-|Comments|Users can send comments to each other as well as create them|Users can create comments but not send them|Users cannot create comments|
+|      | Exemplary (5) | Good (4) | Satisfactory (3) | Competent (2) | Basic (1) |
+|------|---------------|----------|------------------|---------------|-----------|
+|Login, Logout, and Authentication|Application has ability to create account, login with credentials, and authenticate user|Application has ability to create account and login with credentials|Application has ability to create account|Application has login features on front-end but none on back-end|Application has no login-related features|
+|Tasks|Application can create tasks, update tasks, and delete tasks|Application can only create and update tasks|Application can only create tasks|Application has task features on front-end but none on back-end|Application has no task-related features|
+|Comments|Users can send comments to each other as well as create them|Users can create comments but not send them|Users cannot create comments|Application has comment features on front-end but none on back-end|Application has no comment-related features|
 
 
 # APIs
