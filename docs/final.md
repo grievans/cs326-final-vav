@@ -42,6 +42,7 @@ Aaron Tsui
 * Setup of database structure and tables
 * Application Testing and Debugging
 * Field designing and modification
+* Created and Modified Rubric
 
 
 Griffin Evans
