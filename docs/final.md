@@ -357,11 +357,11 @@ all | string |path |maximum number of comments to show parameter.
 
 |Column      |Data Type|Description|Constraints|
 |------------|---------|-----------|---|
-|email       |text|The email associated with the account|UNIQUE|
-|display_name|text|The name displayed to users||
-|phone_number|text|The user's phone number||
-|salt|text|The salt associated with the hash|NOT NULL|
-|hash|text|The hashed password+salt|NOT NULL|
+|email       |text|The email associated with the account.|UNIQUE|
+|display_name|text|The name displayed to users.||
+|phone_number|text|The user's phone number.||
+|salt|text|The salt associated with the hash.|NOT NULL|
+|hash|text|The hashed password+salt.|NOT NULL|
 <!-- using "text" not string since I'm going off of postgresql types  -->
 
 ## Task table
@@ -374,7 +374,9 @@ all | string |path |maximum number of comments to show parameter.
 |location|text|Location for the request.||
 |email|text|Email of the user who submitted the request.||
 |phone_number|text|Phone number of the user who submitted the request.||
-|id|serial|A numerical id distinct/unique for each added request.|UNIQUE|
+|id|serial|A numerical id, distinct/unique for each added request. Automatically set.|UNIQUE|
+<!-- sidenote apparently there's a new way to do this sort of thing in recent versions of PostgreSQL using "identity columns" but I think serial is fine for our purposes. -->
+<!-- also note technically serial isn't a true type, rather a variant of integer that postgresql has as syntactic sugar, but I think it makes sense just to say serial as the type here -->
 
 ## Comment table
 
