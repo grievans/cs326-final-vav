@@ -355,34 +355,34 @@ all | string |path |maximum number of comments to show parameter.
 
 ## User table
 
-|Column      |Data Type|Description|
-|------------|---------|-----------|
-|email       |text|The email associated with the account|
-|display_name|text|The name displayed to users|
-|phone_number|text|The user's phone number|
-|salt|text|The salt associated with the hash|
-|hash|text|The hashed password+salt|
+|Column      |Data Type|Description|Constraints|
+|------------|---------|-----------|---|
+|email       |text|The email associated with the account|UNIQUE|
+|display_name|text|The name displayed to users||
+|phone_number|text|The user's phone number||
+|salt|text|The salt associated with the hash|NOT NULL|
+|hash|text|The hashed password+salt|NOT NULL|
 <!-- using "text" not string since I'm going off of postgresql types  -->
 
 ## Task table
 
-|Column      |Data Type|Description|
-|------------|---------|-----------|
-|title|text|The title of the request.|
-|description|text|The description for the request.| 
-|user_name|text|Display name of the user who submitted the request.|
-|location|text|Location for the request.|
-|email|text|Email of the user who submitted the request.|
-|phone_number|text|Phone number of the user who submitted the request.|
-|id|serial|A numerical id distinct/unique for each added request.|
+|Column      |Data Type|Description|Constraints|
+|------------|---------|-----------|----|
+|title|text|The title of the request.||
+|description|text|The description for the request.||
+|user_name|text|Display name of the user who submitted the request.||
+|location|text|Location for the request.||
+|email|text|Email of the user who submitted the request.||
+|phone_number|text|Phone number of the user who submitted the request.||
+|id|serial|A numerical id distinct/unique for each added request.|UNIQUE|
 
 ## Comment table
 
-|Column      |Data Type|Description|
-|------------|---------|-----------|
-|task_id|integer|The id value for the associated task.|
-|user_name|text|Display name of the user who sent the comment.|
-|contents|text|The text of the comment.|
+|Column      |Data Type|Description|Constraints|
+|------------|---------|-----------|---|
+|task_id|integer|The id value for the associated task.||
+|user_name|text|Display name of the user who sent the comment.||
+|contents|text|The text of the comment.||
 
 # URL Routes/Mappings
 
