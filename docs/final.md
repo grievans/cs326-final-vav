@@ -5,7 +5,7 @@ UMass Quarantine Requests
 # Semester
 Fall 2021
 # Overview
-
+Our application is for UMass students under quarantine to make requests and helpers to complete those requests. Requests may include food requests, mail requests, and requests for COVID-19 tests from UMass UHS. 
 # Team Members
 Aaron Tsui - **OfficialAaronTsui2** & **OfficialAaronTsui**
 
