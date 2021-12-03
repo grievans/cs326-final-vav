@@ -388,6 +388,8 @@ all | string |path |maximum number of comments to show parameter.
 
 # URL Routes/Mappings
 
+<!-- TODO: Not totally sure what to put here, besides listing off the webpages and their urls; seems like it overlaps a bunch with the API part (since that list includes the routes for the non-page calls to the server). So I guess will need go over that stuff again but include some details about like authentification parts? -->
+
 # Authentication/Authorization
 
 # Division of Labor
