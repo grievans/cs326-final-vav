@@ -15,12 +15,41 @@ Joseph Yang - **JoJo-19**
 # User Interface
 <!-- TODO!!!!! -->
 
-# Rubric
-|      | Exemplary (5) | Good (4) | Satisfactory (3) | Competent (2) | Basic (1) |
-|------|---------------|----------|------------------|---------------|-----------|
-|Login, Logout, and Authentication|Application has ability to create account, login with credentials, and authenticate user|Application has ability to create account and login with credentials|Application has ability to create account|Application has login features on front-end but none on back-end|Application has no login-related features|
-|Tasks|Application can create tasks, update tasks, and delete tasks|Application can only create and update tasks|Application can only create tasks|Application has task features on front-end but none on back-end|Application has no task-related features|
-|Comments|Users can send comments to each other as well as create them|Users can create comments but not send them|Users cannot create comments|Application has comment features on front-end but none on back-end|Application has no comment-related features|
+# Final Rubric
+
+### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
+
+- Authentication
+  - Successfully create a user through sign up
+  - Successfully login a user
+  - Only able to view the details of the inner pages if you are a user.
+- Routing
+- Linting/ code style
+
+### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
+- Successfully create tasks
+- Successfully update tasks
+- Successfully view tasks
+- Successfully delete tasks
+  - Task deletion also deletes all related details like comments specific to task
+
+### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
+- Successfully create comments
+- Users can send comments to each other within application
+
+### CRUD &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  ___ / 5 pts									
+- Create: **1 pt**
+  - Users
+  - Tasks
+  - Comments
+- Read: **1 pt**
+  - Tasks
+- Update: **1 pt**
+  - Tasks
+- Delete: **1 pt**
+  - Tasks
+
+### &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Total:  ___ / 100 points
 
 
 # APIs
