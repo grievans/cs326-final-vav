@@ -13,7 +13,7 @@ Griffin Evans - **grievans**
 
 Joseph Yang - **JoJo-19** 
 # User Interface
-
+<!-- TODO!!!!! -->
 
 # Rubric
 |      | Exemplary (5) | Good (4) | Satisfactory (3) | Competent (2) | Basic (1) |
@@ -378,6 +378,8 @@ all | string |path |maximum number of comments to show parameter.
 <!-- sidenote apparently there's a new way to do this sort of thing in recent versions of PostgreSQL using "identity columns" but I think serial is fine for our purposes. -->
 <!-- also note technically serial isn't a true type, rather a variant of integer that postgresql has as syntactic sugar, but I think it makes sense just to say serial as the type here -->
 
+<!-- Just realized now maybe should add a "status" column that'd indicate if someone's signed on to complete it? -->
+
 ## Comment table
 
 |Column      |Data Type|Description|Constraints|
@@ -391,6 +393,14 @@ all | string |path |maximum number of comments to show parameter.
 <!-- TODO: Not totally sure what to put here, besides listing off the webpages and their urls; seems like it overlaps a bunch with the API part (since that list includes the routes for the non-page calls to the server). So I guess will need go over that stuff again but include some details about like authentification parts? -->
 
 # Authentication/Authorization
+
+Authentication is implemented using the *Passport* package and its *passport-local* module. Starting from the login page, the user enters their account's associated email and password. If they don't have an account, clicking the *Create Account* button will add an account to the database (assuming that email is not already in use), storing the email and salted hash (with the corresponding salt as well) for the password in the *users* table. After creating an account, or if they already have an account, they can log in, at which point the server takes a `POST` request containing the user's email and password, which is used with `passport.authenticate("local")` which then checks if it can find an account with that email in the *users* table, and if so then checks if salting and hashing the request's password gives a matching hash to the hash already stored in the table. If this process succeeds then authenticated as being logged in, and a user object is created for the current session, which stores the email that was used to log in.
+
+Later requests to the server then use this user data to verify that the request-sender has permission to perform the relevant actions. When on the `profile.html` page, one can see the publicly viewable data (email, display name, and phone number, if the latter two have been set) for the current user and using the *Update Defaults* button can make a request to `/user/edit`, which allows them to change the contact information (phone number and display name) that appears as a default when creating a new task. This first checks that the user is logged in (using `checkLoggedIn`, which checks if the request is authenticated and if not, stops the current request and redirects the user back to the login page) then checks if the email sent in the request matches that of the logged-in user, and if so proceeds to update their row in the *users* table to match the new information. Similarly, the `/user/delete` request only proceeds if the user requesting the delete has the same email as the account being deleted, again using `checkLoggedIn`, and otherwise no change is made to the database. Also note `/user/logout`, which has a request made to it when the user presses the *Logout* button in the Navbar at the top of each page, which logs the user out, ending their current session and redirecting them to the login page.
+<!-- TODO maybe should add an account delete button to profile.html -->
+
+On the `quarantining.html` page .... **TODO**
+<!-- TODO put description for how task and comments use authentication; I (Griffin) can write this probably but might hold off until I'm sure it actually all works first so I have the most up-to-date description to give. -->
 
 # Division of Labor
 Aaron Tsui
