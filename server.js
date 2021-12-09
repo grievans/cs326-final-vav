@@ -439,7 +439,7 @@ app.delete("/task/:id",
         //check if proper user
         // if (email === req.user) {
             try {
-                const deleteTask = await db.query ("DELETE FROM task WHERE task_id = $1", [id]);
+                await db.query ("DELETE FROM task WHERE task_id = $1", [id]);
                 // console.log(`Deleted task from user ${email}`);
                 res.status(204);
                 res.send('Deleted task.');
@@ -458,7 +458,7 @@ app.delete("/task/:id",
 
 
 //for submiting request requestProgress.html
-app.post("/task", 
+app.put("/task/:id", 
     async (req, res) => {
         // const requestTitle = req.body["requestTitle"];
         // const requestDescription = req.body["requestDescription"];
@@ -466,7 +466,8 @@ app.post("/task",
         // const req_location = req.body["req_location"];
         // const email = req.body["email"];
         // const phoneNumber = req.body["phoneNumber"];
-        let req_status = "completed";
+        // let req_status = "completed";
+        const id = req.params;
         try {
             // I think this is how it's supposed to be done but really not sure
             // if I'm doing it right
@@ -478,8 +479,8 @@ app.post("/task",
             // await db.none ({text:"INSERT INTO task(req_location, salt, hash) VALUES ($1, $2, $3)", values:[req_location, salt, hash]});
             // await db.none ({text:"INSERT INTO task(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
             // await db.none ({text:"INSERT INTO task(phoneNumber, salt, hash) VALUES ($1, $2, $3)", values:[phoneNumber, salt, hash]});
-            await db.none({text:"UPDATE task SET req_status = $2, WHERE email = $1", values:[email, req_status]});
-                console.log(`Updated task as completed: ${email} ${req_status}`);
+            await db.query ("UPDATE task SET req_status = $1 WHERE task_id = $2", ["completed", id]);
+                // console.log(`Updated task as completed: ${email} ${req_status}`);
                 res.status(204);
                 // res.send('Updated task÷ status.');
                 res.send('submitted, you are all set!!!!');
