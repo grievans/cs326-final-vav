@@ -20,9 +20,10 @@ Joseph Yang - **JoJo-19**
 ### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
 
 - Authentication
-  - Successfully create a user through sign up
-  - Successfully login a user
+  - Successfully create a user through sign-up
+  - Successfully login a user using details stored from sign-up
   - Only able to view the details of the inner pages if you are a user.
+    - Only able to edit account details corresponding to the currently logged-in user.
 - Routing
 - Linting/ code style
 
@@ -44,10 +45,14 @@ Joseph Yang - **JoJo-19**
   - Comments
 - Read: **1 pt**
   - Tasks
+  - User info
 - Update: **1 pt**
   - Tasks
+  - User info
 - Delete: **1 pt**
   - Tasks
+  - Users
+<!--  I haven't made a button on the site for that still but thinking I might just so we have more features to show; should already be implemented in backend fine I think  -->
 
 ### &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Total:  ___ / 100 points
 
