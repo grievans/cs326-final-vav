@@ -423,7 +423,7 @@ app.get("/task", async (req, res) => {
 
     try {
         const results = await db.query("SELECT * FROM task");// db named task
-        return res.json(results.rows);
+        res.json(results.rows);
       } catch (err) {
         return next(err);
       }
