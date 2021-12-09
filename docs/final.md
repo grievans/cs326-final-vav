@@ -17,7 +17,7 @@ Joseph Yang - **JoJo-19**
 
 # Final Rubric
 
-### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
+### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 40 pts
 
 - Authentication
   - Successfully create a user through sign-up
@@ -27,18 +27,18 @@ Joseph Yang - **JoJo-19**
 - Routing
 - Linting/ code style
 
-### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
+### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 28 pts
 - Successfully create tasks
 - Successfully update tasks
 - Successfully view tasks
 - Successfully delete tasks
   - Task deletion also deletes all related details like comments specific to task
 
-### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
+### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 28 pts
 - Successfully create comments
 - Users can send comments to each other within application
 
-### CRUD &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  ___ / 5 pts									
+### CRUD &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  ___ / 4 pts									
 - Create: **1 pt**
   - Users
   - Tasks
@@ -408,6 +408,7 @@ all | string |path |maximum number of comments to show parameter.
 |location|text|Location for the request.||
 |email|text|Email of the user who submitted the request.||
 |phone_number|text|Phone number of the user who submitted the request.||
+|req_status|text|The request status of the current task.||
 |id|serial|A numerical id, distinct/unique for each added request. Automatically set.|UNIQUE|
 <!-- sidenote apparently there's a new way to do this sort of thing in recent versions of PostgreSQL using "identity columns" but I think serial is fine for our purposes. -->
 <!-- also note technically serial isn't a true type, rather a variant of integer that postgresql has as syntactic sugar, but I think it makes sense just to say serial as the type here -->
@@ -462,11 +463,14 @@ Griffin Evans
 * initialization of server connection to PostgreSQL and creation of tables
 
 Joseph Yang
+* Modified wireframe design 
 * Created majority of right branch of site in code
 * Created navigation bar on site
 * Added visual effects to site
 * Modified links across site
 * All of Task-based requests
+* Modified rubric
+* Updated database structure
 * Completed all tasks/ requests related operations from asking request, updating request, deleting request from user and marking requests status from helper + debug
 
 # Conclusion
