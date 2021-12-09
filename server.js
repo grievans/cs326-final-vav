@@ -43,7 +43,7 @@ async function initializeDatabase() {
         console.error(err);
     }
     try {
-        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, id serial UNIQUE)"});
+        await db.none({text:"CREATE TABLE IF NOT EXISTS tasks (title text, description text, user_name text, location text, email text, phone_number text, req_status text, id serial UNIQUE)"});
     }
     catch(err) {
         console.error(err);
@@ -330,20 +330,20 @@ app.post("/task", async (req, res) => {
     const req_location = req.body["req_location"];
     const email = req.body["email"];
     const phoneNumber = req.body["phoneNumber"];
-    let req_status = "pending";// adding a status input
+    // let req_status = "pending";// adding a status input
 
     try {
         // I think this is how it's supposed to be done but really not sure
         // if I'm doing it right
         // All this postgresql stuff is so confusing to me lol
-        await db.none ({text:"INSERT INTO task(requestTitle, salt, hash) VALUES ($1, $2, $3)", values:[requestTitle, salt, hash]});
+        await db.query ("INSERT INTO task(title) VALUES ($1) RETURNING *", [requestTitle]);
         console.log(`Created task: ${requestTitle}`);
-        await db.none ({text:"INSERT INTO task(requestDescription, salt, hash) VALUES ($1, $2, $3)", values:[requestDescription, salt, hash]});
-        await db.none ({text:"INSERT INTO task(name, salt, hash) VALUES ($1, $2, $3)", values:[name, salt, hash]});
-        await db.none ({text:"INSERT INTO task(req_location, salt, hash) VALUES ($1, $2, $3)", values:[req_location, salt, hash]});
-        await db.none ({text:"INSERT INTO task(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
-        await db.none ({text:"INSERT INTO task(phoneNumber, salt, hash) VALUES ($1, $2, $3)", values:[phoneNumber, salt, hash]});
-        await db.none ({text:"INSERT INTO task(req_status, salt, hash) VALUES ($1, $2, $3)", values:[req_status, salt, hash]});
+        await db.query ("INSERT INTO task(description) VALUES ($1)", [requestDescription]);
+        await db.query ("INSERT INTO task(user_name) VALUES ($1)", [name]);
+        await db.query ("INSERT INTO task(location) VALUES ($1)", [req_location]);
+        await db.query ("INSERT INTO task(email) VALUES ($1)", [email]);
+        await db.query ("INSERT INTO task(phone_number) VALUES ($1)", [phoneNumber]);
+        await db.query ("INSERT INTO task(req_status) VALUES ($1)", ["pending"]);
         res.status(201);
         res.send('Created task.');
     }catch(err) {
@@ -454,7 +454,7 @@ app.delete("/task",
 
 
 //for submiting request requestProgress.html
-app.post("/markProgress", 
+app.post("/task", 
     async (req, res) => {
         // const requestTitle = req.body["requestTitle"];
         // const requestDescription = req.body["requestDescription"];
@@ -493,7 +493,7 @@ app.post("/markProgress",
         // res.send('submitted, you are all set!!!!');
 });
 
-app.get("/markProgress", async (req, res) => {
+app.get("/task", async (req, res) => {
     // const data = req.params["data"];
     // console.log("Get param: ");
     // console.log(req.params);
@@ -502,7 +502,7 @@ app.get("/markProgress", async (req, res) => {
     // res.send(data);
 
     try {
-        const results = await db.none("SELECT * FROM task WHERE req_status = 'completed'");// TODO: need to update WHERE clause
+        const results = await db.query ("SELECT * FROM task WHERE req_status = 'completed'");
         return res.json(results.rows);
       } catch (err) {
         return next(err);
