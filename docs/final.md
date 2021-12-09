@@ -17,26 +17,25 @@ Joseph Yang - **JoJo-19**
 
 # Final Rubric
 
-### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
+### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 30 pts
 
-- Authentication
-  - Successfully create a user through sign-up
-  - Successfully login a user using details stored from sign-up
-  - Only able to view the details of the inner pages if you are a user.
+- Authentication 
+  - Successfully create a user through sign-up **5 pts**
+  - Successfully login a user using details stored from sign-up **5 pts**
+  - Only able to view the details of the inner pages if you are a user. **5 pts**
     - Only able to edit account details corresponding to the currently logged-in user.
-- Routing
-- Linting/ code style
+- Routing **15 pts**
 
-### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
-- Successfully create tasks
-- Successfully update tasks
-- Successfully view tasks
-- Successfully delete tasks
+### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 15 pts
+- Successfully create tasks **4 pts**
+- Successfully update tasks **4 pts**
+- Successfully view tasks **4 pts**
+- Successfully delete tasks **3 pts**
   - Task deletion also deletes all related details like comments specific to task
 
-### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
-- Successfully create comments
-- Users can send comments to each other within application
+### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 30 pts
+- Successfully create comments **15 pts**
+- Users can send comments to each other within application **15 pts**
 
 ### CRUD &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  ___ / 25 pts									
 - Create: **3 pts each**
