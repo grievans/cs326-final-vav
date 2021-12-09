@@ -431,15 +431,16 @@ app.get("/task", async (req, res) => {
       }
 });
 //for deleting request quarantiining.html
-app.delete("/task", 
-    checkLoggedIn, //Authentication here is needed
+app.delete("/task/:id", 
+    // checkLoggedIn, //Authentication here is needed
     async (req, res) => {
-        const email = req.body["user_email"];
+        const id = req.params;
+        // const email = req.body["user_email"];
         //check if proper user
-        if (email === req.user) {
+        // if (email === req.user) {
             try {
-                await db.none({text:"DELETE FROM task WHERE email = $1", values:[email]});
-                console.log(`Deleted task from user ${email}`);
+                const deleteTask = await db.query ("DELETE FROM task WHERE task_id = $1", [id]);
+                // console.log(`Deleted task from user ${email}`);
                 res.status(204);
                 res.send('Deleted task.');
             } catch(err) {
@@ -447,10 +448,11 @@ app.delete("/task",
                 res.status(500);
                 res.send('Failed to delete task.');
             }
-        } else {
-            res.status(403);
-            res.send('Invalid session.');
-        }
+        
+        // else {
+        //     res.status(403);
+        //     res.send('Invalid session.');
+        // }
         
     });
 
