@@ -17,7 +17,7 @@ Joseph Yang - **JoJo-19**
 
 # Final Rubric
 
-### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 40 pts
+### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
 
 - Authentication
   - Successfully create a user through sign-up
@@ -27,29 +27,29 @@ Joseph Yang - **JoJo-19**
 - Routing
 - Linting/ code style
 
-### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 28 pts
+### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
 - Successfully create tasks
 - Successfully update tasks
 - Successfully view tasks
 - Successfully delete tasks
   - Task deletion also deletes all related details like comments specific to task
 
-### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 28 pts
+### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 25 pts
 - Successfully create comments
 - Users can send comments to each other within application
 
-### CRUD &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  ___ / 4 pts									
-- Create: **1 pt**
+### CRUD &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  ___ / 25 pts									
+- Create: **3 pts each**
   - Users
   - Tasks
   - Comments
-- Read: **1 pt**
+- Read: **3 pts each**
   - Tasks
   - User info
-- Update: **1 pt**
+- Update: **3 pts each**
   - Tasks
   - User info
-- Delete: **1 pt**
+- Delete: **2 pts each**
   - Tasks
   - Users
 <!--  I haven't made a button on the site for that still but thinking I might just so we have more features to show; should already be implemented in backend fine I think  -->
