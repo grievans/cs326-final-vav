@@ -43,12 +43,12 @@ function setup() {
     
 
     let data = {
-      "requestTitle" : requestTitle.value, 
-      "requestDescription" : requestDescription.value, 
-      "name" : name.value, 
-      "req_location" : req_location.value, 
+      "title" : requestTitle.value, 
+      "description" : requestDescription.value, 
+      "user_name" : name.value, 
+      "location" : req_location.value, 
       "email" : email.value, 
-      "phoneNumber" : phoneNumber.value, 
+      "phone_number" : phoneNumber.value, 
     };
 
     fetch('/task', {
@@ -86,12 +86,12 @@ function setup() {
     const phoneNumber = document.getElementById('phoneNumber');
 
     let data = {
-      "requestTitle" : requestTitle.value, 
-      "requestDescription" : requestDescription.value, 
-      "name" : name.value, 
-      "req_location" : req_location.value, 
+      "title" : requestTitle.value, 
+      "description" : requestDescription.value, 
+      "user_name" : name.value, 
+      "location" : req_location.value, 
       "email" : email.value, 
-      "phoneNumber" : phoneNumber.value, 
+      "phone_number" : phoneNumber.value, 
     };
 
     fetch('/task', {
@@ -130,16 +130,16 @@ function setup() {
     const phoneNumber = document.getElementById('phoneNumber');
 
     let data = {
-      "requestTitle" : requestTitle.value, 
-      "requestDescription" : requestDescription.value, 
-      "name" : name.value, 
-      "req_location" : req_location.value, 
+      "title" : requestTitle.value, 
+      "description" : requestDescription.value, 
+      "user_name" : name.value, 
+      "location" : req_location.value, 
       "email" : email.value, 
-      "phoneNumber" : phoneNumber.value, 
+      "phone_number" : phoneNumber.value, 
     };
 
-    query = "requestTitle="+requestTitle.value + "&" +"requestDescription=" + requestDescription.value + "&" +"name=" + name.value + 
-    "&" +"location=" + req_location.value + "&" +"email=" + email.value + "&" +"phone=" + phoneNumber.value;
+    query = "title="+requestTitle.value + "&" +"description=" + requestDescription.value + "&" +"user_name=" + name.value + 
+    "&" +"location=" + req_location.value + "&" +"email=" + email.value + "&" +"phone_number=" + phoneNumber.value;
 
     fetch('/task/?' + query, {
 
@@ -176,12 +176,12 @@ function setup() {
     const phoneNumber = document.getElementById('phoneNumber');
 
     let data = {
-      "requestTitle" : '', 
-      "requestDescription" : '', 
-      "name" : '', 
-      "req_location" : '', 
+      "title" : '', 
+      "description" : '', 
+      "user_name" : '', 
+      "location" : '', 
       "email" : '', 
-      "phoneNumber" : '', 
+      "phone_number" : '', 
     };
 
     // query = "requestTitle="+requestTitle.value + "&" +"requestDescription=" + requestDescription.value + "&" +"name=" + name.value + 
