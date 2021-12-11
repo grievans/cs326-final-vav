@@ -344,17 +344,15 @@ app.post("/task", async (req, res) => {
     // let req_status = "pending";// adding a status input
 
     try {
-        // I think this is how it's supposed to be done but really not sure
-        // if I'm doing it right
-        // All this postgresql stuff is so confusing to me lol
-        await db.query ("INSERT INTO task(title) VALUES ($1) RETURNING *", [requestTitle]);
+        await db.query ("INSERT INTO task(title, description, user_name, location, email, phone_number, req_status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", 
+        [requestTitle, requestDescription, name, req_location, email, phoneNumber, "pending"]);
         console.log(`Created task: ${requestTitle}`);
-        await db.query ("INSERT INTO task(description) VALUES ($1)", [requestDescription]);
-        await db.query ("INSERT INTO task(user_name) VALUES ($1)", [name]);
-        await db.query ("INSERT INTO task(location) VALUES ($1)", [req_location]);
-        await db.query ("INSERT INTO task(email) VALUES ($1)", [email]);
-        await db.query ("INSERT INTO task(phone_number) VALUES ($1)", [phoneNumber]);
-        await db.query ("INSERT INTO task(req_status) VALUES ($1)", ["pending"]);
+        // await db.query ("INSERT INTO task(description) VALUES ($1)", [requestDescription]);
+        // await db.query ("INSERT INTO task(user_name) VALUES ($1)", [name]);
+        // await db.query ("INSERT INTO task(location) VALUES ($1)", [req_location]);
+        // await db.query ("INSERT INTO task(email) VALUES ($1)", [email]);
+        // await db.query ("INSERT INTO task(phone_number) VALUES ($1)", [phoneNumber]);
+        // await db.query ("INSERT INTO task(req_status) VALUES ($1)", ["pending"]);
         res.status(201);
         res.send('Created task.');
     }catch(err) {
