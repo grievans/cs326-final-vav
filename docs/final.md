@@ -16,46 +16,6 @@ Joseph Yang - **JoJo-19**
 # User Interface
 <!-- TODO!!!!! -->
 
-# Final Rubric
-
-### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 30 pts
-
-- Authentication 
-  - Successfully create a user through sign-up **5 pts**
-  - Successfully login a user using details stored from sign-up **5 pts**
-  - Only able to view the details of the inner pages if you are a user. **5 pts**
-    - Only able to edit account details corresponding to the currently logged-in user.
-- Routing **15 pts**
-
-### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 15 pts
-- Successfully create tasks **4 pts**
-- Successfully update tasks **4 pts**
-- Successfully view tasks **4 pts**
-- Successfully delete tasks **3 pts**
-  - Task deletion also deletes all related details like comments specific to task
-
-### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 30 pts
-- Successfully create comments **15 pts**
-- Users can send comments to each other within application **15 pts**
-
-### CRUD &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  ___ / 25 pts									
-- Create: **3 pts each**
-  - Users
-  - Tasks
-  - Comments
-- Read: **3 pts each**
-  - Tasks
-  - User info
-- Update: **3 pts each**
-  - Tasks
-  - User info
-- Delete: **2 pts each**
-  - Tasks
-  - Users
-<!--  I haven't made a button on the site for that still but thinking I might just so we have more features to show; should already be implemented in backend fine I think  -->
-
-### &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Total:  ___ / 100 points
-
 
 # APIs
 
@@ -435,7 +395,7 @@ all | string |path |maximum number of comments to show parameter.
 |/index.html|html|Introduction and login page|Needs no authentication to access but is used to set up later authentication.|
 |/profile.html|html|User profile page, where accounts can be updated or deleted.|Updating/deleting requires authentication, as specified earlier.|
 |/welcome.html|html|Welcome page leading users to the pages for making/viewing requests.||
-|/quarantining.html|html|Page used to make a new request.|Doesn't require authentication to access but do should be logged in for the loading of user defaults.|
+|/quarantining.html|html|Page used to make a new request.|Doesn't require authentication to access but should be logged in for the loading of user defaults.|
 |/status.html|html|Displays status of a created task.||
 |/requestHolder.html|html|Displays currently active tasks.||
 |/requestProgress.html|html|Displays info of a selected task.||
@@ -493,6 +453,45 @@ Joseph Yang
 # Conclusion
 
 
+
+# Final Rubric
+
+### General &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 30 pts
+
+- Authentication 
+  - Successfully create a user through sign-up **5 pts**
+  - Successfully login a user using details stored from sign-up **5 pts**
+  - Only able to view the details of the inner pages if you are a user. **5 pts**
+    - Only able to edit account details corresponding to the currently logged-in user.
+- Routing **15 pts**
+
+### Tasks &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 15 pts
+- Successfully create tasks **4 pts**
+- Successfully update tasks **4 pts**
+- Successfully view tasks **4 pts**
+- Successfully delete tasks **3 pts**
+  - Task deletion also deletes all related details like comments specific to task
+
+### Comments &emsp; &emsp; &emsp; &emsp; &emsp; ___ / 30 pts
+- Successfully create comments **15 pts**
+- Users can send comments to each other within application **15 pts**
+
+### CRUD &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  ___ / 25 pts									
+- Create: **3 pts each**
+  - Users
+  - Tasks
+  - Comments
+- Read: **3 pts each**
+  - Tasks
+  - User info
+- Update: **3 pts each**
+  - Tasks
+  - User info
+- Delete: **2 pts each**
+  - Tasks
+  - Users
+
+### &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Total:  ___ / 100 points
 
 ## Site link
 https://cs326-final-vav-project.herokuapp.com/
