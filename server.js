@@ -353,6 +353,7 @@ app.post("/task", async (req, res) => {
         res.status(500);
         res.send('Failed to add request.');
     }
+});
 
 app.put("/task/:id", async (req, res) => {
         const id = req.params;//WHERE
