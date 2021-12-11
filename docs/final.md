@@ -279,12 +279,7 @@ method: delete
 
 | requestTitle | requestDescription | name | req_location | email | phoneNumber | 
 |--------------|--------------------|------|--------------|-------|-------------|
-|requestTitle|string|body|The request to be made.|
-|requestDescription|string|body|The description for the request.| 
-|name|string|body|Name for the person who submit request.|
-|req_location|string|body|Location for the request.|
-|email|string|body|Email to reach the person asking for help.|
-|phoneNumber|string|body|Phone number to reach the person asking for help.|
+|id|integer|params|The ID of the request to be deleted.|
 
 *Response:*
     Client: Request delete from server.
@@ -424,19 +419,18 @@ all | string |path |maximum number of comments to show parameter.
 # URL Routes/Mappings
 
 <!-- TODO: Not totally sure what to put here, besides listing off the webpages and their urls; seems like it overlaps a bunch with the API part (since that list includes the routes for the non-page calls to the server). So I guess will need go over that stuff again but include some details about like authentification parts? -->
-|Route|Method/Type|Description|Authentication|
+|Route|Method/Type|Description|Authentication Details (where applicable)|
 |----|----|----|----|
-|/user/login|POST|||
-|/user/logout|GET|||
-|/user/new|POST|||
-|/user/edit|PUT|||
-|/user/delete|DELETE|||
-|/user/data|GET|||
-|/task|POST|||
-|/task|GET|||
-|/task/:id|GET|||
-|/task/:id|PUT|||
-|/task/:id|DELETE|||
+|/user/login|POST|Logs an existing user into their account.|Only works if hash of password matches that of the account in the database, then sets the user to be authenticated for the rest of the session.|
+|/user/logout|GET|Logs out the current user.||
+|/user/new|POST|Creates a new user when provided with a new email and a password.||
+|/user/edit|PUT|Edits the default values that appear when the user makes a new task.|Requires the user to be logged in; only works if attempting to edit the account that the client is authenticated as being.|
+|/user/delete|DELETE|Removes a user's account from the database.|Again requires login and that the client account is authenticated as matching the target account.|
+|/user/data|GET|Gets publicly viewable data for an account (name, email, phone number).||
+|/task|POST|Creates a new task using the provided title, description, etc.|| <!-- should probably have some authentication for this (really should probably be storing what account makes each) but doesn't currently -->
+|/task|GET|Gets the list of currently available tasks.||
+|/task/:id|PUT|Updates an already created task.||
+|/task/:id|DELETE|Removes a task ||
 |/index.html|html|||
 |/profile.html|html|||
 |/quarantining.html|html|||

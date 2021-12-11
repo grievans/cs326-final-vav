@@ -366,7 +366,7 @@ app.put("/task/:id", async (req, res) => {
 
         try {
                 await db.query (
-                    "UPDATE tasks SET email = $1, title = $2, description = $3, name = $4, location = $5, phone_number = $6 WHERE task_id = $7", 
+                    "UPDATE tasks SET email = $1, title = $2, description = $3, name = $4, location = $5, phone_number = $6 WHERE id = $7", 
                 [email, requestTitle, requestDescription, name, req_location, phoneNumber, id]);
                 res.status(204);
                 res.send('Updated related task details.');
@@ -395,20 +395,32 @@ app.get("/task", async (req, res) => {
 app.delete("/task/:id", 
     // checkLoggedIn, //Authentication here is needed
     async (req, res) => {
-        const id = req.params;
+        const id = req.params.id;
         // const email = req.body["user_email"];
         //check if proper user
         // if (email === req.user) {
-            try {
-                await db.query ("DELETE FROM tasks WHERE task_id = $1", [id]);
-                // console.log(`Deleted task from user ${email}`);
-                res.status(204);
-                res.send('Deleted task.');
-            } catch(err) {
-                console.error(err);
-                res.status(500);
-                res.send('Failed to delete task.');
-            }
+        // try {
+        //     const userData = await db.one({text:"SELECT email FROM tasks WHERE task_id = $1 LIMIT 1", values:[id]});
+        //     if (userData.length > 0) {
+        try {
+            await db.query ("DELETE FROM tasks WHERE id = $1", [id]);
+            await db.query ("DELETE FROM comments WHERE task_id = $1", [id]); //remove associated comments
+            // console.log(`Deleted task from user ${email}`);
+            res.status(204);
+            res.send('Deleted task.');
+        } catch(err) {
+            console.error(err);
+            res.status(500);
+            res.send('Failed to delete task.');
+        }
+        //     } else {
+
+        //     }
+        // } catch(err) {
+        //     console.error(err);
+        //     res.status(500);
+        //     res.send('Failed to find task.');
+        // }
     });
 
 
@@ -419,7 +431,7 @@ app.put("/task/:id",
         const id = req.params;
         try {
             
-            await db.query ("UPDATE tasks SET req_status = $1 WHERE task_id = $2", ["completed", id]);
+            await db.query ("UPDATE tasks SET req_status = $1 WHERE id = $2", ["completed", id]);
                 res.status(204);
                 res.send('submitted, you are all set!!!!');
         }catch(err) {
@@ -438,8 +450,8 @@ app.post("/comment",
     try {
        await db.none ({text:"INSERT INTO comments(task_id, user_name, contents) VALUES ($1, $2, $3)", values:[task_id, user_name, contents]});
        console.log(`Created comment for ${task_id}`);
-       await db.none ({text:"INSERT INTO tasks(user_name, salt, hash) VALUES ($1, $2, $3)", values:[user_name, salt, hash]});
-       await db.none ({text:"INSERT INTO tasks(contents, salt, hash) VALUES ($1, $2, $3)", values:[contents, salt, hash]});
+    //    await db.none ({text:"INSERT INTO tasks(user_name, salt, hash) VALUES ($1, $2, $3)", values:[user_name, salt, hash]});
+    //    await db.none ({text:"INSERT INTO tasks(contents, salt, hash) VALUES ($1, $2, $3)", values:[contents, salt, hash]});
        res.status(201);
        res.send('Created comment.');
     }
@@ -451,13 +463,14 @@ app.post("/comment",
 });
 // get comment
 app.get("/comment", async (req, res) => {
-   try {
-       const comms = await db.query("SELECT * FROM comments WHERE task_id = $1");
-       return res.json(comms.rows);
-   }
-   catch (err) {
-       return next(err);
-   }
+    const task_id = req.body["task_id"];
+    try {
+        const comms = await db.query("SELECT * FROM comments WHERE task_id = $1", [task_id]);
+        return res.json(comms.rows);
+    }
+    catch (err) {
+        return next(err);
+    }
 });
 
 
