@@ -334,7 +334,7 @@ app.get('/user/logout', (req, res) => {
 });
 
 //for submiting request quarantiining.html
-app.post("/task", async (req, res) => {
+app.post("/tasks", async (req, res) => {
     const requestTitle = req.body["requestTitle"];
     const requestDescription = req.body["requestDescription"];
     const name = req.body["name"]; 
@@ -344,7 +344,7 @@ app.post("/task", async (req, res) => {
     // let req_status = "pending";// adding a status input
 
     try {
-        await db.query ("INSERT INTO task(title, description, user_name, location, email, phone_number, req_status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", 
+        await db.query ("INSERT INTO tasks(title, description, user_name, location, email, phone_number, req_status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", 
         [requestTitle, requestDescription, name, req_location, email, phoneNumber, "pending"]);
         console.log(`Created task: ${requestTitle}`);
         // await db.query ("INSERT INTO task(description) VALUES ($1)", [requestDescription]);
@@ -380,7 +380,7 @@ app.post("/task", async (req, res) => {
 //     res.status(201);
 //     res.send('Updated, you are all set!!!!');
 // });
-app.put("/task/:id", 
+app.put("/tasks/:id", 
     //Authentication is not needed here
     async (req, res) => {
         // const email = req.body["user_email"];
@@ -401,7 +401,7 @@ app.put("/task/:id",
             try {
                 //Note for now I'm leaving tip_link out of it since none of our API stuff from last time mentioned it, I can re-add if people want it
                 await db.query (
-                    "UPDATE task SET email = $1, title = $2, description = $3, name = $4, location = $5, phone_number = $6 WHERE task_id = $7", 
+                    "UPDATE tasks SET email = $1, title = $2, description = $3, name = $4, location = $5, phone_number = $6 WHERE task_id = $7", 
                 [email, requestTitle, requestDescription, name, req_location, phoneNumber, id]);
                 // console.log(`Updated account: ${email} ${requestTitle} ${requestDescription} ${name} ${req_location} ${phoneNumber}`);
                 res.status(204);
@@ -419,7 +419,7 @@ app.put("/task/:id",
         
     });
 //for geting request quarantiining.html
-app.get("/task", async (req, res) => {
+app.get("/tasks", async (req, res) => {
     // const requestTitle = req.query["requestTitle"];
     // const requestDescription = req.query["requestDescription"];
     // const name = req.query["name"]; 
@@ -433,14 +433,14 @@ app.get("/task", async (req, res) => {
     // res.json(req.query);
 
     try {
-        const results = await db.query("SELECT * FROM task");// db named task
+        const results = await db.query("SELECT * FROM tasks");// db named task
         res.json(results.rows);
       } catch (err) {
         return next(err);
       }
 });
 //for deleting request quarantiining.html
-app.delete("/task/:id", 
+app.delete("/tasks/:id", 
     // checkLoggedIn, //Authentication here is needed
     async (req, res) => {
         const id = req.params;
@@ -448,7 +448,7 @@ app.delete("/task/:id",
         //check if proper user
         // if (email === req.user) {
             try {
-                await db.query ("DELETE FROM task WHERE task_id = $1", [id]);
+                await db.query ("DELETE FROM tasks WHERE task_id = $1", [id]);
                 // console.log(`Deleted task from user ${email}`);
                 res.status(204);
                 res.send('Deleted task.');
@@ -467,7 +467,7 @@ app.delete("/task/:id",
 
 
 //for submiting request requestProgress.html
-app.put("/task/:id", 
+app.put("/tasks/:id", 
     async (req, res) => {
         // const requestTitle = req.body["requestTitle"];
         // const requestDescription = req.body["requestDescription"];
@@ -488,7 +488,7 @@ app.put("/task/:id",
             // await db.none ({text:"INSERT INTO task(req_location, salt, hash) VALUES ($1, $2, $3)", values:[req_location, salt, hash]});
             // await db.none ({text:"INSERT INTO task(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
             // await db.none ({text:"INSERT INTO task(phoneNumber, salt, hash) VALUES ($1, $2, $3)", values:[phoneNumber, salt, hash]});
-            await db.query ("UPDATE task SET req_status = $1 WHERE task_id = $2", ["completed", id]);
+            await db.query ("UPDATE tasks SET req_status = $1 WHERE task_id = $2", ["completed", id]);
                 // console.log(`Updated task as completed: ${email} ${req_status}`);
                 res.status(204);
                 // res.send('Updated task÷ status.');
@@ -507,7 +507,7 @@ app.put("/task/:id",
         // res.send('submitted, you are all set!!!!');
 });
 
-app.get("/task", async (req, res) => {
+app.get("/tasks", async (req, res) => {
     // const data = req.params["data"];
     // console.log("Get param: ");
     // console.log(req.params);
@@ -516,7 +516,7 @@ app.get("/task", async (req, res) => {
     // res.send(data);
 
     try {
-        const results = await db.query ("SELECT * FROM task WHERE req_status = 'completed'");
+        const results = await db.query ("SELECT * FROM tasks WHERE req_status = 'completed'");
         return res.json(results.rows);
       } catch (err) {
         return next(err);
