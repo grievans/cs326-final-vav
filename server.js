@@ -335,12 +335,12 @@ app.get('/user/logout', (req, res) => {
 
 //for submiting request quarantiining.html
 app.post("/task", async (req, res) => {
-    const requestTitle = req.body["requestTitle"];
-    const requestDescription = req.body["requestDescription"];
+    const requestTitle = req.body["title"];
+    const requestDescription = req.body["description"];
     const name = req.body["name"]; 
-    const req_location = req.body["req_location"];
+    const req_location = req.body["location"];
     const email = req.body["email"];
-    const phoneNumber = req.body["phoneNumber"];
+    const phoneNumber = req.body["phone_number"];
     // let req_status = "pending";// adding a status input
 
     try {
@@ -387,12 +387,12 @@ app.put("/task/:id",
         // const displayName = req.body["display_name"];
         // const phoneNumber = req.body["phone_number"];
         const id = req.params;//WHERE
-        const requestTitle = req.body["requestTitle"];
-        const requestDescription = req.body["requestDescription"];
+        const requestTitle = req.body["title"];
+        const requestDescription = req.body["description"];
         const name = req.body["name"]; 
-        const req_location = req.body["req_location"];
+        const req_location = req.body["location"];
         const email = req.body["email"];
-        const phoneNumber = req.body["phoneNumber"];
+        const phoneNumber = req.body["phone_number"];
         
         //check if proper user
         //not sure but looks like it 
