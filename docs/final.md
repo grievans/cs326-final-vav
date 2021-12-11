@@ -6,6 +6,7 @@ UMass Quarantine Requests
 Fall 2021
 # Overview
 Our application is for UMass students under quarantine to make requests and helpers to complete those requests. Requests may include food requests, mail requests, and requests for COVID-19 tests from UMass UHS. 
+<!-- TODO "You should also mention why your application is innovative"  -->
 # Team Members
 Aaron Tsui - **OfficialAaronTsui2** & **OfficialAaronTsui**
 
@@ -153,7 +154,7 @@ If an error occurs when accessing the account in the database:
 
 Removes the user's account from the database.
 
-**PUT** /user/delete
+**DELETE** /user/delete
 
 *Parameters:*
 
@@ -412,8 +413,6 @@ all | string |path |maximum number of comments to show parameter.
 <!-- sidenote apparently there's a new way to do this sort of thing in recent versions of PostgreSQL using "identity columns" but I think serial is fine for our purposes. -->
 <!-- also note technically serial isn't a true type, rather a variant of integer that postgresql has as syntactic sugar, but I think it makes sense just to say serial as the type here -->
 
-<!-- Just realized now maybe should add a "status" column that'd indicate if someone's signed on to complete it? -->
-
 ## Comment table
 
 |Column      |Data Type|Description|Constraints|
@@ -425,6 +424,29 @@ all | string |path |maximum number of comments to show parameter.
 # URL Routes/Mappings
 
 <!-- TODO: Not totally sure what to put here, besides listing off the webpages and their urls; seems like it overlaps a bunch with the API part (since that list includes the routes for the non-page calls to the server). So I guess will need go over that stuff again but include some details about like authentification parts? -->
+|Route|Method/Type|Description|Authentication|
+|----|----|----|----|
+|/user/login|POST|||
+|/user/logout|GET|||
+|/user/new|POST|||
+|/user/edit|PUT|||
+|/user/delete|DELETE|||
+|/user/data|GET|||
+|/task|POST|||
+|/task|GET|||
+|/task/:id|GET|||
+|/task/:id|PUT|||
+|/task/:id|DELETE|||
+|/index.html|html|||
+|/profile.html|html|||
+|/quarantining.html|html|||
+|/requestHolder.html|html|||
+|/requestProgress.html|html|||
+|/status.html|html|||
+|/welcome.html|html|||
+|/images/campus.jpg|image|||
+<!-- |/images/campus2.jpg|image||| No longer being used so will leave out, I think-->
+
 
 # Authentication/Authorization
 
@@ -456,10 +478,11 @@ Griffin Evans
 * Redesigned status page and reformatted multiple pages
 * Stylized site better
 * All of account/login
-* Login and user authentification + storing of user data in database
+* Login and user authentication + storing of user data in database
 * logout and user profile options
 * Setup of database structure and respective documentation
 * initialization of server connection to PostgreSQL and creation of tables
+* Updating of documentation for database and API
 
 Joseph Yang
 * Modified wireframe design 

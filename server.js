@@ -385,9 +385,11 @@ app.get("/task", async (req, res) => {
     try {
         const results = await db.query("SELECT * FROM tasks");// db named task
         res.json(results.rows);
-      } catch (err) {
-        return next(err);
-      }
+    } catch (err) {
+        console.error(err);
+        res.status(500);
+        res.send('Failed to get list of tasks.');
+    }
 });
 //for deleting request quarantiining.html
 app.delete("/task/:id", 
@@ -425,15 +427,6 @@ app.put("/task/:id",
             res.status(500);
             res.send('Failed to update request status.');
         }
-});
-
-app.get("/task", async (req, res) => {
-   try {
-        const results = await db.query ("SELECT * FROM tasks WHERE req_status = 'completed'");
-        return res.json(results.rows);
-      } catch (err) {
-        return next(err);
-      }
 });
 // create comment
 app.post("/comment", 
