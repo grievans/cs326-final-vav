@@ -51,7 +51,7 @@ function setup() {
       "phone_number" : phoneNumber.value, 
     };
 
-    fetch('/task', {
+    fetch('/tasks', {
 
       method: 'post', 
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -94,7 +94,7 @@ function setup() {
       "phone_number" : phoneNumber.value, 
     };
 
-    fetch('/task', {
+    fetch('/tasks', {
 
       method: 'put', 
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -141,7 +141,7 @@ function setup() {
     query = "title="+requestTitle.value + "&" +"description=" + requestDescription.value + "&" +"user_name=" + name.value + 
     "&" +"location=" + req_location.value + "&" +"email=" + email.value + "&" +"phone_number=" + phoneNumber.value;
 
-    fetch('/task/?' + query, {
+    fetch('/tasks/?' + query, {
 
       method: 'get', 
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -187,7 +187,7 @@ function setup() {
     // query = "requestTitle="+requestTitle.value + "&" +"requestDescription=" + requestDescription.value + "&" +"name=" + name.value + 
     // "&" +"location=" + req_location.value + "&" +"email=" + email.value + "&" +"phone=" + phoneNumber.value;
 
-    fetch('/task', {
+    fetch('/tasks', {
 
       method: 'delete', 
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
