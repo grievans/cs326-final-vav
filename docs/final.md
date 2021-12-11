@@ -162,8 +162,6 @@ If `target_email` has no matching account:
 
 
 
-<!-- TODO API section below still to be updated -->
-
 ## Create Task
 Creates a new request. 
 
@@ -227,9 +225,9 @@ On failure:
 
 
 ## Delete Tasks
-Delete the requested data.
+Delete the specified task as well as any comments associated with that task.
 
-**DELETE** /task
+**DELETE** /task/:id
 
 *Parameters:*
 
@@ -237,25 +235,35 @@ Delete the requested data.
 |--------------|--------------------|------|--------------|
 |id|integer|params|The ID of the request to be deleted.|
 
+*Use:*
+
+  Client: Request delete from server.
+
+  Server: Delete from DB. Let client know it's deleted from DB.
+
 *Response:*
-    Client: Request delete from server.
-    Server: Delete from DB(future). Let client know it's deleted from DB.
-    Example output would be:
-    'Deleted, you are all set!!!!'
+
+Example output would be:
+
+    'Deleted task.'
+
+On failure:
+
+    Status: 500 Internal Server Error
 
 ## Edit Task
-Update the requested data.
+Update the requested task.
 
-**PUT** /task
+**PUT** /task/:id
 
 *Parameters:*
 
 | Name | Type | In | Description |
 |--------------|--------------------|------|--------------|
 |id|integer|params|The ID of the request to be updated|
-|title|string|body|A .|
-|description|string|body|The description for the request.| 
-|user_name|string|body|Name for the person who submit request.|
+|title|string|body|The title to change the task's title to.|
+|description|string|body|The description to change to.| 
+|user_name|string|body|Name for the person who submited the request.|
 |req_location|string|body|Location for the request.|
 |email|string|body|Email to reach the person asking for help.|
 |phoneNumber|string|body|Phone number to reach the person asking for help.|
@@ -288,8 +296,7 @@ method: post
     Post body: 
 { ok: true }
 <!-- G.E.: This one didn't end up being made at all I guess? -->
-
-<!-- TODO: above section still to finish being updated -->
+<!-- TODO might just delete since it's covered by PUT /task/:id in functionality already I think -->
 
 
 ## Create Comment
