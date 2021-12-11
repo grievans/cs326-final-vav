@@ -169,18 +169,17 @@ Creates a new request.
 
 **POST** /task
 
-method: post
 
 *Parameters:*
 
-| requestTitle | requestDescription | name | req_location | email | phoneNumber | 
-|--------------|--------------------|------|--------------|-------|-------------|
-|requestTitle|string|body|The request to be made.|
-|requestDescription|string|body|The description for the request.| 
-|name|string|body|Name for the person who submit request.|
-|req_location|string|body|Location for the request.|
+| Name | Type | In | Description |
+|--------------|--------------------|------|--------------|
+|title|string|body|The title for the request to be made.|
+|description|string|body|The description for the request.| 
+|user_name|string|body|Name for the person who submitted the request.|
+|location|string|body|Location for the request.|
 |email|string|body|Email to reach the person asking for help.|
-|phoneNumber|string|body|Phone number to reach the person asking for help.|
+|phone_number|string|body|Phone number to reach the person asking for help.|
 
 *Response:*
     Client side: stored info in req.body and send to server.
@@ -197,48 +196,45 @@ method: post
 }
 
 ## Get Task Data
-Review the request made.
+
+Gets the list of active tasks.
 
 **GET** /task
-method: get
 
-*Parameters:*
-
-| requestTitle | requestDescription | name | req_location | email | phoneNumber | 
-|--------------|--------------------|------|--------------|-------|-------------|
-|requestTitle|string|body|The request to be made.|
-|requestDescription|string|body|The description for the request.| 
-|name|string|body|Name for the person who submit request.|
-|req_location|string|body|Location for the request.|
-|email|string|body|Email to reach the person asking for help.|
-|phoneNumber|string|body|Phone number to reach the person asking for help.|
+*Parameters:* none
 
 *Response:*
-    Client side: Request data from server.
-    Server: Abstract data from DB(future). Check authentication to proceed/ return(future). Send data to client.
 
-    Example output would be:
-    Get param: 
-{
-  requestTitle: '',
-  requestDescription: '',
-  name: '',
-  req_location: '',
-  email: '',
-  phoneNumber: ''
-}
+Example output would be:
+
+    [
+        {
+            title: '',
+            description: '',
+            user_name: '',
+            location: '',
+            email: '',
+            phone_number: '',
+            req_status: '',
+            id: 0
+        }
+    ]
+
+On failure:
+
+    Status: 500 Internal Server Error
+
 
 
 ## Delete Tasks
 Delete the requested data.
 
 **DELETE** /task
-method: delete
 
 *Parameters:*
 
-| requestTitle | requestDescription | name | req_location | email | phoneNumber | 
-|--------------|--------------------|------|--------------|-------|-------------|
+| Name | Type | In | Description |
+|--------------|--------------------|------|--------------|
 |id|integer|params|The ID of the request to be deleted.|
 
 *Response:*
@@ -251,15 +247,15 @@ method: delete
 Update the requested data.
 
 **PUT** /task
-method: put
 
 *Parameters:*
 
-| requestTitle | requestDescription | name | req_location | email | phoneNumber | 
-|--------------|--------------------|------|--------------|-------|-------------|
-|requestTitle|string|body|The request to be made.|
-|requestDescription|string|body|The description for the request.| 
-|name|string|body|Name for the person who submit request.|
+| Name | Type | In | Description |
+|--------------|--------------------|------|--------------|
+|id|integer|params|The ID of the request to be updated|
+|title|string|body|A .|
+|description|string|body|The description for the request.| 
+|user_name|string|body|Name for the person who submit request.|
 |req_location|string|body|Location for the request.|
 |email|string|body|Email to reach the person asking for help.|
 |phoneNumber|string|body|Phone number to reach the person asking for help.|
@@ -291,54 +287,54 @@ method: post
     Sample dummy output:
     Post body: 
 { ok: true }
+<!-- G.E.: This one didn't end up being made at all I guess? -->
 
-
+<!-- TODO: above section still to finish being updated -->
 
 
 ## Create Comment
 
-create comment, get list of comments for a task?
+Requester creates new comment, server stores comment with the associated task.
 
-**POST** /comment/{commentId}
-
-Requester creates new comment with commentId, server stores comment with requestId.
+**POST** /comment/
 
 *Parameters:*
 | Name | Type | In | Description |
 |------|------|----|-------------|
-requestId | integer | query | Identification Number for the request.
-commentId | integer |path |Identification Number for the comment.
+|task_id | integer | body | Identification number for the task this comment is being posted on.|
+|user_name| string | body | A name for the user sending the comment.|
+|contents | string | body |The text body of the comment.|
 
 
 *Response:*
 
-    Status: 200 OK
-    {
-        "comment_creation": "successful",
-        "session_token": "xxxxxxxxxxx"
-    }
+    Status: 201 Created
+
+On failure:
+
+    Status: 500 Internal Server Error
 
 ## Get comments
-**GET** /comment/all
-Helper gets all comments.
+
+Gets all comments on the specified task.
+
+**GET** /comment
 
 *Parameters:*
 | Name | Type | In | Description |
 |------|------|----|-------------|
-requestId | integer | query | Identification Number for the request.
-all | string |path |maximum number of comments to show parameter.
+|task_id | integer | body | Identification number for the task.|
 
 
 *Response:*
 
     Status: 200 OK
-    {
-        "all_comments": "true",
-        "session_token": "xxxxxxxxxxx"
-    }
+    Response contains a json object containing the array of comments
 
+On failure:
 
-<!-- TODO: above section still to finish being updated -->
+    Status: 500 Internal Server Error
+
 
 # Database
 

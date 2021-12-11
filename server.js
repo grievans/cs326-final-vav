@@ -337,7 +337,7 @@ app.get('/user/logout', (req, res) => {
 app.post("/task", async (req, res) => {
     const requestTitle = req.body["title"];
     const requestDescription = req.body["description"];
-    const name = req.body["name"]; 
+    const name = req.body["user_name"]; 
     const req_location = req.body["location"];
     const email = req.body["email"];
     const phoneNumber = req.body["phone_number"];
@@ -356,10 +356,10 @@ app.post("/task", async (req, res) => {
 });
 
 app.put("/task/:id", async (req, res) => {
-        const id = req.params;//WHERE
+        const id = req.params["id"];
         const requestTitle = req.body["title"];
         const requestDescription = req.body["description"];
-        const name = req.body["name"]; 
+        const name = req.body["user_name"]; 
         const req_location = req.body["location"];
         const email = req.body["email"];
         const phoneNumber = req.body["phone_number"];
@@ -395,7 +395,7 @@ app.get("/task", async (req, res) => {
 app.delete("/task/:id", 
     // checkLoggedIn, //Authentication here is needed
     async (req, res) => {
-        const id = req.params.id;
+        const id = req.params["id"];
         // const email = req.body["user_email"];
         //check if proper user
         // if (email === req.user) {
@@ -428,7 +428,7 @@ app.delete("/task/:id",
 app.put("/task/:id", 
     async (req, res) => {
         
-        const id = req.params;
+        const id = req.params["id"];
         try {
             
             await db.query ("UPDATE tasks SET req_status = $1 WHERE id = $2", ["completed", id]);
@@ -466,10 +466,13 @@ app.get("/comment", async (req, res) => {
     const task_id = req.body["task_id"];
     try {
         const comms = await db.query("SELECT * FROM comments WHERE task_id = $1", [task_id]);
-        return res.json(comms.rows);
+        res.status(200);
+        res.json(comms.rows);
     }
     catch (err) {
-        return next(err);
+        console.error(err);
+        res.status(500);
+        res.send('Failed to load comments.');
     }
 });
 
