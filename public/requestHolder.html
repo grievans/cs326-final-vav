@@ -22,7 +22,38 @@
 
         <br>
 
-        <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">title</th>
+              <th scope="col">description</th>
+              <th scope="col">name</th>
+            <th scope="col">location</th>
+            <th scope="col">email</th>
+            <th scope="col">phone_number</th>
+            </tr>
+          </thead>
+          {% for task in tasks %}
+          <tr>
+          <th scope="row">{{results.task_id}}</th>
+          <td>{{results.title}}
+          </td>
+          <td>{{results.description}}
+          </td>
+          <td>{{results.name}}
+          </td>
+          <td>{{results.location}}
+          </td>
+          <td>{{results.email}}
+          </td>
+          <td>{{results.phone_number}}
+          </td>
+          </tr>
+          {% endfor %}
+        </table>
+
+        <!-- <div class="container">
             <div class="row">
                 <div class="col-sm-6">
                   <div class="card">
@@ -34,7 +65,7 @@
                             <a href="mailto:someone@gmail.com">someone@gmail.com</a>
                         </p>
                         <div class="card-footer text-muted">413-***-****</div>
-                        <!-- TODO: in practice the below check box should maybe be some other icon indicating in progress or not -->
+                        
                         <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
                     </div>
                   </div>
@@ -56,7 +87,7 @@
             </div>
 
 
-        </div>
+        </div> -->
 
         <nav class="navbar fixed-top navbar-dark bg-dark">
             <div class="container-fluid">

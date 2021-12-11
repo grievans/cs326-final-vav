@@ -341,18 +341,11 @@ app.post("/task", async (req, res) => {
     const req_location = req.body["location"];
     const email = req.body["email"];
     const phoneNumber = req.body["phone_number"];
-    // let req_status = "pending";// adding a status input
 
     try {
         await db.query ("INSERT INTO tasks(title, description, user_name, location, email, phone_number, req_status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", 
         [requestTitle, requestDescription, name, req_location, email, phoneNumber, "pending"]);
         console.log(`Created task: ${requestTitle}`);
-        // await db.query ("INSERT INTO task(description) VALUES ($1)", [requestDescription]);
-        // await db.query ("INSERT INTO task(user_name) VALUES ($1)", [name]);
-        // await db.query ("INSERT INTO task(location) VALUES ($1)", [req_location]);
-        // await db.query ("INSERT INTO task(email) VALUES ($1)", [email]);
-        // await db.query ("INSERT INTO task(phone_number) VALUES ($1)", [phoneNumber]);
-        // await db.query ("INSERT INTO task(req_status) VALUES ($1)", ["pending"]);
         res.status(201);
         res.send('Created task.');
     }catch(err) {
@@ -361,31 +354,7 @@ app.post("/task", async (req, res) => {
         res.send('Failed to add request.');
     }
 
-    // console.log("Post body: ");
-    // console.log(req.body);
-    // res.status(201);
-    // res.send('submitted, you are all set!!!!');
-});
-//for updating request quarantiining.html
-// app.put("/task", (req, res) => {
-//     const requestTitle = req.body["requestTitle"];
-//     const requestDescription = req.body["requestDescription"];
-//     const name = req.body["name"]; 
-//     const req_location = req.body["req_location"];
-//     const email = req.body["email"];
-//     const phoneNumber = req.body["phoneNumber"];
-
-//     console.log("Updated body: ");
-//     console.log(req.body);
-//     res.status(201);
-//     res.send('Updated, you are all set!!!!');
-// });
-app.put("/task/:id", 
-    //Authentication is not needed here
-    async (req, res) => {
-        // const email = req.body["user_email"];
-        // const displayName = req.body["display_name"];
-        // const phoneNumber = req.body["phone_number"];
+app.put("/task/:id", async (req, res) => {
         const id = req.params;//WHERE
         const requestTitle = req.body["title"];
         const requestDescription = req.body["description"];
@@ -393,17 +362,11 @@ app.put("/task/:id",
         const req_location = req.body["location"];
         const email = req.body["email"];
         const phoneNumber = req.body["phone_number"];
-        
-        //check if proper user
-        //not sure but looks like it 
-        //checking email alone should be sufficient
-        // if (email === req.user) {
-            try {
-                //Note for now I'm leaving tip_link out of it since none of our API stuff from last time mentioned it, I can re-add if people want it
+
+        try {
                 await db.query (
                     "UPDATE tasks SET email = $1, title = $2, description = $3, name = $4, location = $5, phone_number = $6 WHERE task_id = $7", 
                 [email, requestTitle, requestDescription, name, req_location, phoneNumber, id]);
-                // console.log(`Updated account: ${email} ${requestTitle} ${requestDescription} ${name} ${req_location} ${phoneNumber}`);
                 res.status(204);
                 res.send('Updated related task details.');
             } catch(err) {
@@ -411,27 +374,13 @@ app.put("/task/:id",
                 res.status(500);
                 res.send('Failed to update task details.');
             }
-         
-        // else {
-        //     res.status(403);
-        //     res.send('Invalid session.');
-        // }
+  
+        
         
     });
 //for geting request quarantiining.html
 app.get("/task", async (req, res) => {
-    // const requestTitle = req.query["requestTitle"];
-    // const requestDescription = req.query["requestDescription"];
-    // const name = req.query["name"]; 
-    // const req_location = req.query["req_location"];
-    // const email = req.query["email"];
-    // const phoneNumber = req.query["phoneNumber"];
-
-    // console.log("Get param: ");
-    // console.log(req.query);
-    // res.status(201);
-    // res.json(req.query);
-
+    
     try {
         const results = await db.query("SELECT * FROM tasks");// db named task
         res.json(results.rows);
@@ -457,65 +406,28 @@ app.delete("/task/:id",
                 res.status(500);
                 res.send('Failed to delete task.');
             }
-        
-        // else {
-        //     res.status(403);
-        //     res.send('Invalid session.');
-        // }
-        
     });
 
 
 //for submiting request requestProgress.html
 app.put("/task/:id", 
     async (req, res) => {
-        // const requestTitle = req.body["requestTitle"];
-        // const requestDescription = req.body["requestDescription"];
-        // const name = req.body["name"]; 
-        // const req_location = req.body["req_location"];
-        // const email = req.body["email"];
-        // const phoneNumber = req.body["phoneNumber"];
-        // let req_status = "completed";
+        
         const id = req.params;
         try {
-            // I think this is how it's supposed to be done but really not sure
-            // if I'm doing it right
-            // All this postgresql stuff is so confusing to me lol
-            // await db.none ({text:"INSERT INTO task(requestTitle, salt, hash) VALUES ($1, $2, $3)", values:[requestTitle, salt, hash]});
-            // console.log(`Created task: ${requestTitle}`);
-            // await db.none ({text:"INSERT INTO task(requestDescription, salt, hash) VALUES ($1, $2, $3)", values:[requestDescription, salt, hash]});
-            // await db.none ({text:"INSERT INTO task(name, salt, hash) VALUES ($1, $2, $3)", values:[name, salt, hash]});
-            // await db.none ({text:"INSERT INTO task(req_location, salt, hash) VALUES ($1, $2, $3)", values:[req_location, salt, hash]});
-            // await db.none ({text:"INSERT INTO task(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
-            // await db.none ({text:"INSERT INTO task(phoneNumber, salt, hash) VALUES ($1, $2, $3)", values:[phoneNumber, salt, hash]});
+            
             await db.query ("UPDATE tasks SET req_status = $1 WHERE task_id = $2", ["completed", id]);
-                // console.log(`Updated task as completed: ${email} ${req_status}`);
                 res.status(204);
-                // res.send('Updated task÷ status.');
                 res.send('submitted, you are all set!!!!');
-            // res.status(201);
-            // res.send('Created task.');
         }catch(err) {
             console.error(err);
             res.status(500);
             res.send('Failed to update request status.');
         }
-
-        // console.log("Post body: ");
-        // console.log(req.body);
-        // res.status(201);
-        // res.send('submitted, you are all set!!!!');
 });
 
 app.get("/task", async (req, res) => {
-    // const data = req.params["data"];
-    // console.log("Get param: ");
-    // console.log(req.params);
-    // res.status(201);
-    // res.send('Marked!! Changing status right now!!');
-    // res.send(data);
-
-    try {
+   try {
         const results = await db.query ("SELECT * FROM tasks WHERE req_status = 'completed'");
         return res.json(results.rows);
       } catch (err) {
@@ -554,12 +466,6 @@ app.get("/comment", async (req, res) => {
    }
 });
 
-
-//TODO not sure if needed?
-// app.get("*", (req, res) => {
-//     res.status(404);
-//     res.send("Request invalid.");
-// });
 
 const port = process.env.PORT || 3000;
 app.listen(port, (err) => {
