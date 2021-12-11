@@ -530,7 +530,7 @@ app.post("/comment",
     const user_name = req.body["user_name"];
     const contents = req.body["contents"]; 
     try {
-       await db.none ({text:"INSERT INTO comments(task_id, salt, hash) VALUES ($1, $2, $3)", values:[task_id, salt, hash]});
+       await db.none ({text:"INSERT INTO comments(task_id, user_name, contents) VALUES ($1, $2, $3)", values:[task_id, user_name, contents]});
        console.log(`Created comment for ${task_id}`);
        await db.none ({text:"INSERT INTO tasks(user_name, salt, hash) VALUES ($1, $2, $3)", values:[user_name, salt, hash]});
        await db.none ({text:"INSERT INTO tasks(contents, salt, hash) VALUES ($1, $2, $3)", values:[contents, salt, hash]});
