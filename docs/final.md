@@ -418,7 +418,6 @@ all | string |path |maximum number of comments to show parameter.
 
 # URL Routes/Mappings
 
-<!-- TODO: Not totally sure what to put here, besides listing off the webpages and their urls; seems like it overlaps a bunch with the API part (since that list includes the routes for the non-page calls to the server). So I guess will need go over that stuff again but include some details about like authentification parts? -->
 |Route|Method/Type|Description|Authentication Details (where applicable)|
 |----|----|----|----|
 |/user/login|POST|Logs an existing user into their account.|Only works if hash of password matches that of the account in the database, then sets the user to be authenticated for the rest of the session.|
@@ -431,14 +430,16 @@ all | string |path |maximum number of comments to show parameter.
 |/task|GET|Gets the list of currently available tasks.||
 |/task/:id|PUT|Updates an already created task.||
 |/task/:id|DELETE|Removes a task and its associated comments from the database.|| <!-- again really ought to have some sort of authentication I guess to check that the corresponding user is the creator of the task or something like that -->
-|/index.html|html|||
-|/profile.html|html|||
-|/quarantining.html|html|||
-|/requestHolder.html|html|||
-|/requestProgress.html|html|||
-|/status.html|html|||
-|/welcome.html|html|||
-|/images/campus.jpg|image|||
+|/comment|POST|Creates a new comment on a task specified by ID.||
+|/comment|GET|Gets an array of the comments on the specified task.||
+|/index.html|html|Introduction and login page|Needs no authentication to access but is used to set up later authentication.|
+|/profile.html|html|User profile page, where accounts can be updated or deleted.|Updating/deleting requires authentication, as specified earlier.|
+|/welcome.html|html|Welcome page leading users to the pages for making/viewing requests.||
+|/quarantining.html|html|Page used to make a new request.|Doesn't require authentication to access but do should be logged in for the loading of user defaults.|
+|/status.html|html|Displays status of a created task.||
+|/requestHolder.html|html|Displays currently active tasks.||
+|/requestProgress.html|html|Displays info of a selected task.||
+|/images/campus.jpg|image|Image file loaded as a background for other pages||
 <!-- |/images/campus2.jpg|image||| No longer being used so will leave out, I think-->
 
 
