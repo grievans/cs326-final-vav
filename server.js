@@ -271,6 +271,17 @@ app.delete("/user/delete",
         const email = req.body["user_email"];
         //check if proper user
         if (email === req.user) {
+            //Considered adding a check for if the user has open tasks but not going to right now since I'm not sure how we're tracking that?
+            // try {
+            //     const activeTasks = await db.any({text:"SELECT email FROM tasks WHERE email = $1 LIMIT 1", values:[email]});
+            //     if (activeTasks.length <= 0) {
+            //         return false;
+            //     }
+            //     return true
+            // } catch {
+            //     res.status(409);
+            //     res.send('Failed to delete account as it still has active tasks.');
+            // }
             try {
                 await db.none({text:"DELETE FROM users WHERE email = $1", values:[email]});
                 console.log(`Deleted account ${email}`);
