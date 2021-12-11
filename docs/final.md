@@ -430,7 +430,7 @@ all | string |path |maximum number of comments to show parameter.
 |/task|POST|Creates a new task using the provided title, description, etc.|| <!-- should probably have some authentication for this (really should probably be storing what account makes each) but doesn't currently -->
 |/task|GET|Gets the list of currently available tasks.||
 |/task/:id|PUT|Updates an already created task.||
-|/task/:id|DELETE|Removes a task ||
+|/task/:id|DELETE|Removes a task and its associated comments from the database.|| <!-- again really ought to have some sort of authentication I guess to check that the corresponding user is the creator of the task or something like that -->
 |/index.html|html|||
 |/profile.html|html|||
 |/quarantining.html|html|||
