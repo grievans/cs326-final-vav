@@ -334,7 +334,7 @@ app.get('/user/logout', (req, res) => {
 });
 
 //for submiting request quarantiining.html
-app.post("/tasks", async (req, res) => {
+app.post("/task", async (req, res) => {
     const requestTitle = req.body["requestTitle"];
     const requestDescription = req.body["requestDescription"];
     const name = req.body["name"]; 
@@ -380,7 +380,7 @@ app.post("/tasks", async (req, res) => {
 //     res.status(201);
 //     res.send('Updated, you are all set!!!!');
 // });
-app.put("/tasks/:id", 
+app.put("/task/:id", 
     //Authentication is not needed here
     async (req, res) => {
         // const email = req.body["user_email"];
@@ -419,7 +419,7 @@ app.put("/tasks/:id",
         
     });
 //for geting request quarantiining.html
-app.get("/tasks", async (req, res) => {
+app.get("/task", async (req, res) => {
     // const requestTitle = req.query["requestTitle"];
     // const requestDescription = req.query["requestDescription"];
     // const name = req.query["name"]; 
@@ -440,7 +440,7 @@ app.get("/tasks", async (req, res) => {
       }
 });
 //for deleting request quarantiining.html
-app.delete("/tasks/:id", 
+app.delete("/task/:id", 
     // checkLoggedIn, //Authentication here is needed
     async (req, res) => {
         const id = req.params;
@@ -467,7 +467,7 @@ app.delete("/tasks/:id",
 
 
 //for submiting request requestProgress.html
-app.put("/tasks/:id", 
+app.put("/task/:id", 
     async (req, res) => {
         // const requestTitle = req.body["requestTitle"];
         // const requestDescription = req.body["requestDescription"];
@@ -507,7 +507,7 @@ app.put("/tasks/:id",
         // res.send('submitted, you are all set!!!!');
 });
 
-app.get("/tasks", async (req, res) => {
+app.get("/task", async (req, res) => {
     // const data = req.params["data"];
     // console.log("Get param: ");
     // console.log(req.params);
