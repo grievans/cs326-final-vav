@@ -25,15 +25,28 @@ Joseph Yang - **JoJo-19**
 # User Interface
 
 ![This is our home page where users would login or register.](diagrams/final/login.png)
-This is our home page where users would login or register. The home button on the Navbar would also direct user to this page.
+This is our home page where users would login or register. The Logout button on the Navbar would also direct the user to this page.
+
 ![This is the page where user will land after login/register.](diagrams/final/requestOrHelp.png)
-This is the page where user will land after login/register. Where the user will have options to start making requests or be a helper to view current requests.
+This is the page where user will land after login/register. Here the user will have options to start making requests or be a helper to view current requests. The Home button on the Navbar would also direct the user to this page
+
 ![This is the page where user would make request.](diagrams/final/makeRequest.png)
 This is the page where user would make request with a request title, request description, name, location and contact info. They can also update and delete their request on this page.
+
 ![This would be the page where the user would land on when request is submitted.](diagrams/final/requestDone.png)
 This would be the page where the user would land on when request is submitted. Where the user can send messages to the helper or adding additional instructions on the request.
+
 ![This is the page where user can view all the current requests.](diagrams/final/viewRequest.png)
 This is the page where user/helper can view all the current requests.
+
+![A screenshot of a page with information fields representing the details and user contact information for another user's request.](diagrams/final/helperView.png)
+This is the page where a helper can view the details of a request they are looking at.
+
+![A screenshot of a page with text fields marked "Display Name" and "Phone Number" and buttons marked "Update Defaults" and "Delete Account".](diagrams/final/profile.png)
+This is the page where a user can examine and edit the default entry values set for their account. They can also delete their account from this page. This page is accessible through the "Account Info" button on the Navbar.
+
+![A drop-down menu showing buttons marked "Home", "Back", "Contact", "Account Info", and "Logout".](diagrams/final/navbar.png)
+An expanded view of the Navbar that appears at the top of each page besides the Login page. Has options for linking to the aforementioned user profile and welcome page, and to log out and return to the login page. As well as these it also has a "Back" button that goes to the previously visited page and a "Contact" link to email one of the site creators.
 
 
 
@@ -89,7 +102,6 @@ Creates a new account, if `user_email` is not already in use. Note this does not
 *Response:*
 
     Status: 201 Created
-<!-- TODO maybe add details of what the res.send lists for these? The status is what's actually used really though, that's just a bit of extra detail -->
 
 If the email is already in use:
 
@@ -116,8 +128,6 @@ Edits details of the current user's account.
 |user_email|string|body|The email of the current user.|
 |display_name|string|body|If present, a name to change the account's display name to.|
 |phone_number|string|body|If present, what to change the account's phone number to.|
-<!-- TODO maybe I should add being able to change password? wouldn't be too hard to implement I think, basically just make a new salt+hash and put that in. SHOULD already be authenticated -->
-<!-- Not doing that for now even though I could probably. -->
 
 *Response:*
 
@@ -433,7 +443,7 @@ Authentication is implemented using the *Passport* package and its *passport-loc
 
 Later requests to the server then use this user data to verify that the request-sender has permission to perform the relevant actions. When on the `profile.html` page, one can see the publicly viewable data (email, display name, and phone number, if the latter two have been set) for the current user and using the *Update Defaults* button can make a request to `/user/edit`, which allows them to change the contact information (phone number and display name) that appears as a default when creating a new task. This first checks that the user is logged in (using `checkLoggedIn`, which checks if the request is authenticated and if not, stops the current request and redirects the user back to the login page) then checks if the email sent in the request matches that of the logged-in user, and if so proceeds to update their row in the *users* table to match the new information. Similarly, the `/user/delete` request, which can be triggered by another button from `profile.html`,  only proceeds if the user requesting the delete has the same email as the account being deleted, again using `checkLoggedIn`, and otherwise no change is made to the database. Also note `/user/logout`, which has a request made to it when the user presses the *Logout* button in the Navbar at the top of each page, which logs the user out, ending their current session and redirecting them to the login page.
 
-On the `quarantining.html` page .... **TODO**
+<!-- On the `quarantining.html` page .... **TODO** -->
 <!-- TODO put description for how task and comments use authentication; I (Griffin) can write this probably but might hold off until I'm sure it actually all works first so I have the most up-to-date description to give. -->
 <!-- Update: Only other thing that actually checks for login currently is /comment which doesn't really do anything with that logged-in status so not really sure what else to say. delete("/task/:id") had checkLoggedIn but has since been commented out  -->
 
