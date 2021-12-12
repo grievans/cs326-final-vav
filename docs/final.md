@@ -19,7 +19,6 @@ Joseph Yang - **JoJo-19**
 
 # APIs
 
-<!-- TODO working on updating these to reflect current implementation. Currently up to "/user/data" has been updated -->
 ## Login
 
 Attempts to log the client into a specified account, given a correct email and password.
@@ -97,6 +96,7 @@ Edits details of the current user's account.
 |display_name|string|body|If present, a name to change the account's display name to.|
 |phone_number|string|body|If present, what to change the account's phone number to.|
 <!-- TODO maybe I should add being able to change password? wouldn't be too hard to implement I think, basically just make a new salt+hash and put that in. SHOULD already be authenticated -->
+<!-- Not doing that for now even though I could probably. -->
 
 *Response:*
 
@@ -410,11 +410,11 @@ On failure:
 
 Authentication is implemented using the *Passport* package and its *passport-local* module. Starting from the login page, the user enters their account's associated email and password. If they don't have an account, clicking the *Create Account* button will add an account to the database (assuming that email is not already in use), storing the email and salted hash (with the corresponding salt as well) for the password in the *users* table. After creating an account, or if they already have an account, they can log in, at which point the server takes a `POST` request containing the user's email and password, which is used with `passport.authenticate("local")` which then checks if it can find an account with that email in the *users* table, and if so then checks if salting and hashing the request's password gives a matching hash to the hash already stored in the table. If this process succeeds then authenticated as being logged in, and a user object is created for the current session, which stores the email that was used to log in.
 
-Later requests to the server then use this user data to verify that the request-sender has permission to perform the relevant actions. When on the `profile.html` page, one can see the publicly viewable data (email, display name, and phone number, if the latter two have been set) for the current user and using the *Update Defaults* button can make a request to `/user/edit`, which allows them to change the contact information (phone number and display name) that appears as a default when creating a new task. This first checks that the user is logged in (using `checkLoggedIn`, which checks if the request is authenticated and if not, stops the current request and redirects the user back to the login page) then checks if the email sent in the request matches that of the logged-in user, and if so proceeds to update their row in the *users* table to match the new information. Similarly, the `/user/delete` request only proceeds if the user requesting the delete has the same email as the account being deleted, again using `checkLoggedIn`, and otherwise no change is made to the database. Also note `/user/logout`, which has a request made to it when the user presses the *Logout* button in the Navbar at the top of each page, which logs the user out, ending their current session and redirecting them to the login page.
-<!-- TODO maybe should add an account delete button to profile.html -->
+Later requests to the server then use this user data to verify that the request-sender has permission to perform the relevant actions. When on the `profile.html` page, one can see the publicly viewable data (email, display name, and phone number, if the latter two have been set) for the current user and using the *Update Defaults* button can make a request to `/user/edit`, which allows them to change the contact information (phone number and display name) that appears as a default when creating a new task. This first checks that the user is logged in (using `checkLoggedIn`, which checks if the request is authenticated and if not, stops the current request and redirects the user back to the login page) then checks if the email sent in the request matches that of the logged-in user, and if so proceeds to update their row in the *users* table to match the new information. Similarly, the `/user/delete` request, which can be triggered by another button from `profile.html`,  only proceeds if the user requesting the delete has the same email as the account being deleted, again using `checkLoggedIn`, and otherwise no change is made to the database. Also note `/user/logout`, which has a request made to it when the user presses the *Logout* button in the Navbar at the top of each page, which logs the user out, ending their current session and redirecting them to the login page.
 
 On the `quarantining.html` page .... **TODO**
 <!-- TODO put description for how task and comments use authentication; I (Griffin) can write this probably but might hold off until I'm sure it actually all works first so I have the most up-to-date description to give. -->
+<!-- Only other thing that actually checks for login currently is /comment which doesn't actually do anything with that logged-in status so not really sure what else to say. delete("/task/:id") had checkLoggedIn but has since been commented out  -->
 
 # Division of Labor
 Aaron Tsui
@@ -434,13 +434,18 @@ Griffin Evans
 * Created initial wireframe
 * Advanced overall site code
 * Redesigned status page and reformatted multiple pages
-* Stylized site better
+* Updated stylization of site
 * All of account/login
-* Login and user authentication + storing of user data in database
-* logout and user profile options
+    * Set up login and profile pages and their respective code
+    * Login and account creation + storing of user data in database
+        * User authentication and logout
+    * Editing and deletion options for user profile
+* Connection of project to Heroku
 * Setup of database structure and respective documentation
-* initialization of server connection to PostgreSQL and creation of tables
-* Updating of documentation for database and API
+    * Initialization of server connection to PostgreSQL and creation of tables
+* Miscellaneous fixes and tweaks to other sections of code to resolve bugs and inconsistencies
+* Updating of documentation for Database and API sections for final version
+* Creation of URL Routes/Mappings and Authentication documentation
 
 Joseph Yang
 * Modified wireframe design 
