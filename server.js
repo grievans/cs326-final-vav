@@ -11,7 +11,7 @@ import pgPromise from 'pg-promise';
 //Decided against it though ultimately since then we'd just end up needing a ton of methods that are basically just used once for the various totally different queries to the database
 //So it seemed neater just to access it directly
 //My (G.E.) initial comments on the subject:
-//    TODO maybe should move into separate database.js? I'm finding this way to be easier though
+//    maybe should move into separate database.js? I'm finding this way to be easier though
 //    I think just gonna leave this way for now; have a database.js with functions for Find, Update etc. but the operations
 //    I'm doing are too specific for me to use that without having to write like a separate function/if statement for every
 //    time it's called at which point it'd just make the code harder to follow
