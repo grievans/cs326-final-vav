@@ -425,13 +425,13 @@ app.delete("/task/:id",
 
 
 //for submiting request requestProgress.html
-app.put("/task/:id", 
+app.put("/markProgress/:id", 
     async (req, res) => {
         
         const id = req.params["id"];
         try {
             
-            await db.query ("UPDATE tasks SET req_status = $1 WHERE id = $2", ["completed", id]);
+            await db.query ("UPDATE tasks SET req_status = $1 WHERE id = $2", ["in progress", id]);
                 res.status(204);
                 res.send('submitted, you are all set!!!!');
         }catch(err) {

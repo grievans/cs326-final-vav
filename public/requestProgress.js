@@ -6,10 +6,10 @@ const submitButton = document.getElementById('submit');
                 data = {
                   "ok": true
                 };
+                const id = 0; //doesn't have a way to get this currently? should be ID of currently viewed request. This isn't my section though so I'm going to prioritize other stuff over getting this implemented
+                fetch(`/markProgress/:${id}`, {
         
-                fetch('/markProgress', {
-        
-                  method: 'post', 
+                  method: 'put', 
                   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                   credentials: 'same-origin', // include, *same-origin, omit
                   headers: {
