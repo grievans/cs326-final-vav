@@ -320,7 +320,7 @@ Update the requested task.
 ## Task Progress
 Mark task as in-progress.
 
-**POST** /markProgress
+**POST** /markProgress/:id
 
 | Name | Type | In | Description |
 |--------------|--------------------|------|--------------|
@@ -329,9 +329,10 @@ Mark task as in-progress.
 *Response:*
     
     Status: 204 No Content
-    
-<!-- G.E.: This one didn't end up being made at all I guess? -->
-<!-- TODO might just delete since it's covered by PUT /task/:id in functionality already I think -->
+
+On failure:
+
+    Status: 500 Internal Server Error
 
 
 ## Create Comment
@@ -447,8 +448,7 @@ Authentication is implemented using the *Passport* package and its *passport-loc
 
 Later requests to the server then use this user data to verify that the request-sender has permission to perform the relevant actions. When on the `profile.html` page, one can see the publicly viewable data (email, display name, and phone number, if the latter two have been set) for the current user and using the *Update Defaults* button can make a request to `/user/edit`, which allows them to change the contact information (phone number and display name) that appears as a default when creating a new task. This first checks that the user is logged in (using `checkLoggedIn`, which checks if the request is authenticated and if not, stops the current request and redirects the user back to the login page) then checks if the email sent in the request matches that of the logged-in user, and if so proceeds to update their row in the *users* table to match the new information. Similarly, the `/user/delete` request, which can be triggered by another button from `profile.html`,  only proceeds if the user requesting the delete has the same email as the account being deleted, again using `checkLoggedIn`, and otherwise no change is made to the database. Also note `/user/logout`, which has a request made to it when the user presses the *Logout* button in the Navbar at the top of each page, which logs the user out, ending their current session and redirecting them to the login page. Posting comments via `/comment` also requires being authenticated as logged in.
 
-<!-- TODO put description for how task and comments use authentication; I (Griffin) can write this probably but might hold off until I'm sure it actually all works first so I have the most up-to-date description to give. -->
-<!-- Update: Only other thing that actually checks for login currently is /comment which doesn't really do anything with that logged-in status so not really sure what else to say. delete("/task/:id") had checkLoggedIn but has since been commented out  -->
+<!-- Only other thing besides account data stuff that actually checks for login currently is /comment which doesn't really do anything with that logged-in status so not really sure what else to say. delete("/task/:id") had checkLoggedIn but has since been commented out  -->
 
 # Division of Labor
 Aaron Tsui

@@ -14,6 +14,7 @@ export class Database {
 
     }
 
+    // eslint-disable-next-line no-unused-vars
     insert(category, element) {
         // this._data[category].push(element);
         //doesn't actually update anything since it's just dummy

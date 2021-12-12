@@ -129,16 +129,7 @@ function setup() {
     const email = document.getElementById('email');
     const phoneNumber = document.getElementById('phoneNumber');
 
-    let data = {
-      "title" : requestTitle.value, 
-      "description" : requestDescription.value, 
-      "user_name" : name.value, 
-      "location" : req_location.value, 
-      "email" : email.value, 
-      "phone_number" : phoneNumber.value, 
-    };
-
-    query = "title="+requestTitle.value + "&" +"description=" + requestDescription.value + "&" +"user_name=" + name.value + 
+    let query = "title="+requestTitle.value + "&" +"description=" + requestDescription.value + "&" +"user_name=" + name.value + 
     "&" +"location=" + req_location.value + "&" +"email=" + email.value + "&" +"phone_number=" + phoneNumber.value;
 
     fetch('/task/?' + query, {
@@ -167,13 +158,6 @@ function setup() {
   deleteButton.addEventListener('click', function(a) {
     a.preventDefault();//prevent from reloading
 
-    
-    const requestTitle = document.getElementById('requestTitle');
-    const requestDescription = document.getElementById('requestDescription');
-    const name = document.getElementById('name'); 
-    const req_location = document.getElementById('location');
-    const email = document.getElementById('email');
-    const phoneNumber = document.getElementById('phoneNumber');
 
     let data = {
       "title" : '', 
@@ -183,9 +167,6 @@ function setup() {
       "email" : '', 
       "phone_number" : '', 
     };
-
-    // query = "requestTitle="+requestTitle.value + "&" +"requestDescription=" + requestDescription.value + "&" +"name=" + name.value + 
-    // "&" +"location=" + req_location.value + "&" +"email=" + email.value + "&" +"phone=" + phoneNumber.value;
 
     fetch('/task', {
 

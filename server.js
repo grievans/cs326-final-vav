@@ -1,33 +1,20 @@
 "use strict";
 
 import express from "express";
-// import faker from "faker"; //IMPORTANT PROBABLY: note "npm i faker" needed to be run to use this, probably will have to mention in the docs/setup.md file; TODO
-import {Database} from "./database.js";
 const app = express();
-app.use('/', express.static('public')); //TODO maybe should be "./public"? not sure if it matters in this case
-// app.use('/', express.static('public/images')); //TODO not sure this needed or not if above included
-// app.use(express.urlencoded({ extended: false })); //TODO do we need this? They seem to recommend to just use JSON anyway so this seems redundant
+app.use('/', express.static('public'));
 app.use(express.json());
-const database = new Database();
-
-// const database = new Database(["user", "task"]);
-
-// app.get("/", (req, res) => {
-//     // console.log(req.headers);
-//     // console.log(req.url);
-//     // console.log(req.ip);
-//     // console.log(req.method);
-//     // console.log(req.protocol);
-//     // console.log(req.path);
-//     // console.log(req.query);
-//     // console.log(req.subdomains);
-//     // console.log(req.params);
-//     // res.status(404).end();
-//     res.send("Test");
-// });
 
 import pgPromise from 'pg-promise'; 
-//TODO maybe should move into database.js
+
+//Considered earlier that maybe this should be moved into database.js
+//Decided against it though ultimately since then we'd just end up needing a ton of methods that are basically just used once for the various totally different queries to the database
+//So it seemed neater just to access it directly
+//My (G.E.) initial comments on the subject:
+//    TODO maybe should move into separate database.js? I'm finding this way to be easier though
+//    I think just gonna leave this way for now; have a database.js with functions for Find, Update etc. but the operations
+//    I'm doing are too specific for me to use that without having to write like a separate function/if statement for every
+//    time it's called at which point it'd just make the code harder to follow
 const pgp = pgPromise();
 const db = pgp({
         connectionString: process.env.DATABASE_URL,
@@ -58,33 +45,16 @@ async function initializeDatabase() {
 initializeDatabase();
 
 import expressSession from 'express-session';  // for managing session state
-import ConnectPgSimple from 'connect-pg-simple';
-const pgSession = ConnectPgSimple(expressSession);
-// TODO might have to change that to add a store that scales better, maybe connect-pg-simple since that'll integrate with our db
 import passport from 'passport';               // handles authentication
 import {Strategy as LocalStrategy} from 'passport-local'; // username/password strategy
-/// NEW
-import minicrypt from './miniCrypt.js'; //NOT SURE if we're supposed to be doing encryption stuff in this but putting it in anyway
+import minicrypt from './miniCrypt.js';
 const mc = new minicrypt();
 
 // Session configuration
 
 const session = {
-    // store: new pgSession({
-    //     createTableIfMissing : true,
-    //     conString : process.env.DATABASE_URL,
-    //     // ssl: {
-    //     //   rejectUnauthorized: false
-    //     // }
-    //     // pool : null
-    //     // conObject: {
-    //     //     connectionString: process.env.DATABASE_URL,
-    //     //     // ssl: true,
-    //     // },
-    // }),
-    //TODO maybe leave the store as is for now since it does *work* it's just not gonna scale up?
+    //Leaving the session storing as-is for now, but if wanting to make this scale up (to like thousands of users though; works fine small-scale) should replace it
     secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
-    //TODO maybe need to set up this^? I don't totally understand what I need to put exactly (added a config var in heroku for it, not sure if anything else is needed)
     resave : false,
     saveUninitialized: false
 };
@@ -144,13 +114,6 @@ passport.deserializeUser((uid, done) => {
 // Returns true iff the user exists.
 async function findUser(email) {
     try {
-        // const userExists = await db.any({text:"SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", values:[email]});
-        // if (!userExists[0]) {
-        //     return false;
-        // } else {
-        //     return true;
-        // }
-        //might change back to that^? seems to work fine as is
         const userData = await db.any({text:"SELECT email FROM users WHERE email = $1 LIMIT 1", values:[email]});
         if (userData.length <= 0) {
             return false;
@@ -159,7 +122,7 @@ async function findUser(email) {
     }
     catch(err) {
         console.error(err);
-        return false; //not sure what's best to do here really; might not end up using this function anyway tbh
+        return false; //should really return something else, like just undefined I guess, to clarify it just failed and didn't actually confirm they didn't exist, but doesn't really matter for this.
     }
 }
 
@@ -176,7 +139,7 @@ async function validatePassword(email, pwd) {
         return mc.check(pwd, userSalt, userHash);
     } catch(err) {
         console.error(err);
-        return false; //not sure best approach for what to return here
+        return false; //not sure best approach for what to return here; see comment in findUser
     }
 }
 
@@ -206,10 +169,6 @@ app.post("/user/new", async (req, res) => {
     } else {
         const [salt, hash] = mc.hash(password);
         try {
-            //TODO maybe should move into separate database.js? I'm finding this way to be easier though
-            //I think just gonna leave this way for now; have a database.js with functions for Find, Update etc. but the operations
-            //I'm doing are too specific for me to use that without having to write like a separate function/if statement for every
-            //time it's called at which point it'd just make the code harder to follow
             await db.none({text:"INSERT INTO users(email, salt, hash) VALUES ($1, $2, $3)", values:[email, salt, hash]});
             console.log(`Created account: ${email}`);
             res.status(201);
@@ -243,7 +202,6 @@ app.put("/user/edit",
         const displayName = req.body["display_name"];
         const phoneNumber = req.body["phone_number"];
         //check if proper user
-        //(to be honest I'm not totally sure if this checks right but going off of what the code shown in class has had it seems good?)
         if (email === req.user) {
             try {
                 //Note for now I'm leaving tip_link out of it since none of our API stuff from last time mentioned it, I can re-add if people want it
@@ -271,17 +229,7 @@ app.delete("/user/delete",
         const email = req.body["user_email"];
         //check if proper user
         if (email === req.user) {
-            //Considered adding a check for if the user has open tasks but not going to right now since I'm not sure how we're tracking that?
-            // try {
-            //     const activeTasks = await db.any({text:"SELECT email FROM tasks WHERE email = $1 LIMIT 1", values:[email]});
-            //     if (activeTasks.length <= 0) {
-            //         return false;
-            //     }
-            //     return true
-            // } catch {
-            //     res.status(409);
-            //     res.send('Failed to delete account as it still has active tasks.');
-            // }
+            //Considered adding a check for if the user has open tasks but not going to right now since the tasks aren't really set up for that
             try {
                 await db.none({text:"DELETE FROM users WHERE email = $1", values:[email]});
                 console.log(`Deleted account ${email}`);
@@ -318,8 +266,6 @@ app.get("/user/data", async (req, res) => {
         output.email = details.email;
         output.display_name = details.display_name || "";
         output.phone_number = details.phone_number || "";
-        // output.tip_link = details.tip_link || "";
-        //^was in dummy function but not in table since we didn't specify it in our API; so will just be blank currently. Can add to table later if needed
         res.status(200);
         res.send(JSON.stringify(output));
     } else {
@@ -391,21 +337,15 @@ app.get("/task", async (req, res) => {
         res.send('Failed to get list of tasks.');
     }
 });
-//for deleting request quarantiining.html
+//for deleting request quarantining.html
 app.delete("/task/:id", 
     // checkLoggedIn, //Authentication here is needed
     async (req, res) => {
         const id = req.params["id"];
-        // const email = req.body["user_email"];
-        //check if proper user
-        // if (email === req.user) {
-        // try {
-        //     const userData = await db.one({text:"SELECT email FROM tasks WHERE task_id = $1 LIMIT 1", values:[id]});
-        //     if (userData.length > 0) {
         try {
             await db.query ("DELETE FROM tasks WHERE id = $1", [id]);
             await db.query ("DELETE FROM comments WHERE task_id = $1", [id]); //remove associated comments
-            // console.log(`Deleted task from user ${email}`);
+            console.log(`Deleted task ${id}`);
             res.status(204);
             res.send('Deleted task.');
         } catch(err) {
@@ -413,24 +353,14 @@ app.delete("/task/:id",
             res.status(500);
             res.send('Failed to delete task.');
         }
-        //     } else {
-
-        //     }
-        // } catch(err) {
-        //     console.error(err);
-        //     res.status(500);
-        //     res.send('Failed to find task.');
-        // }
     });
 
 
 //for submiting request requestProgress.html
 app.put("/markProgress/:id", 
     async (req, res) => {
-        
         const id = req.params["id"];
         try {
-            
             await db.query ("UPDATE tasks SET req_status = $1 WHERE id = $2", ["in progress", id]);
                 res.status(204);
                 res.send('submitted, you are all set!!!!');
@@ -450,8 +380,6 @@ app.post("/comment",
     try {
        await db.none ({text:"INSERT INTO comments(task_id, user_name, contents) VALUES ($1, $2, $3)", values:[task_id, user_name, contents]});
        console.log(`Created comment for ${task_id}`);
-    //    await db.none ({text:"INSERT INTO tasks(user_name, salt, hash) VALUES ($1, $2, $3)", values:[user_name, salt, hash]});
-    //    await db.none ({text:"INSERT INTO tasks(contents, salt, hash) VALUES ($1, $2, $3)", values:[contents, salt, hash]});
        res.status(201);
        res.send('Created comment.');
     }

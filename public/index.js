@@ -4,7 +4,6 @@ function setup() {
 }
 async function login(event) {
     event.preventDefault();
-    // console.log("B")
     const email = document.getElementById("userEmail").value;
     const password = document.getElementById("userPassword").value;
     const data = {"user_email":email, "password":password};
@@ -23,14 +22,12 @@ async function login(event) {
         return response.json();
     }).then((data) => {
         if (data["login_status"] === "valid") {
-            // window.localStorage.setItem('session', data["session_token"]);
             window.localStorage.setItem('user_email', email); //used to set default email on page for making requests
             window.location.href = "./welcome.html";
         } else {
             alert("Invalid login credentials.");
         }
     });
-    // console.log("A")
 }
 async function createAccount(event) {
     event.preventDefault();
@@ -48,7 +45,7 @@ async function createAccount(event) {
         return response.status;
     }).then((status) => {
         if (status === 201) {
-            login(event); //TODO maybe should just make new do login too?
+            login(event);
         } else if (status === 304) {
             alert("Failed to create account; try another email.");
         } else {

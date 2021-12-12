@@ -56,30 +56,30 @@ async function updateDetails(event) {
 async function deleteAccount(event) {
     event.preventDefault();
     const email = window.localStorage.getItem('user_email');
-    const password = window.confirm("Are you sure you'd like to delete your account? Click OK to confirm.");
-    // const password = window.prompt("Are you sure you'd like to delete your account? Note this can only be done if you do not have any active requests.");
-    const data = {"user_email":email}; //TODO maybe add a password requirement? Already logged in so would mostly just be another way to verify 
-    fetch("/user/delete",{
-        method: "DELETE",
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    }).then((response) => {
-        return response.status;
-    }).then((status) => {
-        if (status === 204) {
-            alert("Deleted!");
-            // fetch("/user/logout");
-            window.location.href = "./user/logout";
-        } else if (status === 403) {
-            alert("Invalid login session.");
-        // } else if (status === 409) {
-        //     alert("Failed to delete account; please first close all of your active requests.")
-        } else {
-            alert("Failed to delete account.");
-        }
-    });
+    const confirmation = window.confirm("Are you sure you'd like to delete your account? Click OK to confirm.");
+    if (confirmation) {
+        const data = {"user_email":email}; //TODO maybe add a password requirement? Already logged in so would mostly just be another way to verify 
+        fetch("/user/delete",{
+            method: "DELETE",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then((response) => {
+            return response.status;
+        }).then((status) => {
+            if (status === 204) {
+                alert("Deleted!");
+                window.location.href = "./user/logout";
+            } else if (status === 403) {
+                alert("Invalid login session.");
+            // } else if (status === 409) {
+            //     alert("Failed to delete account; please first close all of your active requests.")
+            } else {
+                alert("Failed to delete account.");
+            }
+        });
+    }
 }
 window.addEventListener('load', setup);
