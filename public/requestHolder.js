@@ -11,8 +11,6 @@
     window.addEventListener('load', function(a) {
       a.preventDefault();//prevent from reloading
 
-      data = await db.many("SELECT * FROM tasks");
-
       fetch('/task', {
 
         method: 'get', 

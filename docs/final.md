@@ -17,11 +17,13 @@ Our application is for UMass students under quarantine to make requests and help
 The innovative idea behind this concept essentially comes in using similar techniques to existing services but with a different purpose in mind—conceptually the site is somewhat like a forum or job posting site, but the focus is on giving a way for people to share and respond to one-time volunteer tasks rather than either facilitating discussions or providing long-term paid positions. Hence the site fits into a distinct niche, providing a service which stands out from existing resources.
 
 # Team Members
+
 Aaron Tsui - **OfficialAaronTsui2** & **OfficialAaronTsui**
 
 Griffin Evans - **grievans**
 
 Joseph Yang - **JoJo-19** 
+
 # User Interface
 
 ![This is our home page where users would login or register.](diagrams/final/login.png)
@@ -478,6 +480,8 @@ Griffin Evans
 * Updating of documentation for Database and API sections for final version
 * Creation of URL Routes/Mappings and Authentication documentation
 * Added details about "innovative idea" to Overview section of documentation
+* Added some more details to the UI section
+* Wrote Conclusion section
 
 Joseph Yang
 * Modified wireframe design 
@@ -489,16 +493,17 @@ Joseph Yang
 * Modified rubric
 * Updated database structure
 * Completed all tasks/ requests related operations from asking request, updating request, deleting request from user and marking requests status from helper + debug
-
+* Added images and descriptions for UI documentation
 
 # Conclusion
 
-<!-- TODO -->
 <!-- "A conclusion describing your team’s experience in working on this project. This should include what you learned through the design and implementation process, the difficulties you encountered, what your team would have liked to know before starting the project that would have helped you later, and any other technical hurdles that your team encountered." -->
 
-...
+A big part of the difficulty of this project was of course the need to adapt to using various packages and services (for example Heroku, PostgreSQL, and JS Modules like Express, pg-promise, and Passport) which we hadn't used before this class in order to make it. Through the process of working on the project though we've thus learned to better be able to integrate these into our projects. 
 
-One difficult aspect was trying to plan out how parts of the project would be structured when tehy involved interactions with parts that would not be done until later—for instance, planning out the front-end API calls before having figured out how features like the databases and the authentication system would be structured was difficult (e.g. not having planned out the database structure led to figuring out what particular parameters need to be passed in to be used in the database difficult) and ended up later leading to a lot of back-and-forth editing to ensure the front- and back-end would interact correctly.  
+Another difficult aspect was trying to plan out how parts of the project would be structured when they involved interactions with parts that would not be done until later—for instance, planning out the front-end API calls before having figured out how features like the databases and the authentication system would be structured was difficult (e.g. not having planned out the database structure led to figuring out what particular parameters need to be passed in to be used in the database difficult) and ended up later leading to a lot of back-and-forth editing to ensure the front- and back-end would interact correctly. In fact in general, the task of integrating front-end and back-end elements of the code and determining things like what operations need to be done on what side was a difficult process—not being used to writing server code before this course—though again now we have more experience to enable better judgement when facing these sorts of situations in the future.
+
+In retrospect something that would have been good would be to plan out aspects like what database systems we would be using earlier in the project even if not actually implementing them at that point, as that would have allowed us to better plan around them and potentially even practice with smaller-scale prototypes as preparation before needing to implement them into the main project.
 
 # Final Rubric
 
