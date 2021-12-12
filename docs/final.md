@@ -480,9 +480,15 @@ Joseph Yang
 * Updated database structure
 * Completed all tasks/ requests related operations from asking request, updating request, deleting request from user and marking requests status from helper + debug
 
-# Conclusion
-<!-- TODO -->
 
+# Conclusion
+
+<!-- TODO -->
+<!-- "A conclusion describing your team’s experience in working on this project. This should include what you learned through the design and implementation process, the difficulties you encountered, what your team would have liked to know before starting the project that would have helped you later, and any other technical hurdles that your team encountered." -->
+
+...
+
+One difficult aspect was trying to plan out how parts of the project would be structured when tehy involved interactions with parts that would not be done until later—for instance, planning out the front-end API calls before having figured out how features like the databases and the authentication system would be structured was difficult (e.g. not having planned out the database structure led to figuring out what particular parameters need to be passed in to be used in the database difficult) and ended up later leading to a lot of back-and-forth editing to ensure the front- and back-end would interact correctly.  
 
 # Final Rubric
 
