@@ -34,7 +34,8 @@
             <th scope="col">phone_number</th>
             </tr>
           </thead>
-          {% for task in tasks %}
+          <!-- {% for task in tasks %} -->
+          <!-- G.E. IDK how this setup works but validator complains about the placement of that text between table sections so just commenting it for now-->
           <tr>
           <th scope="row">{{results.task_id}}</th>
           <td>{{results.title}}
@@ -50,44 +51,8 @@
           <td>{{results.phone_number}}
           </td>
           </tr>
-          {% endfor %}
+          <!-- {% endfor %} -->
         </table>
-
-        <!-- <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <a href="requestProgress.html">
-                        <h5 class="card-title">Pasta, Pizza, Soda</h5>
-                      </a>
-                        <p class="card-text">
-                            <a href="mailto:someone@gmail.com">someone@gmail.com</a>
-                        </p>
-                        <div class="card-footer text-muted">413-***-****</div>
-                        
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <a href="requestProgress.html">
-                        <h5 class="card-title">burger, brown rice</h5>
-                      </a>
-                      <p class="card-text">
-                          <a href="mailto:anotherPerson@gamil.com">anotherPerson@gamil.com</a>
-                      </p>
-                      <div class="card-footer text-muted">413-***-****</div>
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                    </div>
-                  </div>
-                </div>
-            </div>
-
-
-        </div> -->
 
         <nav class="navbar fixed-top navbar-dark bg-dark">
             <div class="container-fluid">

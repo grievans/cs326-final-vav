@@ -37,6 +37,7 @@
     "pg-promise": "^10.11.1"
   },
   "devDependencies": {
-    "eslint": "^8.4.1"
+    "eslint": "^8.4.1",
+    "htmlhint": "^1.0.0"
   }
 }
