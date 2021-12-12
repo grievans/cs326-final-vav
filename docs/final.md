@@ -483,6 +483,7 @@ Griffin Evans
 * Added details about "innovative idea" to Overview section of documentation
 * Added some more details to the UI section
 * Wrote Conclusion section
+* Code cleanup
 
 Joseph Yang
 * Modified wireframe design 
