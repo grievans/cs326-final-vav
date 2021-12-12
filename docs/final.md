@@ -455,6 +455,7 @@ Griffin Evans
 * Miscellaneous fixes and tweaks to other sections of code to resolve bugs and inconsistencies
 * Updating of documentation for Database and API sections for final version
 * Creation of URL Routes/Mappings and Authentication documentation
+* Added details about "innovative idea" to Overview section of documentation
 
 Joseph Yang
 * Modified wireframe design 
