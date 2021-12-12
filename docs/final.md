@@ -23,7 +23,19 @@ Griffin Evans - **grievans**
 
 Joseph Yang - **JoJo-19** 
 # User Interface
-<!-- TODO!!!!! -->
+
+![This is our home page where users would login or register.](diagrams/final/login.png)
+This is our home page where users would login or register. The home button on the Navbar would also direct user to this page.
+![This is the page where user will land after login/register.](diagrams/final/requestOrHelp.png)
+This is the page where user will land after login/register. Where the user will have options to start making requests or be a helper to view current requests.
+![This is the page where user would make request.](diagrams/final/makeRequest.png)
+This is the page where user would make request with a request title, request description, name, location and contact info. They can also update and delete their request on this page.
+![This would be the page where the user would land on when request is submitted.](diagrams/final/requestDone.png)
+This would be the page where the user would land on when request is submitted. Where the user can send messages to the helper or adding additional instructions on the request.
+![This is the page where user can view all the current requests.](diagrams/final/viewRequest.png)
+This is the page where user/helper can view all the current requests.
+
+
 
 
 # APIs
