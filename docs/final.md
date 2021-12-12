@@ -1,12 +1,21 @@
 # Title
+
 Team Vav
+
 # Subtitle
+
 UMass Quarantine Requests
+
 # Semester
+
 Fall 2021
+
 # Overview
+
 Our application is for UMass students under quarantine to make requests and helpers to complete those requests. Requests may include food requests, mail requests, and requests for COVID-19 tests from UMass UHS. 
-<!-- TODO "You should also mention why your application is innovative"  -->
+<!-- "You should also mention why your application is innovative"  -->
+The innovative idea behind this concept essentially comes in using similar techniques to existing services but with a different purpose in mind—conceptually the site is somewhat like a forum or job posting site, but the focus is on giving a way for people to share and respond to one-time volunteer tasks rather than either facilitating discussions or providing long-term paid positions. Hence the site fits into a distinct niche, providing a service which stands out from existing resources.
+
 # Team Members
 Aaron Tsui - **OfficialAaronTsui2** & **OfficialAaronTsui**
 
@@ -414,7 +423,7 @@ Later requests to the server then use this user data to verify that the request-
 
 On the `quarantining.html` page .... **TODO**
 <!-- TODO put description for how task and comments use authentication; I (Griffin) can write this probably but might hold off until I'm sure it actually all works first so I have the most up-to-date description to give. -->
-<!-- Only other thing that actually checks for login currently is /comment which doesn't actually do anything with that logged-in status so not really sure what else to say. delete("/task/:id") had checkLoggedIn but has since been commented out  -->
+<!-- Update: Only other thing that actually checks for login currently is /comment which doesn't really do anything with that logged-in status so not really sure what else to say. delete("/task/:id") had checkLoggedIn but has since been commented out  -->
 
 # Division of Labor
 Aaron Tsui
