@@ -1,5 +1,4 @@
 .bg-image {
-    /* TODO: maybe get a wider image? gets a bit grainy at high resolutions */
     background-image: url('images/campus.jpg');
     height: 15em;
     max-height: 20vh;

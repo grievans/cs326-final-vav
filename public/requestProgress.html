@@ -11,9 +11,7 @@
         <title>[Request Title] from [Some One]] - UMassQuarantineRequests</title>
 
         <!-- front end handle mark button -->
-        <script defer src="requestProgress.js">
-          // TODO: Most work is for backend, when marked ---> send signal to server then update user side "progress" to in progress (hard T_T)
-        </script>
+        <script defer src="requestProgress.js"></script>
     </head>
     <body class="text-center">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" 
@@ -41,7 +39,6 @@
             </div>
 
             <div class="btn btn-success" id="submit">Mark Request in Progress</div>
-            <!-- <button type="submit" id="submit">Submit Request</button> -->
 
             <br>
             <br>
@@ -52,8 +49,6 @@
                     Helper questions or comments:
                 </span>
 
-                <!-- TODO Note: in actual implementation probably want something you can scroll through? Dunno to set up; not sure if just html or needs a custom css style or what -->
-                <!-- Not gonna try figuring that out more right now but might be worth doing before submitting; not too important though since it'd probably have to be changed anyway when making it actually interact with the comments -->
                 <div class="card text-start">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">A message from the helper</li>

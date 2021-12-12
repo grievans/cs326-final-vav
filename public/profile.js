@@ -58,7 +58,7 @@ async function deleteAccount(event) {
     const email = window.localStorage.getItem('user_email');
     const confirmation = window.confirm("Are you sure you'd like to delete your account? Click OK to confirm.");
     if (confirmation) {
-        const data = {"user_email":email}; //TODO maybe add a password requirement? Already logged in so would mostly just be another way to verify 
+        const data = {"user_email":email}; //Maybe add a password requirement? Already logged in so would mostly just be another way to verify. For now sticking with this way
         fetch("/user/delete",{
             method: "DELETE",
             cache: "no-cache",
